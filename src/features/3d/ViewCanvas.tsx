@@ -16,7 +16,7 @@ export default function ViewCanvas({ children, className }: WrapperProps) {
             <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
                 {children}
             </Float>
-            <Environment preset="city" />
+            <Environment files="/potsdamer_platz_1k.hdr" />
         </Canvas>
     );
 }

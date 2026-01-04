@@ -1,0 +1,57 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    /* Max z-index */
+    background: black;
+    transition: opacity 1.5s ease-out, visibility 1.5s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.skipButton {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1rem;
+    color: white;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.8rem;
+    opacity: 0.5;
+    z-index: 100;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.skipButton:hover {
+    opacity: 1;
+    border-color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.loadingWrap {
+    color: white;
+    font-family: inherit;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    opacity: 0.6;
+}
