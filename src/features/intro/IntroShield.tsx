@@ -39,7 +39,7 @@ export function IntroShield({ timeline }: IntroShieldProps) {
                 color="#a5f3fc"
                 roughness={0}
                 metalness={0.2}
-                transmission={0.95} // Glass-like
+                transmission={2} // Glass-like
                 thickness={0.5}
                 transparent
                 opacity={0.5}
