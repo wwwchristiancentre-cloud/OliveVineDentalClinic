@@ -8,6 +8,8 @@
 - **FR-002 Morphing Chair**: Configurable component in `src/features/3d/Chair.tsx`.
 - **FR-003 Crystal Jaw**: Refractive material setup in `src/features/3d/Jaw.tsx`.
 - **Smart Scheduling UI**: Booking page implemented with Sunday/Wednesday exclusion visual logic.
+- **System-Wide Navigation**: Functional routing between Home, About, Services, and Booking pages. Added Navbar to Booking page.
+- **Visual Fidelity**: Fixed About page timeline alignment to match centered mockup design.
 - **Mockup Fidelity**: Home, About, Services, Booking pages implemented with CSS Modules matching 100% of defined mockups.
 - **Visuals**: Implemented "Clinical Precision x Spiritual Warmth" vibe using Olive/Gold palette and Serif typography.
 - **Tech Stack**: Next.js 16 (App Router), React Three Fiber, GSAP, CSS Modules (No Tailwind).

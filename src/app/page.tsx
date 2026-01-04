@@ -44,7 +44,7 @@ export default function Home() {
               Our Infection Prevention and Control (IPC) protocols exceed international standards.
               We treat every instrument with surgical reverence, ensuring a pristine environment for your healing.
             </p>
-            <Link href="#" className={styles.readMore}>
+            <Link href="/about" className={styles.readMore}>
               Read our Protocols <span style={{ marginLeft: '0.5rem' }}>→</span>
             </Link>
           </div>
@@ -64,26 +64,26 @@ export default function Home() {
 
           <div className={styles.servicesGrid}>
             {/* Card 1 */}
-            <div className={styles.serviceCard}>
+            <Link href="/services" className={styles.serviceCard}>
               <h3 className={styles.cardTitle}>Restorative</h3>
               <p className={styles.cardDesc}>
                 Implants, crowns, and bridges engineered to restore full function and natural aesthetics.
               </p>
-            </div>
+            </Link>
             {/* Card 2 */}
-            <div className={styles.serviceCard}>
+            <Link href="/services" className={styles.serviceCard}>
               <h3 className={styles.cardTitle}>Cosmetic</h3>
               <p className={styles.cardDesc}>
                 Veneers and whitening designed to enhance your natural beauty, not mask it.
               </p>
-            </div>
+            </Link>
             {/* Card 3 */}
-            <div className={styles.serviceCard}>
+            <Link href="/services" className={styles.serviceCard}>
               <h3 className={styles.cardTitle}>Orthodontics</h3>
               <p className={styles.cardDesc}>
                 Alignment solutions including invisible aligners for discreet correction.
               </p>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
