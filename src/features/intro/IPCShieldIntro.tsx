@@ -9,14 +9,21 @@ import { IntroShield } from '@/features/intro/IntroShield';
 import styles from './intro.module.css';
 
 export function IPCShieldIntro({ onComplete }: { onComplete?: () => void }) {
-    const [complete, setComplete] = useState(false);
+    const [isFading, setIsFading] = useState(false); // Triggers CSS fade out
+    const [complete, setComplete] = useState(false); // Removes from DOM
     const [isStarted, setIsStarted] = useState(false);
 
     // Auto-hide when sequence finishes
     const handleComplete = () => {
-        console.log("Intro sequence complete, hiding overlay.");
-        setComplete(true);
-        if (onComplete) onComplete();
+        console.log("Intro sequence complete, starting fade out.");
+        setIsFading(true);
+
+        // Wait for CSS transition (1.5s) before unmounting
+        setTimeout(() => {
+            console.log("Fade out complete, unmounting.");
+            setComplete(true);
+            if (onComplete) onComplete();
+        }, 1500);
     };
 
     useEffect(() => {
@@ -35,11 +42,11 @@ export function IPCShieldIntro({ onComplete }: { onComplete?: () => void }) {
         }
     }, [complete]);
 
-    if (complete && isStarted) return null;
+    if (complete) return null;
 
     return (
         <div
-            className={`${styles.container} ${complete ? styles.hidden : ''}`}
+            className={`${styles.container} ${isFading ? styles.hidden : ''}`}
             style={{ zIndex: 99999 }} // Extra safe
         >
             <Canvas className={styles.canvas} gl={{ antialias: true, alpha: true }}>
@@ -53,7 +60,7 @@ export function IPCShieldIntro({ onComplete }: { onComplete?: () => void }) {
                 </Suspense>
             </Canvas>
 
-            {!complete && (
+            {!isFading && (
                 <button className={styles.skipButton} onClick={handleComplete}>
                     Skip Intro
                 </button>
@@ -72,10 +79,17 @@ function IntroScene({ onComplete }: { onComplete?: () => void }) {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
+            // Trigger exit transition exactly when the shield starts expanding (6.5s)
+            // This creates a "Dissolve to Content" effect rather than "Fade to Black -> Reveal".
+            timeline.call(() => {
+                console.log("Timeline Trigger: Start Page Reveal");
+                onComplete?.();
+            }, [], 6.5);
+
             timeline.play();
         });
         return () => ctx.revert();
-    }, [timeline]);
+    }, [timeline, onComplete]);
 
     return (
         <group>

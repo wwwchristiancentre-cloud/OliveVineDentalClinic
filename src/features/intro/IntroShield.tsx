@@ -23,12 +23,23 @@ export function IntroShield({ timeline }: IntroShieldProps) {
         // Particles Phase 2: 3s -> 4s (Wait)
         // Particles Phase 3: 4s -> 6s (Hand to Shield)
 
-        // We want the shield surface to appear AS the particles arrive
+        // Sync with Particles Phase 3 (Hand -> Shield)
+        // Particles Phase 1 End: 3.5s
+        // Particles Phase 2 End: 4.0s (Start Shield)
+
         timeline.to(meshRef.current.scale, {
             x: 1, y: 1, z: 1,
-            duration: 2,
+            duration: 2.5,
             ease: 'elastic.out(1, 0.5)',
-        }, 4); // Start at 4s mark
+        }, 4.0);
+
+        // Final Exit: Expansion / Pushing away
+        // Happens after shield forms (6.5s)
+        timeline.to(meshRef.current.scale, {
+            x: 1.5, y: 1.5, z: 1.5, // Subtle expansion, not explosion
+            duration: 0.5,
+            ease: 'power2.in',
+        }, 6.5);
 
     }, [timeline]);
 

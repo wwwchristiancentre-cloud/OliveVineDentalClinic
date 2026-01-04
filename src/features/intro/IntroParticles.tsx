@@ -144,17 +144,17 @@ export function IntroParticles({ timeline }: IntroParticlesProps) {
 
     useEffect(() => {
         console.log("IntroParticles mounted, adding tweens to timeline.");
-        // Phase 1: Chaos -> Hand
+        // Phase 1: Chaos -> Hand (Start: 0.5s, Dur: 3s -> End: 3.5s)
         timeline.to(progress.current, {
             value: 1,
             duration: 3,
             ease: 'power2.inOut',
         }, 0.5);
 
-        // Phase 2: Hand Hold (Wash request? We can rotate the container to simulate looking)
-        timeline.to({}, { duration: 1.5 });
+        // Phase 2: Hand Hold (Shortened to 0.5s -> End: 4.0s)
+        timeline.to({}, { duration: 0.5 });
 
-        // Phase 3: Hand -> Shield
+        // Phase 3: Hand -> Shield (Start: 4.0s, Dur: 2.5s -> End: 6.5s)
         timeline.to(progress.current, {
             value: 2,
             duration: 2.5,
@@ -203,7 +203,14 @@ export function IntroParticles({ timeline }: IntroParticlesProps) {
         <instancedMesh ref={meshRef} args={[undefined, undefined, count]} frustumCulled={false}>
             {/* Smaller dots on mobile to look sharper */}
             <dodecahedronGeometry args={[isMobile ? 0.15 : 0.22, 0]} />
-            <meshStandardMaterial color="#4ade80" emissive="#4ade80" emissiveIntensity={0.6} toneMapped={false} />
+            <meshStandardMaterial
+                name="intro-particles-material" // For GSAP targeting
+                color="#4ade80"
+                emissive="#4ade80"
+                emissiveIntensity={0.6}
+                toneMapped={false}
+                transparent={true} // Enable transparency for fade
+            />
         </instancedMesh>
     );
 }
