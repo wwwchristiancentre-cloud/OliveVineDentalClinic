@@ -1,0 +1,154 @@
+.container {
+    display: flex;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--white);
+    color: var(--gray-900);
+}
+
+.fixedSide {
+    width: 100%;
+    height: 50vh;
+    position: relative;
+    background: radial-gradient(circle at center, #2D3B2D 0%, #1A1A1A 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.3);
+    font-family: monospace;
+}
+
+@media (min-width: 768px) {
+    .fixedSide {
+        width: 50%;
+        height: 100%;
+    }
+}
+
+.scrollSide {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+@media (min-width: 768px) {
+    .scrollSide {
+        width: 50%;
+    }
+}
+
+.section {
+    height: 100vh;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    scroll-snap-align: start;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+@media (min-width: 768px) {
+    .section {
+        padding: 6rem;
+        /* p-24 approx */
+    }
+}
+
+.bgGray {
+    background-color: var(--gray-50);
+}
+
+.bgDark {
+    background-color: var(--olive-dark);
+    color: var(--white);
+}
+
+.label {
+    color: var(--gold-DEFAULT);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.heading {
+    font-size: 3rem;
+    /* 5xl approx */
+    font-family: var(--font-serif);
+    margin-bottom: 1.5rem;
+    color: var(--olive-dark);
+}
+
+.bgDark .heading {
+    color: var(--white);
+}
+
+.desc {
+    color: var(--gray-500);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    max-width: 28rem;
+}
+
+.bgDark .desc {
+    color: var(--gray-400);
+}
+
+.list {
+    list-style: none;
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    line-height: 2;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btnPrimary {
+    border: 1px solid var(--olive-DEFAULT);
+    color: var(--olive-DEFAULT);
+    padding: 0.5rem 1.5rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.3s;
+}
+
+.btnPrimary:hover {
+    background-color: var(--olive-DEFAULT);
+    color: var(--white);
+}
+
+.btnLink {
+    color: var(--olive-DEFAULT);
+    font-size: 0.875rem;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btnLink:hover {
+    color: var(--gold-DEFAULT);
+}
+
+.floatingLabel {
+    position: absolute;
+    top: 50%;
+    right: 5rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(201, 169, 98, 0.3);
+    color: var(--gold-DEFAULT);
+    font-size: 0.75rem;
+}

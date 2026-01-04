@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Olive Vine Dental</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        olive: { DEFAULT: '#2D3B2D', light: '#4A5D4A', dark: '#1A221A' },
+                        gold: { DEFAULT: '#C9A962' },
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Playfair Display', 'serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .jaw-canvas {
+            background: radial-gradient(circle at center, #2D3B2D 0%, #1A1A1A 100%);
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-900 overflow-hidden h-screen flex flex-col">
+
+    <!-- Nav -->
+    <nav class="fixed w-full z-50 px-8 py-6 flex justify-between items-center text-white mix-blend-difference">
+        <div class="font-serif text-2xl font-bold tracking-wide">OLIVE VINE</div>
+        <a href="booking.html" class="bg-white text-olive px-6 py-2 rounded-full font-bold text-sm">Book</a>
+    </nav>
+
+    <div class="flex flex-1 relative">
+
+        <!-- Interactive 3D Side (Fixed) -->
+        <div
+            class="w-full md:w-1/2 h-full jaw-canvas relative flex items-center justify-center text-white/30 font-mono">
+            [3D Crystal Jaw Canvas]
+            <!-- Floating Label Example -->
+            <div
+                class="absolute top-1/2 right-20 bg-black/50 backdrop-blur px-4 py-2 rounded-lg border border-gold/30 text-gold text-xs">
+                ← Viewing: Implants
+            </div>
+        </div>
+
+        <!-- Scrollable Content Side -->
+        <div class="w-full md:w-1/2 h-full overflow-y-auto bg-white snap-y snap-mandatory scroll-smooth">
+
+            <!-- Item 1: General -->
+            <section class="h-screen p-16 flex flex-col justify-center snap-start border-b border-gray-100">
+                <span class="text-gold text-xs font-bold uppercase tracking-widest mb-4">01. Function</span>
+                <h2 class="font-serif text-5xl text-olive-dark mb-6">General Dentistry</h2>
+                <p class="text-gray-500 leading-relaxed mb-6 max-w-md">
+                    The foundation of oral health. From ultrasonic cleanings to precision fillings, we maintain the
+                    integrity of your smile using minimally invasive techniques.
+                </p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>• Routine Hygiene & Exams</li>
+                    <li>• Root Canal Therapy</li>
+                    <li>• Composite Fillings</li>
+                </ul>
+            </section>
+
+            <!-- Item 2: Cosmetic -->
+            <section class="h-screen p-16 flex flex-col justify-center snap-start border-b border-gray-100 bg-gray-50">
+                <span class="text-gold text-xs font-bold uppercase tracking-widest mb-4">02. Aesthetics</span>
+                <h2 class="font-serif text-5xl text-olive-dark mb-6">Cosmetic Design</h2>
+                <p class="text-gray-500 leading-relaxed mb-6 max-w-md">
+                    Artistry meets anatomy. We design smiles that complement your facial structure, using ultra-thin
+                    veneers and professional whitening systems.
+                </p>
+                <div class="flex gap-4">
+                    <button
+                        class="border border-olive text-olive px-6 py-2 rounded-full hover:bg-olive hover:text-white transition-all text-sm">View
+                        Gallery</button>
+                    <button class="text-olive hover:text-gold text-sm underline">Pricing</button>
+                </div>
+            </section>
+
+            <!-- Item 3: Implants -->
+            <section class="h-screen p-16 flex flex-col justify-center snap-start bg-olive-dark text-white">
+                <span class="text-gold text-xs font-bold uppercase tracking-widest mb-4">03. Reconstruction</span>
+                <h2 class="font-serif text-5xl mb-6">Dental Implants</h2>
+                <p class="text-gray-400 leading-relaxed mb-6 max-w-md">
+                    Permanent solutions for missing teeth. We use computer-guided surgery to place titanium implants
+                    with sub-millimeter accuracy.
+                </p>
+            </section>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

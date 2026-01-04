@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Olive Vine Dental</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        olive: { DEFAULT: '#2D3B2D', light: '#4A5D4A', dark: '#1A221A' },
+                        gold: { DEFAULT: '#C9A962' },
+                        charcoal: '#1A1A1A',
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Playfair Display', 'serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-charcoal text-white overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 px-8 py-6 flex justify-between items-center mix-blend-difference text-white">
+        <div class="font-serif text-2xl font-bold tracking-wide">OLIVE VINE</div>
+        <div class="hidden md:flex space-x-8 text-sm font-medium tracking-widest uppercase">
+            <a href="#" class="hover:text-gold transition-colors">Our Story</a>
+            <a href="#" class="hover:text-gold transition-colors">Services</a>
+            <a href="#" class="hover:text-gold transition-colors">Contact</a>
+        </div>
+        <button
+            class="bg-white text-olive px-6 py-2 rounded-full font-bold hover:bg-gold hover:text-white transition-all text-sm">
+            Book Now
+        </button>
+    </nav>
+
+    <!-- Hero Section (3D Placeholder) -->
+    <section class="h-screen relative flex items-center justify-center bg-gradient-to-b from-charcoal to-olive-dark">
+        <!-- 3D Canvas Placeholder -->
+        <div class="absolute inset-0 flex items-center justify-center opacity-30">
+            <div
+                class="border-2 border-dashed border-gold rounded-full w-96 h-96 flex items-center justify-center text-gold font-mono">
+                [3D Morphing Chair Canvas]
+            </div>
+        </div>
+
+        <div class="z-10 text-center px-4 max-w-4xl">
+            <h1 class="font-serif text-5xl md:text-7xl leading-tight mb-6">
+                Clinical Excellence <br>
+                <span class="text-gold italic">With a Soul</span>
+            </h1>
+            <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10">
+                Experience Abuja's most advanced dental care in an environment of spiritual calm and medical precision.
+            </p>
+            <div class="animate-bounce">
+                <svg class="w-6 h-6 mx-auto text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intro / IPC Shield -->
+    <section class="py-24 px-8 bg-charcoal relative">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <span class="text-gold text-sm font-bold tracking-widest uppercase">Safety First</span>
+                <h2 class="font-serif text-4xl mt-4 mb-6">Your Safety is Our Fortress</h2>
+                <p class="text-gray-400 leading-relaxed mb-6">
+                    Our Infection Prevention and Control (IPC) protocols exceed international standards.
+                    We treat every instrument with surgical reverence, ensuring a pristine environment for your healing.
+                </p>
+                <a href="#"
+                    class="text-white border-b border-gold pb-1 hover:text-gold transition-colors inline-flex items-center">
+                    Read our Protocols <span class="ml-2">→</span>
+                </a>
+            </div>
+            <!-- 3D Shield Placeholder -->
+            <div
+                class="h-96 bg-black/50 rounded-2xl border border-white/10 flex items-center justify-center text-gray-500 font-mono">
+                [3D Particle Shield Animation]
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Preview -->
+    <section class="py-24 px-8 bg-white text-charcoal">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl mb-4 text-olive-dark">Curated Treatments</h2>
+                <p class="text-gray-600">Precision procedures tailored to your anatomy.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div
+                    class="group p-8 rounded-2xl bg-gray-50 hover:bg-olive hover:text-white transition-all duration-500 cursor-pointer">
+                    <h3 class="font-serif text-2xl mb-4 group-hover:text-gold">Restorative</h3>
+                    <p class="text-gray-500 group-hover:text-gray-300 text-sm leading-relaxed">
+                        Implants, crowns, and bridges engineered to restore full function and natural aesthetics.
+                    </p>
+                </div>
+                <!-- Card 2 -->
+                <div
+                    class="group p-8 rounded-2xl bg-gray-50 hover:bg-olive hover:text-white transition-all duration-500 cursor-pointer">
+                    <h3 class="font-serif text-2xl mb-4 group-hover:text-gold">Cosmetic</h3>
+                    <p class="text-gray-500 group-hover:text-gray-300 text-sm leading-relaxed">
+                        Veneers and whitening designed to enhance your natural beauty, not mask it.
+                    </p>
+                </div>
+                <!-- Card 3 -->
+                <div
+                    class="group p-8 rounded-2xl bg-gray-50 hover:bg-olive hover:text-white transition-all duration-500 cursor-pointer">
+                    <h3 class="font-serif text-2xl mb-4 group-hover:text-gold">Orthodontics</h3>
+                    <p class="text-gray-500 group-hover:text-gray-300 text-sm leading-relaxed">
+                        Alignment solutions including invisible aligners for discreet correction.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>

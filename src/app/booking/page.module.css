@@ -1,0 +1,280 @@
+.page {
+    background-color: var(--gray-50);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: var(--gray-900);
+}
+
+.card {
+    background-color: var(--white);
+    width: 100%;
+    max-width: 56rem;
+    /* 4xl approx */
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .card {
+        flex-direction: row;
+    }
+}
+
+.infoSide {
+    background-color: var(--olive-dark);
+    color: var(--white);
+    padding: 2.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+    .infoSide {
+        width: 33.333333%;
+    }
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 1.875rem;
+    margin-bottom: 0.5rem;
+    color: var(--gold-DEFAULT);
+}
+
+.subtitle {
+    color: var(--gray-400);
+    font-size: 0.875rem;
+    margin-bottom: 2rem;
+}
+
+.checklist {
+    font-size: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.checkItem {
+    display: flex;
+    align-items: center;
+    color: var(--gray-300);
+}
+
+.checkIcon {
+    width: 1rem;
+    height: 1rem;
+    background-color: rgba(201, 169, 98, 0.2);
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    color: var(--gold-DEFAULT);
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dotIcon {
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--gray-700);
+    border-radius: 50%;
+    margin-right: 0.75rem;
+}
+
+.noteSection {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.noteLabel {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+}
+
+.noteText {
+    font-size: 0.75rem;
+    color: var(--gray-400);
+    line-height: 1.6;
+}
+
+.goldText {
+    color: var(--gold-DEFAULT);
+}
+
+/* Calendar Side */
+.calendarSide {
+    padding: 2.5rem;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .calendarSide {
+        width: 66.666667%;
+    }
+}
+
+.calHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.monthTitle {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--olive-dark);
+}
+
+.navBtns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.navBtn {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    color: var(--gray-400);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.navBtn:hover {
+    background-color: var(--gray-100);
+}
+
+.daysGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.dayLabel {
+    font-size: 0.75rem;
+    color: var(--gray-400);
+    padding: 0.5rem 0;
+}
+
+.sundayLabel {
+    color: var(--gold-DEFAULT);
+    font-weight: 700;
+}
+
+.dayBtn {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 0.25rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dayBtn:hover {
+    background-color: var(--olive-DEFAULT);
+    color: var(--white);
+}
+
+.dayDisabled {
+    background-color: var(--gray-50);
+    color: var(--gray-300);
+    text-decoration: line-through;
+    cursor: not-allowed;
+}
+
+.dayDisabled:hover {
+    background-color: var(--gray-50);
+    color: var(--gray-300);
+}
+
+.daySelected {
+    background-color: transparent;
+    color: var(--olive-DEFAULT);
+    font-weight: 700;
+}
+
+.daySunday {
+    background-color: #FFFBEB;
+    /* amber-50 */
+    color: #FBBF24;
+    /* amber-400 */
+    cursor: not-allowed;
+}
+
+.daySunday:hover {
+    background-color: #FFFBEB;
+    color: #FBBF24;
+}
+
+.timeTitle {
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.timeGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.timeBtn {
+    border: 1px solid var(--gray-200);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    background: none;
+    cursor: pointer;
+}
+
+.timeBtn:hover {
+    border-color: var(--olive-DEFAULT);
+    color: var(--olive-DEFAULT);
+}
+
+.timeSelected {
+    background-color: var(--olive-DEFAULT);
+    color: var(--white);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: transparent;
+}
+
+.timeDisabled {
+    color: var(--gray-300);
+    text-decoration: line-through;
+    cursor: not-allowed;
+    border-color: var(--gray-200);
+}
+
+.confirmBtn {
+    width: 100%;
+    margin-top: 2rem;
+    background-color: var(--gold-DEFAULT);
+    color: var(--white);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.confirmBtn:hover {
+    background-color: var(--olive-DEFAULT);
+}

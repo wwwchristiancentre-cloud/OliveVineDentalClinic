@@ -1,66 +1,92 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from 'next/link';
+import ViewCanvas from '@/features/3d/ViewCanvas';
+import Chair from '@/features/3d/Chair';
+import Shield from '@/features/3d/Shield';
+import Navbar from '@/components/Navbar';
+import styles from './page.module.css';
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main>
+      <Navbar />
+
+      {/* Hero Section */}
+      <section className={styles.hero}>
+        <div className={styles.canvasPlaceholder}>
+          <div className={styles.canvasCircle} style={{ border: 'none' }}>
+            <ViewCanvas className={styles.canvasPlaceholder}><Chair /></ViewCanvas>
+          </div>
+        </div>
+
+        <div className={styles.heroContent}>
+          <h1 className={styles.heroTitle}>
+            Clinical Excellence <br />
+            <span className={styles.soulText}>With a Soul</span>
+          </h1>
+          <p className={styles.heroDesc}>
+            Experience Abuja's most advanced dental care in an environment of spiritual calm and medical precision.
           </p>
+          <div className={styles.scrollIcon}>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </div>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Intro / IPC Shield */}
+      <section className={styles.intro}>
+        <div className={styles.introGrid}>
+          <div>
+            <span className={styles.label}>Safety First</span>
+            <h2 className={styles.sectionTitle}>Your Safety is Our Fortress</h2>
+            <p className={styles.introText}>
+              Our Infection Prevention and Control (IPC) protocols exceed international standards.
+              We treat every instrument with surgical reverence, ensuring a pristine environment for your healing.
+            </p>
+            <Link href="#" className={styles.readMore}>
+              Read our Protocols <span style={{ marginLeft: '0.5rem' }}>→</span>
+            </Link>
+          </div>
+          <div className={styles.shieldPlaceholder} style={{ background: 'transparent', border: 'none' }}>
+            <ViewCanvas className={styles.shieldPlaceholder}><Shield /></ViewCanvas>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Services Preview */}
+      <section className={styles.services}>
+        <div style={{ maxWidth: '72rem', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center' }}>
+            <h2 className={`${styles.sectionTitle} ${styles.servicesTitle}`}>Curated Treatments</h2>
+            <p style={{ color: 'var(--gray-600)' }}>Precision procedures tailored to your anatomy.</p>
+          </div>
+
+          <div className={styles.servicesGrid}>
+            {/* Card 1 */}
+            <div className={styles.serviceCard}>
+              <h3 className={styles.cardTitle}>Restorative</h3>
+              <p className={styles.cardDesc}>
+                Implants, crowns, and bridges engineered to restore full function and natural aesthetics.
+              </p>
+            </div>
+            {/* Card 2 */}
+            <div className={styles.serviceCard}>
+              <h3 className={styles.cardTitle}>Cosmetic</h3>
+              <p className={styles.cardDesc}>
+                Veneers and whitening designed to enhance your natural beauty, not mask it.
+              </p>
+            </div>
+            {/* Card 3 */}
+            <div className={styles.serviceCard}>
+              <h3 className={styles.cardTitle}>Orthodontics</h3>
+              <p className={styles.cardDesc}>
+                Alignment solutions including invisible aligners for discreet correction.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

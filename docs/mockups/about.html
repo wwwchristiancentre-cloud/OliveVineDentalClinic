@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Olive Vine Dental</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        olive: { DEFAULT: '#2D3B2D', light: '#4A5D4A', dark: '#1A221A' },
+                        gold: { DEFAULT: '#C9A962' },
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Playfair Display', 'serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-stone-50 text-gray-900">
+
+    <!-- Sticky Nav -->
+    <nav
+        class="fixed w-full z-50 px-8 py-6 flex justify-between items-center text-olive-dark bg-white/80 backdrop-blur-md">
+        <div class="font-serif text-2xl font-bold tracking-wide">OLIVE VINE</div>
+        <div class="hidden md:flex space-x-8 text-sm font-medium tracking-widest uppercase">
+            <a href="home.html" class="hover:text-gold transition-colors">Home</a>
+            <span class="text-gold">Our Story</span> <!-- Active -->
+            <a href="services.html" class="hover:text-gold transition-colors">Services</a>
+        </div>
+        <a href="booking.html"
+            class="text-sm font-bold border-b border-olive hover:text-gold hover:border-gold transition-colors">Book
+            Visit</a>
+    </nav>
+
+    <!-- Editorial Hero -->
+    <section class="min-h-screen flex flex-col md:flex-row">
+        <!-- Image Side (Placeholder) -->
+        <div class="w-full md:w-1/2 h-96 md:h-auto bg-gray-200 relative overflow-hidden grayscale contrast-125">
+            <div class="absolute inset-0 flex items-center justify-center text-gray-500 font-mono">
+                [Portrait: Dr. Emmanuel Oke]
+            </div>
+            <!-- Overlay Text -->
+            <div class="absolute bottom-10 left-10 text-white z-10">
+                <p class="text-sm tracking-widest uppercase mb-2">Lead Surgeon & Pastor</p>
+                <h1 class="font-serif text-5xl">Dr. Emmanuel Oke</h1>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        </div>
+
+        <!-- Text Side -->
+        <div class="w-full md:w-1/2 p-12 md:p-24 flex flex-col justify-center bg-white">
+            <span class="text-gold font-serif italic text-2xl mb-6">"To heal is to serve."</span>
+            <p class="text-lg leading-relaxed text-gray-600 mb-8 font-light">
+                Medicine treats the body, but true healing touches the spirit. At Olive Vine, we believe in a holistic
+                approach where clinical excellence is delivered with the compassion of a shepherd.
+            </p>
+            <div class="grid grid-cols-2 gap-8 border-t border-gray-100 pt-8">
+                <div>
+                    <h3 class="font-bold text-olive-dark">Clinical</h3>
+                    <p class="text-sm text-gray-500 mt-1">Head of Clinical Services,<br>Karshi General Hospital</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-olive-dark">Spiritual</h3>
+                    <p class="text-sm text-gray-500 mt-1">Pastor,<br>Winning Worship Way</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scrollytelling Timeline (Placeholder) -->
+    <section class="py-32 bg-olive-dark text-white relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-8 relative z-10">
+            <h2 class="font-serif text-4xl text-gold mb-16 text-center">The Journey</h2>
+
+            <div class="space-y-24 border-l border-white/10 pl-12 ml-4">
+                <!-- Item 1 -->
+                <div class="relative">
+                    <div class="absolute -left-14 top-2 w-4 h-4 rounded-full bg-gold"></div>
+                    <span class="text-xs text-gray-400 uppercase tracking-widest">The Foundation</span>
+                    <h3 class="text-3xl font-serif mt-2 mb-4">Maitama District Hospital</h3>
+                    <p class="text-gray-400 max-w-lg">Where the rigorous standards of surgical precision were forged in
+                        a high-volume trauma environment.</p>
+                </div>
+                <!-- Item 2 -->
+                <div class="relative">
+                    <div class="absolute -left-14 top-2 w-4 h-4 rounded-full bg-white"></div>
+                    <span class="text-xs text-gray-400 uppercase tracking-widest">The Leadership</span>
+                    <h3 class="text-3xl font-serif mt-2 mb-4">Karshi General Hospital</h3>
+                    <p class="text-gray-400 max-w-lg">Leading clinical services and implementing the IPC protocols that
+                        would become the gold standard.</p>
+                </div>
+                <!-- Item 3 -->
+                <div class="relative">
+                    <div
+                        class="absolute -left-14 top-2 w-8 h-8 rounded-full bg-gold flex items-center justify-center animate-pulse">
+                        <div class="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                    <span class="text-xs text-gold uppercase tracking-widest">The Vision</span>
+                    <h3 class="text-3xl font-serif mt-2 mb-4 text-white">Olive Vine Dental</h3>
+                    <p class="text-gray-300 max-w-lg text-lg">A sanctuary where cutting-edge dentistry meets the warmth
+                        of home.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>

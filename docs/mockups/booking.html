@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book - Olive Vine Dental</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        olive: { DEFAULT: '#2D3B2D', light: '#4A5D4A', dark: '#1A221A' },
+                        gold: { DEFAULT: '#C9A962' },
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Playfair Display', 'serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Booking Card -->
+    <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
+
+        <!-- Summary/Info Side -->
+        <div class="bg-olive-dark text-white p-10 md:w-1/3 flex flex-col justify-between">
+            <div>
+                <h2 class="font-serif text-3xl mb-2 text-gold">Schedule Visit</h2>
+                <p class="text-gray-400 text-sm mb-8">Select a time that works for you. Our team will confirm shortly.
+                </p>
+
+                <div class="space-y-4 text-sm">
+                    <div class="flex items-center text-gray-300">
+                        <span
+                            class="w-4 h-4 bg-gold/20 rounded-full mr-3 text-gold text-xs flex items-center justify-center">✓</span>
+                        Consultation (30m)
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <span class="w-4 h-4 bg-gray-700 rounded-full mr-3"></span>
+                        Dr. Emmanuel Oke
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-white/10">
+                <p class="text-xs text-gray-500 uppercase tracking-widest mb-2">Hours Note</p>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    We are closed on <span class="text-gold">Sundays</span>. <br>
+                    Wednesday appointments end at 4:00 PM.
+                </p>
+            </div>
+        </div>
+
+        <!-- Calendar Side -->
+        <div class="p-10 md:w-2/3">
+            <!-- Calendar Header -->
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="font-serif text-xl text-olive-dark">January 2026</h3>
+                <div class="flex gap-2">
+                    <button class="p-2 hover:bg-gray-100 rounded text-gray-400">←</button>
+                    <button class="p-2 hover:bg-gray-100 rounded text-gray-400">→</button>
+                </div>
+            </div>
+
+            <!-- Days Grid -->
+            <div class="grid grid-cols-7 gap-2 mb-8 text-center">
+                <span class="text-xs text-gray-400 py-2">Mon</span>
+                <span class="text-xs text-gray-400 py-2">Tue</span>
+                <span class="text-xs text-gray-400 py-2">Wed</span>
+                <span class="text-xs text-gray-400 py-2">Thu</span>
+                <span class="text-xs text-gray-400 py-2">Fri</span>
+                <span class="text-xs text-gray-400 py-2">Sat</span>
+                <span class="text-xs text-gold font-bold py-2">Sun</span> <!-- Sunday emphasized -->
+
+                <!-- Week 1 Example -->
+                <button class="p-3 text-sm rounded bg-gray-50 text-gray-300 line-through cursor-not-allowed">29</button>
+                <button class="p-3 text-sm rounded hover:bg-olive hover:text-white transition-colors">30</button>
+                <button class="p-3 text-sm rounded hover:bg-olive hover:text-white transition-colors">31</button>
+                <button
+                    class="p-3 text-sm rounded hover:bg-olive hover:text-white transition-colors font-bold text-olive">1</button>
+                <button class="p-3 text-sm rounded hover:bg-olive hover:text-white transition-colors">2</button>
+                <button class="p-3 text-sm rounded hover:bg-olive hover:text-white transition-colors">3</button>
+                <button class="p-3 text-sm rounded bg-amber-50 text-amber-400 cursor-not-allowed">4</button>
+                <!-- Sunday Blocked -->
+            </div>
+
+            <!-- Time Slots -->
+            <h4 class="text-sm font-bold text-gray-900 mb-4">Available Times</h4>
+            <div class="grid grid-cols-3 gap-3">
+                <button
+                    class="border border-gray-200 py-2 rounded text-sm text-gray-600 hover:border-olive hover:text-olive">09:00
+                    AM</button>
+                <button class="bg-olive text-white py-2 rounded text-sm shadow-md ring-2 ring-gold/50">10:00 AM</button>
+                <!-- Selected -->
+                <button
+                    class="border border-gray-200 py-2 rounded text-sm text-gray-600 hover:border-olive hover:text-olive">11:30
+                    AM</button>
+                <button
+                    class="border border-gray-200 py-2 rounded text-sm text-gray-300 line-through cursor-not-allowed"
+                    disabled>02:00 PM</button>
+            </div>
+
+            <!-- Action -->
+            <button class="w-full mt-8 bg-gold text-white py-4 rounded-xl font-bold hover:bg-olive transition-colors">
+                Confirm Booking
+            </button>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
