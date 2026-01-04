@@ -122,7 +122,7 @@ export function IntroParticles({ timeline }: IntroParticlesProps) {
         }
 
         return positions;
-    }, [obj]);
+    }, [obj, spreadScale]);
 
     // 3. SHIELD POSITIONS (Surface of a Sphere)
     const shieldData = useMemo(() => {
@@ -154,21 +154,41 @@ export function IntroParticles({ timeline }: IntroParticlesProps) {
         // Phase 2: Hand Hold (Shortened to 0.5s -> End: 4.0s)
         timeline.to({}, { duration: 0.5 });
 
-        // Phase 3: Hand -> Shield (Start: 4.0s, Dur: 2.5s -> End: 6.5s)
+        // Phase 3: Hand -> Shield
+        // Start delayed to 5.0s (Shield starts at 4.0s). 
+        // This creates a 1s window where Shield grows AROUND the hands.
+        // Duration compressed to 1.5s to finish by 6.5s (Reveal Trigger).
         timeline.to(progress.current, {
             value: 2,
-            duration: 2.5,
+            duration: 1.5,
             ease: 'elastic.out(1, 0.5)',
-        });
+        }, 5.0);
+    }, [timeline]);
+
+    // Fade Out Logic (Scale to 0)
+    const globalScale = useRef({ value: 1 });
+
+    useEffect(() => {
+        if (timeline) {
+            // Animate global scale to 0 at the end (6.5s)
+            timeline.to(globalScale.current, {
+                value: 0,
+                duration: 0.5,
+                ease: 'power2.in'
+            }, 6.5);
+        }
     }, [timeline]);
 
     useFrame((state) => {
         if (!meshRef.current) return;
 
         // Add subtle rotation to the whole group for life
-        meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2) * 0.1;
+        // Tuned Up: Speed 0.4 (was 0.2), Amp 0.2 (was 0.1)
+        meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.4) * 0.2
 
         const p = progress.current.value;
+        const gScale = globalScale.current.value; // Current global scale
+
         const dummy = new THREE.Object3D();
 
         for (let i = 0; i < count; i++) {
@@ -190,8 +210,8 @@ export function IntroParticles({ timeline }: IntroParticlesProps) {
             dummy.position.set(x, y, z);
 
             // Scale particles down when they form the detailed Hand, up when Shield?
-            // Keep constant for now
-            dummy.scale.setScalar(0.04);
+            // Apply global fade scale
+            dummy.scale.setScalar(0.04 * gScale);
 
             dummy.updateMatrix();
             meshRef.current.setMatrixAt(i, dummy.matrix);
@@ -209,7 +229,7 @@ export function IntroParticles({ timeline }: IntroParticlesProps) {
                 emissive="#4ade80"
                 emissiveIntensity={0.6}
                 toneMapped={false}
-                transparent={true} // Enable transparency for fade
+                transparent={false} // Reverted to opaque for solid look
             />
         </instancedMesh>
     );
