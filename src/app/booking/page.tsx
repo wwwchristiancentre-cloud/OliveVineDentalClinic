@@ -150,7 +150,7 @@ export default function Booking() {
                 <h1 className="font-serif text-4xl md:text-5xl text-olive-dark">Schedule Your Sanctuary Visit</h1>
               </div>
               <p className="text-gray-500 text-sm max-w-sm">
-                Reserve your tailored dental therapy with Dr. Goke inside our state-of-the-art sterile clinic at Garki Mall, Abuja.
+                Reserve your tailored dental therapy with Dr. Oke inside our state-of-the-art sterile clinic at Garki Mall, Abuja.
               </p>
             </div>
           </div>
@@ -401,15 +401,19 @@ export default function Booking() {
                       Lead Surgeon
                     </div>
                     <div className="space-y-1">
-                      <h3 className="font-serif text-2xl text-white">Dr. Goke</h3>
+                      <h3 className="font-serif text-2xl text-white">Dr. Emmanuel Oke</h3>
                       <p className="text-xs text-gold font-semibold uppercase tracking-wider">Founder & Surgeon</p>
                     </div>
 
-                    {/* Placeholder doctor outline */}
-                    <div className="py-6 border-y border-white/10 flex justify-center text-white/20">
-                      <svg className="w-20 h-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
+                    {/* Doctor portrait */}
+                    <div className="py-4 border-y border-white/10 flex justify-center">
+                      <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-gold/40 shadow-inner bg-olive-deep">
+                        <img
+                          src="/dr-oke.png"
+                          alt="Dr. Oke Portrait"
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      </div>
                     </div>
 
                     <p className="text-gray-300 text-xs leading-relaxed italic">
@@ -490,7 +494,7 @@ export default function Booking() {
 
               <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 text-xs text-left max-w-sm mx-auto space-y-2 text-gray-500">
                 <p><strong>📍 Location:</strong> Suite C108, Garki Mall, Area 11, Abuja</p>
-                <p><strong>👨‍⚕️ Surgeon:</strong> Dr. Goke</p>
+                <p><strong>👨‍⚕️ Surgeon:</strong> Dr. Oke</p>
                 <p><strong>📞 Contact:</strong> {patientPhone}</p>
                 <p className="text-red-400 pt-1 font-semibold">⚠️ Our clinical team will reach out via WhatsApp/SMS shortly to finalize your slot details.</p>
               </div>

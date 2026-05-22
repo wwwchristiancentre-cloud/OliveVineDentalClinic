@@ -8,7 +8,7 @@
 | Attribute | Details |
 |-----------|---------|
 | **Location** | Suite C108, Garki Mall, Abuja |
-| **Phone** | 0703 229 9287 |
+| **Phone** | 0706 368 7055 |
 | **Hours** | Mon-Fri: 9AM-5PM, Sat: 10AM-3PM, Sun: Closed |
 | **Services** | General dentistry, cosmetic dentistry, orthodontics, restorative procedures |
 

@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
           <div className="grid md:grid-cols-12 gap-8 items-start">
             {/* Left Column: Legal Content */}
             <div className="md:col-span-8 bg-white border border-gray-100 rounded-3xl p-6 md:p-8 shadow-xl space-y-8 text-sm leading-relaxed text-gray-600">
-              
+
               <div className="space-y-3">
                 <h2 className="font-serif text-xl text-olive-dark font-semibold">1. Our Commitment to Your Sanctuary</h2>
                 <p>
@@ -89,7 +89,7 @@ export default function PrivacyPolicy() {
                   Under MDCN ethical codes, you maintain full right to access your physical and digital medical files, obtain copy duplicates of your digital radiographs, and request immediate rectification of incorrect personal information.
                 </p>
                 <p>
-                  For any inquiries regarding your privacy rights, please connect directly with our patient care team at Garki Mall, Area 11, Abuja, or call us at <strong>0703 229 9287</strong>.
+                  For any inquiries regarding your privacy rights, please connect directly with our patient care team at Garki Mall, Area 11, Abuja, or call us at <strong>0706 368 7055</strong>.
                 </p>
               </div>
 
@@ -97,11 +97,11 @@ export default function PrivacyPolicy() {
 
             {/* Right Column: Assurances & Quick Booking */}
             <div className="md:col-span-4 space-y-6">
-              
+
               {/* Clinical Promise Card */}
               <div className="bg-olive text-white rounded-3xl p-6 shadow-xl relative overflow-hidden border border-olive-light/10">
                 <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-white/5 blur-2xl pointer-events-none"></div>
-                
+
                 <div className="space-y-4 relative z-10">
                   <div className="inline-block text-[9px] uppercase font-bold tracking-widest text-gold bg-white/10 px-3 py-1 rounded-full">
                     Ethical Promise
@@ -110,7 +110,7 @@ export default function PrivacyPolicy() {
                   <p className="text-gray-300 text-xs leading-relaxed">
                     Our data security protocols are formulated in compliance with the Medical and Dental Council of Nigeria's Code of Medical Ethics and international healthcare confidentiality standards.
                   </p>
-                  
+
                   <div className="flex items-center space-x-2 pt-2 text-gold">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                     <span className="font-bold uppercase tracking-wider text-[9px]">100% Medical Confidentiality</span>
@@ -122,7 +122,7 @@ export default function PrivacyPolicy() {
               <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-md text-center space-y-4">
                 <h4 className="font-serif text-sm font-bold text-olive-dark uppercase tracking-wider">Ready to Book?</h4>
                 <p className="text-xs text-gray-500 leading-relaxed">
-                  Experience a secure, pristine sanctuary. Reserve your slot with Dr. Goke in Area 11, Abuja.
+                  Experience a secure, pristine sanctuary. Reserve your slot with Dr. Oke in Area 11, Abuja.
                 </p>
                 <div className="space-y-2">
                   <Link href="/booking" className="block w-full bg-gold hover:bg-gold-warm text-white py-3 rounded-full font-bold transition-all text-xs tracking-wider uppercase shadow-md active:scale-95">

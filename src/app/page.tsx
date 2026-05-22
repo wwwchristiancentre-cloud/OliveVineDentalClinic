@@ -3,11 +3,23 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import ViewCanvas from '@/features/3d/ViewCanvas';
-import Shield from '@/features/3d/Shield';
 
 export default function Home() {
   const [introPlayed, setIntroPlayed] = useState(true);
+  const announcements = [
+    "Now Welcoming New Patients in Garki",
+    "Pristine IPC Safety Standards",
+    "Suite C108, Garki Mall, Abuja",
+    "Direct WhatsApp: 0805 335 1465"
+  ];
+  const [activeAnnouncement, setActiveAnnouncement] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveAnnouncement((prev) => (prev + 1) % announcements.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
 
   // Smooth scroll animations trigger
   useEffect(() => {
@@ -49,9 +61,21 @@ export default function Home() {
           <div className="max-w-7xl mx-auto w-full grid md:grid-cols-12 gap-12 items-center relative z-10">
             {/* Left Content Column */}
             <div className="md:col-span-7 space-y-8 text-left scroll-animate transition-all duration-1000 ease-out transform">
-              <div className="inline-flex items-center space-x-2 bg-white/5 border border-white/10 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider text-gold-warm">
-                <span className="w-2 h-2 rounded-full bg-gold animate-ping"></span>
-                <span>Now Welcoming New Patients in Garki</span>
+
+              <div className="inline-flex items-center space-x-2 bg-white/5 border border-white/10 px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-gold-warm overflow-hidden h-8 max-w-full">
+                <span className="w-2 h-2 rounded-full bg-gold animate-ping shrink-0"></span>
+                <div className="relative overflow-hidden h-5 w-52 sm:w-64 md:w-72">
+                  <div
+                    className="flex flex-col transition-transform duration-500 ease-in-out"
+                    style={{ transform: `translateY(-${activeAnnouncement * 1.25}rem)` }}
+                  >
+                    {announcements.map((text, idx) => (
+                      <span key={idx} className="h-5 flex items-center shrink-0 truncate text-[10px] sm:text-xs tracking-wider">
+                        {text}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
               <h1 className="font-serif text-5xl md:text-7xl leading-tight text-white">
                 Clinical Excellence <br />
@@ -60,7 +84,7 @@ export default function Home() {
               <p className="text-gray-300 text-base md:text-lg max-w-xl leading-relaxed">
                 Experience Abuja’s premier dental sanctuary. We combine cutting-edge clinical safety and digital diagnostics with a tranquil, empathetic approach to healing.
               </p>
-              
+
               {/* Dual CTAs */}
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link href="/booking">
@@ -92,43 +116,51 @@ export default function Home() {
                   <span>Suite C108 Garki Mall</span>
                 </div>
               </div>
-            </div>
+            </div>            {/* Right Doctor Portrait Column */}
+            <div className="md:col-span-5 flex justify-center relative scroll-animate transition-all duration-1000 ease-out delay-200 transform z-10">
+              {/* Container with group */}
+              <div className="relative w-80 h-[480px] group flex items-end">
 
-            {/* Right Doctor Portrait Column */}
-            <div className="md:col-span-5 flex justify-center relative scroll-animate transition-all duration-1000 ease-out delay-200 transform">
-              {/* Asymmetric Elegant Arch Shape Placeholder for Dr. Goke Portrait */}
-              <div className="relative w-80 h-[480px] rounded-t-[160px] rounded-b-[40px] overflow-hidden border-2 border-gold/30 bg-gradient-to-tr from-olive-dark via-olive-deep to-charcoal shadow-2xl flex flex-col justify-between p-8 group hover:border-gold transition-colors duration-500">
-                {/* Floating ambient glow behind placeholder */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gold/5 to-gold/20 opacity-40"></div>
-                
-                {/* Micro Arch Details */}
-                <div className="absolute inset-2 rounded-t-[150px] rounded-b-[30px] border border-white/5 pointer-events-none"></div>
+                {/* 1. The Background Arch Frame (The "Portal") - WITH overflow-hidden */}
+                {/* We make the bottom border flat and remove the bottom gold line so the suit blends perfectly into the base */}
+                <div className="absolute inset-x-0 bottom-0 h-[440px] rounded-t-[160px] rounded-b-none bg-gradient-to-tr from-olive-dark via-olive-deep to-charcoal border-t-2 border-x-2 border-b-0 border-gold/30 shadow-2xl overflow-hidden group-hover:border-gold transition-colors duration-500 z-0">
+                  {/* Abstract background grid or patterns inside the arch */}
+                  <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(201,169,98,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(201,169,98,0.05)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
 
-                {/* Top visual graphic */}
-                <div className="w-full flex justify-center pt-8 z-10">
-                  <div className="w-16 h-16 rounded-full border border-gold/40 flex items-center justify-center">
-                    <span className="font-serif text-gold text-lg tracking-wider">OV</span>
-                  </div>
+                  {/* Micro Arch Details inside - flat bottom to match the main frame */}
+                  <div className="absolute top-2 left-2 right-2 bottom-0 rounded-t-[150px] rounded-b-none border-t border-x border-b-0 border-white/5 pointer-events-none z-20"></div>
+
+                  {/* 1.a. BACK IMAGE LAYER: The Clipped Body (inside the overflow-hidden frame) */}
+                  {/* Positioned at bottom-[-55px] to ensure the straight bottom edge of the suit never shows, even on hover */}
+                  <img
+                    src="/dr-oke.png"
+                    alt="Dr. Emmanuel Oke Portrait - Body"
+                    className="absolute bottom-[-55px] left-1/2 -translate-x-1/2 h-[560px] w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.05] group-hover:-translate-y-3 origin-bottom"
+                  />
                 </div>
 
-                {/* Conceptual Doctor Outline */}
-                <div className="w-full flex justify-center py-4 z-10 opacity-60">
-                  <svg className="w-28 h-28 text-gold/40 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
+                {/* 2. FRONT IMAGE LAYER: The Pop-Out Head (outside the frame to overlap the top border) */}
+                {/* We use clip-path to keep ONLY the head and neck (top 38%), so shoulders do not protrude out of the sides! */}
+                {/* Sits at bottom-[-55px] to perfectly align and scale in sync with the back body layer */}
+                <img
+                  src="/dr-oke.png"
+                  alt="Dr. Emmanuel Oke Portrait - Head Pop-out"
+                  style={{ clipPath: 'inset(0 0 62% 0)' }}
+                  className="absolute bottom-[-55px] left-1/2 -translate-x-1/2 h-[560px] w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.05] group-hover:-translate-y-3 origin-bottom filter drop-shadow-[0_20px_25px_rgba(0,0,0,0.7)]"
+                />
 
-                {/* Metadata Card at bottom */}
-                <div className="text-center space-y-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-2xl p-4 z-10 shadow-lg">
-                  <h3 className="font-serif text-gold text-lg font-semibold tracking-wide">Dr. Goke</h3>
+                {/* 3. The Metadata Card (Placed at the bottom, on top of both layers) */}
+                <div className="absolute bottom-4 left-4 right-4 text-center space-y-1 bg-black/70 backdrop-blur-md border border-white/10 rounded-2xl p-4 z-20 shadow-lg group-hover:border-gold/50 transition-colors duration-500">
+                  <h3 className="font-serif text-gold text-lg font-semibold tracking-wide">Dr. Emmanuel Oke</h3>
                   <p className="text-gray-300 text-xs font-semibold uppercase tracking-widest">Lead Dental Surgeon</p>
                   <p className="text-gray-400 text-[10px]">Oral Health & Implantology expert</p>
                 </div>
-              </div>
 
-              {/* Decorative side accent elements */}
-              <div className="absolute -bottom-6 -right-6 w-24 h-24 border-r-2 border-b-2 border-gold/20 rounded-br-3xl pointer-events-none"></div>
-              <div className="absolute -top-6 -left-6 w-24 h-24 border-l-2 border-t-2 border-gold/20 rounded-tl-3xl pointer-events-none"></div>
+                {/* Decorative side accent elements (outside the frame) */}
+                <div className="absolute -bottom-6 -right-6 w-24 h-24 border-r-2 border-b-2 border-gold/20 rounded-br-3xl pointer-events-none z-0"></div>
+                <div className="absolute -top-6 -left-6 w-24 h-24 border-l-2 border-t-2 border-gold/20 rounded-tl-3xl pointer-events-none z-0"></div>
+              </div>
             </div>
           </div>
         </section>
@@ -190,20 +222,44 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div>            {/* Right Column: 3D Pop-out Dental Chair Arch Portal */}
+            <div className="md:col-span-5 flex justify-center items-center min-h-[480px] relative scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-200 transform z-10">
+              <div className="relative w-80 h-[480px] group flex items-end">
 
-            {/* Right 3D Shield Canvas Column */}
-            <div className="md:col-span-5 flex justify-center h-96 relative scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-200 transform">
-              <div className="absolute inset-0 bg-gradient-to-tr from-gold/5 via-transparent to-olive-light/5 rounded-3xl pointer-events-none"></div>
-              
-              {/* Glassmorphic border container wrapping the Canvas */}
-              <div className="w-full h-full bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 p-6 flex items-center justify-center relative shadow-2xl overflow-hidden group hover:border-gold/30 transition-all duration-500">
-                <ViewCanvas className="w-full h-full">
-                  <Shield />
-                </ViewCanvas>
-                <div className="absolute bottom-4 left-4 right-4 text-center z-10 pointer-events-none">
-                  <span className="text-[10px] font-bold tracking-widest text-gold uppercase bg-charcoal/80 border border-gold/20 px-3 py-1 rounded-full">Interactive 3D Protection Shield</span>
+                {/* 1. The Background Arch Frame (The "Fortress Portal") */}
+                <div className="absolute inset-x-0 bottom-0 h-[420px] rounded-t-[160px] rounded-b-none bg-gradient-to-tr from-charcoal via-olive-dark to-charcoal border-t-2 border-x-2 border-b-0 border-gold/30 shadow-2xl overflow-hidden group-hover:border-gold transition-colors duration-500 z-0">
+                  {/* Subtle interior medical tech grid */}
+                  <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(201,169,98,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(201,169,98,0.03)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
+
+                  {/* Inner Accent Gold Ring */}
+                  <div className="absolute top-2 left-2 right-2 bottom-0 rounded-t-[150px] rounded-b-none border-t border-x border-b-0 border-gold/10 pointer-events-none z-20"></div>
+
+                  {/* 2. BACK IMAGE LAYER: The Clipped Chair Base */}
+                  <img
+                    src="/dental-chair.png"
+                    alt="Pristine Sanctuary Dental Chair - Base"
+                    className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 h-[410px] w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.05] group-hover:-translate-y-2 origin-bottom"
+                  />
                 </div>
+
+                {/* 3. FRONT IMAGE LAYER: The Pop-Out LED Surgical Light / Headrest */}
+                <img
+                  src="/dental-chair.png"
+                  alt="Pristine Sanctuary Dental Chair - Pop-out LED Light"
+                  style={{ clipPath: 'inset(0 0 65% 0)' }}
+                  className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 h-[410px] w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.05] group-hover:-translate-y-2 origin-bottom filter drop-shadow-[0_15px_20px_rgba(0,0,0,0.6)]"
+                />
+
+                {/* 4. Glassmorphic Clinic Assurances Tag */}
+                <div className="absolute bottom-6 left-6 right-6 text-center space-y-1 bg-black/75 backdrop-blur-md border border-white/10 rounded-2xl p-4 z-20 shadow-lg group-hover:border-gold/40 transition-colors duration-500">
+                  <h3 className="font-serif text-gold text-sm font-semibold tracking-wide">Pristine Treatment Suite</h3>
+                  <p className="text-gray-300 text-[10px] font-semibold uppercase tracking-widest">Sterile Sanctuary Lounge</p>
+                </div>
+
+                {/* Side Accents */}
+                <div className="absolute -bottom-4 -right-4 w-16 h-16 border-r-2 border-b-2 border-gold/15 rounded-br-2xl pointer-events-none z-0"></div>
+                <div className="absolute -top-4 -left-4 w-16 h-16 border-l-2 border-t-2 border-gold/15 rounded-tl-2xl pointer-events-none z-0"></div>
               </div>
             </div>
           </div>
@@ -222,42 +278,111 @@ export default function Home() {
 
             <div className="grid md:grid-cols-3 gap-8">
               {/* Card 1: Restorative */}
-              <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:bg-olive hover:text-white transition-all duration-500 cursor-pointer scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out transform">
-                <div className="w-12 h-12 bg-olive/10 group-hover:bg-white/10 rounded-full flex items-center justify-center mb-6 text-olive group-hover:text-gold transition-colors duration-300">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg>
+              <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:bg-olive hover:text-white transition-all duration-500 cursor-pointer scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out transform flex flex-col justify-between">
+                <div>
+                  {/* Mini 3D Pop-out Portal */}
+                  <div className="relative w-full h-44 mb-6 flex items-end justify-center overflow-visible">
+                    {/* Background Arch Frame */}
+                    <div className="absolute inset-x-0 bottom-0 h-36 rounded-t-[70px] bg-gradient-to-tr from-olive-light/5 via-olive-deep/10 to-charcoal/5 border-t border-x border-b-0 border-olive-dark/10 shadow-sm overflow-hidden group-hover:border-gold/40 group-hover:from-olive-dark/40 group-hover:via-olive-deep/40 group-hover:to-charcoal/30 transition-all duration-500 z-0">
+                      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(201,169,98,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(201,169,98,0.03)_1px,transparent_1px)] bg-[size:12px_12px]"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 group-hover:from-charcoal/60 transition-all duration-500"></div>
+
+                      {/* Back Body Layer */}
+                      <img
+                        src="/restorative-care.png"
+                        alt="Restorative Care - Base"
+                        className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 h-32 w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1.5 origin-bottom"
+                      />
+                    </div>
+
+                    {/* Front Pop-out Layer */}
+                    <img
+                      src="/restorative-care.png"
+                      alt="Restorative Care - Pop-out"
+                      style={{ clipPath: 'inset(0 0 50% 0)' }}
+                      className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 h-32 w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1.5 origin-bottom filter drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_12px_16px_rgba(0,0,0,0.4)]"
+                    />
+                  </div>
+
+                  <h3 className="font-serif text-2xl mb-4 text-olive-dark group-hover:text-gold transition-colors duration-300">Restorative Care</h3>
+                  <p className="text-gray-500 group-hover:text-gray-300 text-sm leading-relaxed mb-6">
+                    Advanced, biocompatible implants, bridges, and crown architectures engineered to return full clinical function and pristine, natural aesthetics.
+                  </p>
                 </div>
-                <h3 className="font-serif text-2xl mb-4 text-olive-dark group-hover:text-gold transition-colors duration-300">Restorative Care</h3>
-                <p className="text-gray-500 group-hover:text-gray-300 text-sm leading-relaxed mb-6">
-                  Advanced, biocompatible implants, bridges, and crown architectures engineered to return full clinical function and pristine, natural aesthetics.
-                </p>
                 <Link href="/services" className="inline-flex items-center text-gold text-xs font-bold tracking-widest uppercase hover:underline">
                   Explore Therapy <span className="ml-2">→</span>
                 </Link>
               </div>
 
               {/* Card 2: Cosmetic */}
-              <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:bg-olive hover:text-white transition-all duration-500 cursor-pointer scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-150 transform">
-                <div className="w-12 h-12 bg-olive/10 group-hover:bg-white/10 rounded-full flex items-center justify-center mb-6 text-olive group-hover:text-gold transition-colors duration-300">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+              <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:bg-olive hover:text-white transition-all duration-500 cursor-pointer scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-150 transform flex flex-col justify-between">
+                <div>
+                  {/* Mini 3D Pop-out Portal */}
+                  <div className="relative w-full h-44 mb-6 flex items-end justify-center overflow-visible">
+                    {/* Background Arch Frame */}
+                    <div className="absolute inset-x-0 bottom-0 h-36 rounded-t-[70px] bg-gradient-to-tr from-olive-light/5 via-olive-deep/10 to-charcoal/5 border-t border-x border-b-0 border-olive-dark/10 shadow-sm overflow-hidden group-hover:border-gold/40 group-hover:from-olive-dark/40 group-hover:via-olive-deep/40 group-hover:to-charcoal/30 transition-all duration-500 z-0">
+                      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(201,169,98,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(201,169,98,0.03)_1px,transparent_1px)] bg-[size:12px_12px]"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 group-hover:from-charcoal/60 transition-all duration-500"></div>
+
+                      {/* Back Body Layer */}
+                      <img
+                        src="/cosmetic-artistry.png"
+                        alt="Cosmetic Artistry - Base"
+                        className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 h-32 w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1.5 origin-bottom"
+                      />
+                    </div>
+
+                    {/* Front Pop-out Layer */}
+                    <img
+                      src="/cosmetic-artistry.png"
+                      alt="Cosmetic Artistry - Pop-out"
+                      style={{ clipPath: 'inset(0 0 50% 0)' }}
+                      className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 h-32 w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1.5 origin-bottom filter drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_12px_16px_rgba(0,0,0,0.4)]"
+                    />
+                  </div>
+
+                  <h3 className="font-serif text-2xl mb-4 text-olive-dark group-hover:text-gold transition-colors duration-300">Cosmetic Artistry</h3>
+                  <p className="text-gray-500 group-hover:text-gray-300 text-sm leading-relaxed mb-6">
+                    Minimally invasive custom veneers and high-potency professional whitening systems designed to express your natural beauty rather than mask it.
+                  </p>
                 </div>
-                <h3 className="font-serif text-2xl mb-4 text-olive-dark group-hover:text-gold transition-colors duration-300">Cosmetic Artistry</h3>
-                <p className="text-gray-500 group-hover:text-gray-300 text-sm leading-relaxed mb-6">
-                  Minimally invasive custom veneers and high-potency professional whitening systems designed to express your natural beauty rather than mask it.
-                </p>
                 <Link href="/services" className="inline-flex items-center text-gold text-xs font-bold tracking-widest uppercase hover:underline">
                   Explore Artistry <span className="ml-2">→</span>
                 </Link>
               </div>
 
               {/* Card 3: Orthodontics */}
-              <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:bg-olive hover:text-white transition-all duration-500 cursor-pointer scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-300 transform">
-                <div className="w-12 h-12 bg-olive/10 group-hover:bg-white/10 rounded-full flex items-center justify-center mb-6 text-olive group-hover:text-gold transition-colors duration-300">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H19M9 11h.01M15 11h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:bg-olive hover:text-white transition-all duration-500 cursor-pointer scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-300 transform flex flex-col justify-between">
+                <div>
+                  {/* Mini 3D Pop-out Portal */}
+                  <div className="relative w-full h-44 mb-6 flex items-end justify-center overflow-visible">
+                    {/* Background Arch Frame */}
+                    <div className="absolute inset-x-0 bottom-0 h-36 rounded-t-[70px] bg-gradient-to-tr from-olive-light/5 via-olive-deep/10 to-charcoal/5 border-t border-x border-b-0 border-olive-dark/10 shadow-sm overflow-hidden group-hover:border-gold/40 group-hover:from-olive-dark/40 group-hover:via-olive-deep/40 group-hover:to-charcoal/30 transition-all duration-500 z-0">
+                      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(201,169,98,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(201,169,98,0.03)_1px,transparent_1px)] bg-[size:12px_12px]"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 group-hover:from-charcoal/60 transition-all duration-500"></div>
+
+                      {/* Back Body Layer */}
+                      <img
+                        src="/clear-orthodontics.png"
+                        alt="Clear Orthodontics - Base"
+                        className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 h-32 w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1.5 origin-bottom"
+                      />
+                    </div>
+
+                    {/* Front Pop-out Layer */}
+                    <img
+                      src="/clear-orthodontics.png"
+                      alt="Clear Orthodontics - Pop-out"
+                      style={{ clipPath: 'inset(0 0 50% 0)' }}
+                      className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 h-32 w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1.5 origin-bottom filter drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_12px_16px_rgba(0,0,0,0.4)]"
+                    />
+                  </div>
+
+                  <h3 className="font-serif text-2xl mb-4 text-olive-dark group-hover:text-gold transition-colors duration-300">Clear Orthodontics</h3>
+                  <p className="text-gray-500 group-hover:text-gray-300 text-sm leading-relaxed mb-6">
+                    Discreet alignment systems including invisible medical-grade aligners for quiet, comfortable teeth correction that respects your lifestyle.
+                  </p>
                 </div>
-                <h3 className="font-serif text-2xl mb-4 text-olive-dark group-hover:text-gold transition-colors duration-300">Clear Orthodontics</h3>
-                <p className="text-gray-500 group-hover:text-gray-300 text-sm leading-relaxed mb-6">
-                  Discreet alignment systems including invisible medical-grade aligners for quiet, comfortable teeth correction that respects your lifestyle.
-                </p>
                 <Link href="/services" className="inline-flex items-center text-gold text-xs font-bold tracking-widest uppercase hover:underline">
                   Explore Alignment <span className="ml-2">→</span>
                 </Link>
@@ -268,78 +393,50 @@ export default function Home() {
 
         {/* Section 6: Doctor Story / About Section */}
         <section id="story" className="py-24 px-6 md:px-8 bg-cream text-charcoal border-t border-gray-100 relative">
-          <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-16 items-center">
-            {/* Left Column: Portrait */}
-            <div className="md:col-span-5 flex justify-center relative scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out transform">
-              <div className="relative w-80 h-[480px] rounded-[32px] overflow-hidden border border-gray-200 shadow-2xl bg-gradient-to-br from-gray-100 to-gray-50 flex flex-col justify-between p-8">
-                {/* Visual elements */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-olive/5 to-olive/10"></div>
-                <div className="w-full flex justify-between items-center z-10">
-                  <span className="text-[10px] font-bold tracking-widest text-gold uppercase bg-olive px-3 py-1 rounded-full">Editorial Portrait</span>
-                  <span className="font-serif text-olive text-sm font-semibold tracking-wider">OLIVE VINE</span>
-                </div>
+          <div className="max-w-4xl mx-auto text-center space-y-8 scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out transform">
+            <span className="text-gold text-xs font-bold uppercase tracking-widest block">Our Philosophy</span>
+            <h2 className="font-serif text-4xl md:text-5xl text-olive-dark leading-tight">
+              Empathy Meets <br />
+              <span className="text-gold italic font-normal">Surgical Accuracy</span>
+            </h2>
 
-                <div className="w-full flex justify-center py-4 z-10 opacity-30">
-                  <svg className="w-32 h-32 text-olive animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
+            {/* Elegant Champagne Gold Pull-Quote */}
+            <div className="relative py-8 px-6 md:px-12 border-y border-gold/20 my-8">
+              <span className="absolute top-2 left-6 text-6xl text-gold/20 font-serif">“</span>
+              <p className="font-serif italic text-olive-dark text-xl md:text-2xl leading-relaxed text-center max-w-2xl mx-auto">
+                We don't just treat anatomy; we care for the human soul behind the smile.
+              </p>
+              <p className="text-xs font-bold uppercase tracking-widest text-gold mt-4">— Dr. Emmanuel Oke, Founder & Surgeon</p>
+              <span className="absolute bottom-[-10px] right-6 text-6xl text-gold/20 font-serif">”</span>
+            </div>
 
-                <div className="z-10 bg-white border border-gray-100 rounded-2xl p-6 shadow-xl space-y-4">
-                  <p className="font-serif italic text-gray-700 text-sm leading-relaxed">
-                    "We don't just treat anatomy; we care for the human soul behind the smile."
-                  </p>
-                  <div className="flex justify-between items-center pt-2 border-t border-gray-100">
-                    <div>
-                      <p className="text-xs font-bold text-olive-dark uppercase">Dr. Goke</p>
-                      <p className="text-[10px] text-gray-400">Founder & Surgeon</p>
-                    </div>
-                    {/* SVG Graphic representation of signature */}
-                    <div className="h-6 w-16 opacity-75">
-                      <svg className="w-full h-full text-gold" viewBox="0 0 100 40" fill="none" stroke="currentColor">
-                        <path d="M10 25c15-10 20-5 35-15 10 5 15-20 20-5s20 5 25-10" strokeWidth="2" strokeLinecap="round" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
+            <div className="text-gray-600 space-y-6 leading-relaxed max-w-3xl mx-auto text-sm md:text-base text-center">
+              <p>
+                At Olive Vine Dental Clinic, we believe that premium healthcare begins with listening. Every patient has a unique story, every smile a specific anatomy.
+              </p>
+              <p>
+                Dr. Oke founded Olive Vine to challenge the sterile, assembly-line model of traditional dental clinics. Combining state-of-the-art imaging and minimally invasive surgical tools with a comforting, pastoral philosophy of holistic care, we have built a sanctuary for healing in Abuja.
+              </p>
+            </div>
+
+            {/* Core Surgeon Highlights - Center Aligned Grid */}
+            <div className="pt-8 grid md:grid-cols-2 gap-8 border-t border-gray-150 max-w-2xl mx-auto">
+              <div className="space-y-2 text-center md:text-left md:border-r md:border-gray-150 md:pr-8">
+                <h4 className="font-serif text-lg text-olive-dark font-semibold">Credentialed Care</h4>
+                <p className="text-xs text-gray-500">Board-certified specialist with extensive postgraduate implant training.</p>
+              </div>
+              <div className="space-y-2 text-center md:text-left md:pl-4">
+                <h4 className="font-serif text-lg text-olive-dark font-semibold">Abuja Connection</h4>
+                <p className="text-xs text-gray-500">Proudly serving local families and professionals at Garki Mall.</p>
               </div>
             </div>
 
-            {/* Right Column: Narrative */}
-            <div className="md:col-span-7 space-y-6 scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-200 transform">
-              <span className="text-gold text-xs font-bold uppercase tracking-widest">Our Philosophy</span>
-              <h2 className="font-serif text-4xl md:text-5xl text-olive-dark leading-tight">
-                Empathy Meets <br />
-                <span className="text-gold italic font-normal">Surgical Accuracy</span>
-              </h2>
-              <div className="text-gray-600 space-y-4 leading-relaxed text-sm md:text-base">
-                <p>
-                  At Olive Vine Dental Clinic, we believe that premium healthcare begins with listening. Every patient has a unique story, every smile a specific anatomy.
-                </p>
-                <p>
-                  Dr. Goke founded Olive Vine to challenge the sterile, assembly-line model of traditional dental clinics. Combining state-of-the-art imaging and minimally invasive surgical tools with a comforting, pastoral philosophy of holistic care, we have built a sanctuary for healing in Abuja.
-                </p>
-              </div>
-
-              {/* Core Surgeon Highlights */}
-              <div className="pt-6 grid grid-cols-2 gap-6 border-t border-gray-100">
-                <div className="space-y-1">
-                  <h4 className="font-serif text-lg text-olive-dark font-semibold">Credentialed Care</h4>
-                  <p className="text-xs text-gray-500">Board-certified specialist with extensive postgraduate implant training.</p>
-                </div>
-                <div className="space-y-1">
-                  <h4 className="font-serif text-lg text-olive-dark font-semibold">Abuja Connection</h4>
-                  <p className="text-xs text-gray-500">Proudly serving local families and professionals at Garki Mall.</p>
-                </div>
-              </div>
-
-              <div className="pt-6">
-                <Link href="/booking">
-                  <button className="bg-olive hover:bg-olive-dark text-white px-8 py-3.5 rounded-full font-bold transition-all shadow-md active:scale-95 text-xs tracking-wider uppercase cursor-pointer">
-                    Schedule with Dr. Goke
-                  </button>
-                </Link>
-              </div>
+            <div className="pt-6">
+              <Link href="/booking">
+                <button className="bg-olive hover:bg-olive-dark text-white px-8 py-3.5 rounded-full font-bold transition-all shadow-md active:scale-95 text-xs tracking-wider uppercase cursor-pointer">
+                  Schedule with Dr. Oke
+                </button>
+              </Link>
             </div>
           </div>
         </section>
@@ -413,7 +510,7 @@ export default function Home() {
                 </div>
                 <h4 className="font-serif text-lg text-olive-dark font-semibold">"Absolutely Painless"</h4>
                 <p className="text-gray-500 text-xs md:text-sm leading-relaxed">
-                  "I was terrified of having an implant done, but Dr. Goke talked me through every single step. The environment at Garki Mall is incredibly serene, and the procedure was completely painless. Exceptional care."
+                  "I was terrified of having an implant done, but Dr. Oke talked me through every single step. The environment at Garki Mall is incredibly serene, and the procedure was completely painless. Exceptional care."
                 </p>
                 <div className="pt-4 border-t border-gray-100">
                   <p className="text-xs font-bold text-olive-dark uppercase">Chinedu O.</p>
@@ -509,7 +606,7 @@ export default function Home() {
 
             <div className="text-center pt-8 scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out transform">
               <Link href="/booking">
-                <button className="bg-gold hover:bg-gold-warm text-white px-10 py-4.5 rounded-full font-bold transition-all shadow-lg active:scale-95 text-sm tracking-wider uppercase cursor-pointer">
+                <button className="bg-gold hover:bg-gold-warm text-white px-10 py-4 rounded-full font-bold transition-all shadow-lg active:scale-95 text-sm tracking-wider uppercase cursor-pointer">
                   Open Booking Dashboard
                 </button>
               </Link>
@@ -533,7 +630,7 @@ export default function Home() {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div className="space-y-2 p-6 rounded-2xl bg-white border border-gray-100 shadow-md">
                   <span className="text-xs text-gold uppercase tracking-widest font-bold">Contact</span>
-                  <p className="font-serif text-lg text-olive-dark font-semibold">0703 229 9287</p>
+                  <p className="font-serif text-lg text-olive-dark font-semibold">0805 335 1465 / 0706 368 7055</p>
                   <p className="text-xs text-gray-400">Call for immediate support</p>
                 </div>
                 <div className="space-y-2 p-6 rounded-2xl bg-white border border-gray-100 shadow-md">
@@ -560,50 +657,22 @@ export default function Home() {
                 </a>
               </div>
             </div>
-
-            {/* Right Column: Stylized Vector Map */}
-            <div className="md:col-span-6 flex justify-center scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-200 transform">
-              <div className="relative w-full h-80 rounded-3xl border border-gray-200 shadow-2xl bg-gradient-to-tr from-olive-dark to-charcoal p-6 flex flex-col justify-between overflow-hidden group">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold/5 via-transparent to-transparent pointer-events-none"></div>
-
-                {/* Abuja Vector Map Grid Placeholder */}
-                <div className="absolute inset-0 opacity-15 pointer-events-none z-0">
-                  <div className="w-full h-full border-t border-b border-l border-r border-white/10 grid grid-cols-6 grid-rows-4">
-                    {[...Array(24)].map((_, i) => <div key={i} className="border border-white/5"></div>)}
-                  </div>
-                </div>
-
-                {/* Top Details */}
-                <div className="flex justify-between items-center z-10">
-                  <span className="text-[10px] font-bold tracking-widest text-gold uppercase bg-olive/80 border border-gold/20 px-3 py-1 rounded-full">Garki Area 11 Map</span>
-                  <span className="text-[10px] text-gray-400 font-bold tracking-widest">ABUJA, NIGERIA</span>
-                </div>
-
-                {/* Center Pointer */}
-                <div className="flex flex-col items-center justify-center space-y-2 z-10">
-                  <div className="relative">
-                    <span className="absolute -top-1 -left-1 w-8 h-8 rounded-full bg-gold/30 animate-ping"></span>
-                    <div className="w-6 h-6 rounded-full bg-gold border-2 border-white flex items-center justify-center shadow-lg relative z-10">
-                      <svg className="w-3.5 h-3.5 text-olive" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg>
-                    </div>
-                  </div>
-                  <div className="text-center bg-charcoal/95 border border-white/10 p-3 rounded-2xl shadow-xl max-w-xs">
-                    <p className="font-serif text-gold text-sm font-semibold">Olive Vine Dental</p>
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Suite C108 Garki Mall</p>
-                  </div>
-                </div>
-
-                {/* Bottom details */}
-                <div className="flex justify-between items-center z-10 text-[10px] text-gray-400 font-bold uppercase tracking-wider">
-                  <span>Opposite Garki Int'l Market</span>
-                  <a
-                    href="https://maps.google.com/?q=Garki+Mall+Abuja"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gold hover:underline cursor-pointer"
-                  >
-                    Open Google Maps
-                  </a>
+            {/* Right Column: Embedded Google Map */}
+            <div className="md:col-span-6 flex justify-center h-96 relative scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-200 transform">
+              <div className="w-full h-full rounded-3xl border border-gray-200 shadow-2xl overflow-hidden relative group bg-charcoal">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.3957245952873!2d7.481512411226066!3d9.027623990998906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0bc41d2f78df%3A0xc3ab0be218c50e2!2sGarki%20Mall!5e0!3m2!1sen!2sng!4v1716393222384!5m2!1sen!2sng"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full filter invert-[0.9] hue-rotate-[180deg] saturate-[0.5] contrast-[1.2] hover:filter-none transition-all duration-700"
+                ></iframe>
+                {/* Floating badge inside map */}
+                <div className="absolute top-4 left-4 z-10 pointer-events-none">
+                  <span className="text-[10px] font-bold tracking-widest text-gold uppercase bg-charcoal/90 border border-gold/20 px-3 py-1.5 rounded-full shadow-lg">Garki Mall Location</span>
                 </div>
               </div>
             </div>
@@ -626,11 +695,11 @@ export default function Home() {
               <span className="text-gold italic font-normal tracking-wide">Elevated</span>
             </h2>
             <p className="text-gray-300 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-              Step out of anxiety and into complete safety. Join Dr. Goke at Abuja’s premier dental sanctuary for healing and aesthetics.
+              Step out of anxiety and into complete safety. Join Dr. Oke at Abuja’s premier dental sanctuary for healing and aesthetics.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Link href="/booking">
-                <button className="w-full sm:w-auto bg-gold hover:bg-gold-warm text-white px-10 py-4.5 rounded-full font-bold transition-all shadow-lg active:scale-95 text-sm tracking-wider uppercase cursor-pointer">
+                <button className="w-full sm:w-auto bg-gold hover:bg-gold-warm text-white px-10 py-4 rounded-full font-bold transition-all shadow-lg active:scale-95 text-sm tracking-wider uppercase cursor-pointer">
                   Book Your Sanctuary Visit
                 </button>
               </Link>
@@ -638,7 +707,7 @@ export default function Home() {
                 href="https://wa.me/2347032299287"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto bg-white/5 border border-white/10 hover:bg-white/10 text-white px-10 py-4.5 rounded-full font-bold transition-all text-sm tracking-wider uppercase active:scale-95 cursor-pointer"
+                className="w-full sm:w-auto bg-white/5 border border-white/10 hover:bg-white/10 text-white px-10 py-4 rounded-full font-bold transition-all text-sm tracking-wider uppercase active:scale-95 cursor-pointer"
               >
                 Chat on WhatsApp
               </a>
@@ -670,7 +739,7 @@ export default function Home() {
                 <p>Suite C108, Garki Mall</p>
                 <p>Opp. Garki International Market</p>
                 <p>Garki Area 11, Abuja, Nigeria</p>
-                <p className="pt-2">0703 229 9287</p>
+                <p className="pt-2">0805 335 1465 or 0706 368 7055</p>
               </div>
             </div>
             <div className="space-y-4">
