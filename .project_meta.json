@@ -1,0 +1,10 @@
+{
+    "name": "OliveVineDentalClinic",
+    "slug": "2026-05-22_OliveVineDentalClinic",
+    "type": "Code",
+    "created": "2026-05-22",
+    "client": "OliveVineDental",
+    "template": "git_clone",
+    "repo_url": "https://github.com/wwwchristiancentre-cloud/OliveVineDentalClinic.git",
+    "root": "C:\\CreativeOS\\01_Projects\\Clients\\OliveVineDental\\2026-05-22_OliveVineDentalClinic"
+}
