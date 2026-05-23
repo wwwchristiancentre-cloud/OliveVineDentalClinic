@@ -1,10 +1,17 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import { CLINIC_PHONE_DISPLAY, CLINIC_WHATSAPP_LINK } from '@/config/constants';
+import { CLINIC_PHONE_DISPLAY, getDynamicWhatsAppLink } from '@/config/constants';
 
 export default function PrivacyPolicy() {
+  const [whatsAppLink, setWhatsAppLink] = useState(getDynamicWhatsAppLink());
+
+  useEffect(() => {
+    setWhatsAppLink(getDynamicWhatsAppLink());
+  }, []);
+
   return (
     <>
       <main className="bg-cream text-charcoal min-h-screen pt-28 pb-20 px-4 md:px-8 relative overflow-x-hidden selection:bg-gold/25">
@@ -130,7 +137,7 @@ export default function PrivacyPolicy() {
                     Book Appointment
                   </Link>
                   <a
-                    href={CLINIC_WHATSAPP_LINK}
+                    href={whatsAppLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block w-full bg-transparent border border-olive text-olive hover:bg-olive hover:text-white py-3 rounded-full font-bold transition-all text-xs tracking-wider uppercase active:scale-95"

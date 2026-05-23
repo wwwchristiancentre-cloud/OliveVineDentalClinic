@@ -3,10 +3,15 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, CLINIC_WHATSAPP_LINK } from '@/config/constants';
+import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, getDynamicWhatsAppLink } from '@/config/constants';
 
 export default function Home() {
   const [introPlayed, setIntroPlayed] = useState(true);
+  const [whatsAppLink, setWhatsAppLink] = useState(getDynamicWhatsAppLink());
+
+  useEffect(() => {
+    setWhatsAppLink(getDynamicWhatsAppLink());
+  }, []);
   const announcements = [
     "Now Welcoming New Patients in Garki",
     "Pristine IPC Safety Standards",
@@ -94,7 +99,7 @@ export default function Home() {
                   </button>
                 </Link>
                 <a
-                  href={CLINIC_WHATSAPP_LINK}
+                  href={whatsAppLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto inline-flex items-center justify-center bg-white/5 border border-white/15 hover:bg-white/10 text-white px-8 py-4 rounded-full font-bold transition-all text-sm tracking-wider uppercase active:scale-95 cursor-pointer"
@@ -643,7 +648,7 @@ export default function Home() {
 
               <div className="flex gap-4">
                 <a
-                  href={CLINIC_WHATSAPP_LINK}
+                  href={whatsAppLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold transition-all inline-flex items-center text-xs tracking-wider uppercase active:scale-95 shadow-md"
@@ -705,7 +710,7 @@ export default function Home() {
                 </button>
               </Link>
               <a
-                href={CLINIC_WHATSAPP_LINK}
+                href={whatsAppLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto bg-white/5 border border-white/10 hover:bg-white/10 text-white px-10 py-4 rounded-full font-bold transition-all text-sm tracking-wider uppercase active:scale-95 cursor-pointer"
@@ -767,7 +772,7 @@ export default function Home() {
 
         {/* Global Floating WhatsApp Badges */}
         <a
-          href={CLINIC_WHATSAPP_LINK}
+          href={whatsAppLink}
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-6 right-6 z-40 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl flex items-center justify-center hover:-translate-y-1 active:scale-95 transition-all duration-300 group cursor-pointer"

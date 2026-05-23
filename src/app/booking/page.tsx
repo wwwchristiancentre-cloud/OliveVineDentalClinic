@@ -252,6 +252,11 @@ export default function Booking() {
     if (isFormInvalid) {
       return;
     }
+    
+    // Programmatically open the pre-filled WhatsApp message in a new browser tab
+    window.open(getWhatsAppLink(), '_blank', 'noopener,noreferrer');
+    
+    // Transition the active site page state into the Sanctuary Pass voucher success view
     setIsSubmitted(true);
   };
 
@@ -278,23 +283,25 @@ export default function Booking() {
 
         <div className="max-w-6xl mx-auto relative z-10">
           {/* Back button and page title */}
-          <div className="space-y-4 mb-10">
-            <Link href="/" className="inline-flex items-center text-xs font-bold tracking-widest text-olive hover:text-gold uppercase transition-colors">
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              Back to Home
-            </Link>
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-              <div className="space-y-2">
-                <span className="text-gold text-xs font-bold uppercase tracking-widest block">Pathway to Comfort</span>
-                <h1 className="font-serif text-4xl md:text-5xl text-olive-dark">Schedule Your Sanctuary Visit</h1>
+          {!isSubmitted && (
+            <div className="space-y-4 mb-10">
+              <Link href="/" className="inline-flex items-center text-xs font-bold tracking-widest text-olive hover:text-gold uppercase transition-colors">
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Home
+              </Link>
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div className="space-y-2">
+                  <span className="text-gold text-xs font-bold uppercase tracking-widest block">Pathway to Comfort</span>
+                  <h1 className="font-serif text-4xl md:text-5xl text-olive-dark">Schedule Your Sanctuary Visit</h1>
+                </div>
+                <p className="text-gray-500 text-sm max-w-sm">
+                  Reserve your tailored dental therapy with Dr. Oke inside our state-of-the-art sterile clinic at Garki Mall, Abuja.
+                </p>
               </div>
-              <p className="text-gray-500 text-sm max-w-sm">
-                Reserve your tailored dental therapy with Dr. Oke inside our state-of-the-art sterile clinic at Garki Mall, Abuja.
-              </p>
             </div>
-          </div>
+          )}
 
           {!isSubmitted ? (
             <div className="grid md:grid-cols-12 gap-8">
@@ -529,34 +536,17 @@ export default function Booking() {
                     <button
                       type="submit"
                       disabled={isFormInvalid}
-                      className={`w-full sm:w-auto px-8 py-4 rounded-full font-bold transition-all shadow-md text-xs tracking-wider uppercase ${
+                      className={`w-full sm:w-auto px-10 py-4 rounded-full font-bold transition-all shadow-md text-xs tracking-wider uppercase flex items-center justify-center ${
                         isFormInvalid
                           ? 'bg-gray-200 text-gray-400 cursor-not-allowed opacity-60'
-                          : 'bg-olive hover:bg-olive-dark text-white active:scale-95 cursor-pointer'
-                      }`}
-                    >
-                      Request Appointment
-                    </button>
-                    <a
-                      href={isFormInvalid ? undefined : getWhatsAppLink()}
-                      onClick={(e) => {
-                        if (isFormInvalid) {
-                          e.preventDefault();
-                        }
-                      }}
-                      target={isFormInvalid ? undefined : "_blank"}
-                      rel="noopener noreferrer"
-                      className={`w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-full font-bold transition-all text-xs tracking-wider uppercase shadow-md ${
-                        isFormInvalid
-                          ? 'bg-gray-200 text-gray-400 cursor-not-allowed opacity-60'
-                          : 'bg-green-500 hover:bg-green-600 text-white active:scale-95 cursor-pointer'
+                          : 'bg-green-500 hover:bg-green-600 text-white active:scale-95 cursor-pointer shadow-lg shadow-green-500/10'
                       }`}
                     >
                       <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.588 1.981 14.119.957 11.49.955 6.058.955 1.633 5.328 1.63 10.757c-.001 1.732.463 3.42 1.342 4.927l-.994 3.633 3.73-.974.349.208z" />
                       </svg>
-                      Book Instantly via WhatsApp
-                    </a>
+                      Book Sanctuary Visit via WhatsApp
+                    </button>
                   </div>
                 </div>
 
@@ -707,27 +697,58 @@ export default function Booking() {
             </div>
           ) : (
             /* Success State */
-            <div className="bg-white border border-gray-100 rounded-3xl p-8 md:p-12 shadow-2xl text-center max-w-2xl mx-auto space-y-6 animate-[fadeIn_0.5s_ease-out]">
-              <div className="w-16 h-16 bg-olive/10 text-gold rounded-full flex items-center justify-center mx-auto mb-4 border border-gold/30">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+            <div className="bg-white border border-gray-100 rounded-3xl p-8 md:p-12 shadow-2xl text-center max-w-2xl mx-auto space-y-8 animate-[fadeIn_0.5s_ease-out]">
+              
+              {/* Dynamic Pulsing Gold Checkmark */}
+              <div className="w-20 h-20 bg-gold/10 text-gold rounded-full flex items-center justify-center mx-auto border border-gold/30 relative">
+                <div className="absolute inset-0 rounded-full border border-gold/20 animate-ping opacity-75"></div>
+                <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
 
               <div className="space-y-2">
-                <span className="text-gold text-xs font-bold uppercase tracking-widest">Reservation Requested</span>
-                <h2 className="font-serif text-3xl text-olive-dark">Your Comfort is Scheduled</h2>
+                <span className="text-gold text-xs font-bold uppercase tracking-widest block">Reservation Provisionally Confirmed</span>
+                <h2 className="font-serif text-3xl md:text-4xl text-olive-dark">Your Clinical Sanctuary is Reserved</h2>
               </div>
 
               <p className="text-gray-600 text-sm leading-relaxed max-w-md mx-auto">
-                Thank you, <span className="font-semibold text-olive-dark">{patientName}</span>. We have provisionally reserved <span className="font-semibold text-olive-dark">May {selectedDate}, 2026 at {selectedTime}</span> for your <span className="font-semibold text-olive">{selectedProcedureDetails?.name}</span>.
+                Thank you, <span className="font-bold text-olive-dark">{patientName}</span>. We have provisionally blocked <span className="font-bold text-olive-dark">May {selectedDate}, 2026 at {selectedTime}</span> inside our sterile Abuja treatment suite.
               </p>
 
-              <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 text-xs text-left max-w-sm mx-auto space-y-2 text-gray-500">
-                <p><strong>📍 Location:</strong> Suite C108, Garki Mall, Area 11, Abuja</p>
-                <p><strong>👨‍⚕️ Surgeon:</strong> Dr. Oke</p>
-                <p><strong>📞 Contact:</strong> {patientPhone}</p>
-                <p className="text-red-400 pt-1 font-semibold">⚠️ Our clinical team will reach out via WhatsApp/SMS shortly to finalize your slot details.</p>
+              {/* Gold-Bordered Medical Sanctuary Pass (Voucher Style) */}
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-olive/5 via-cream/30 to-white border border-gold/20 text-xs text-left max-w-md mx-auto space-y-4 relative overflow-hidden shadow-md">
+                {/* Decorative vintage ticket cutouts on left/right edges */}
+                <div className="absolute top-1/2 -left-2.5 w-5 h-5 rounded-full bg-cream border-r border-gold/20 -translate-y-1/2 z-10"></div>
+                <div className="absolute top-1/2 -right-2.5 w-5 h-5 rounded-full bg-cream border-l border-gold/20 -translate-y-1/2 z-10"></div>
+                
+                <div className="border-b border-dashed border-gold/20 pb-3 flex justify-between items-center">
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-olive font-serif">Sanctuary Pass</span>
+                  <span className="text-[8px] uppercase font-bold tracking-wider text-gold bg-white/60 px-2.5 py-0.5 rounded-full border border-gold/15">Abuja Branch</span>
+                </div>
+                
+                <div className="space-y-3 text-gray-600 relative z-20">
+                  <div className="flex justify-between items-start">
+                    <span className="text-gray-400">📍 Sanctuary Suite</span>
+                    <span className="font-bold text-olive-dark text-right max-w-[200px]">Suite C108, Garki Mall, Area 11, Abuja</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">👨‍⚕️ Clinical Lead</span>
+                    <span className="font-bold text-olive-dark">Dr. Emmanuel Oke</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">📞 Patient Contact</span>
+                    <span className="font-bold text-olive-dark">{patientPhone}</span>
+                  </div>
+                  <div className="flex justify-between items-start">
+                    <span className="text-gray-400">⚜️ Tailored Therapy</span>
+                    <span className="font-bold text-gold text-right max-w-[180px]">{selectedProcedureDetails?.name}</span>
+                  </div>
+                </div>
+                
+                <div className="pt-3.5 border-t border-dashed border-gold/20 text-[10px] text-center text-red-500 font-bold uppercase tracking-widest animate-pulse">
+                  ⚠️ Slot requires instant confirmation below
+                </div>
               </div>
 
               <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
@@ -735,11 +756,14 @@ export default function Booking() {
                   href={getWhatsAppLink()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white px-8 py-3.5 rounded-full font-bold transition-all text-xs tracking-wider uppercase active:scale-95 shadow-md inline-flex items-center justify-center"
+                  className="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white px-10 py-4 rounded-full font-bold transition-all text-xs tracking-wider uppercase active:scale-95 shadow-lg shadow-green-500/20 inline-flex items-center justify-center hover:-translate-y-0.5"
                 >
+                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.588 1.981 14.119.957 11.49.955 6.058.955 1.633 5.328 1.63 10.757c-.001 1.732.463 3.42 1.342 4.927l-.994 3.633 3.73-.974.349.208z" />
+                  </svg>
                   Confirm Fast via WhatsApp
                 </a>
-                <Link href="/" className="w-full sm:w-auto bg-transparent border border-olive text-olive hover:bg-olive hover:text-white px-8 py-3.5 rounded-full font-bold transition-all text-xs tracking-wider uppercase active:scale-95 inline-flex items-center justify-center">
+                <Link href="/" className="w-full sm:w-auto bg-transparent border border-olive text-olive hover:bg-olive hover:text-white px-10 py-4 rounded-full font-bold transition-all text-xs tracking-wider uppercase active:scale-95 inline-flex items-center justify-center hover:-translate-y-0.5">
                   Return to Sanctuary
                 </Link>
               </div>

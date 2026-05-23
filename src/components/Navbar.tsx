@@ -2,11 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { CLINIC_WHATSAPP_LINK } from '@/config/constants';
+import { getDynamicWhatsAppLink } from '@/config/constants';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [whatsAppLink, setWhatsAppLink] = useState(getDynamicWhatsAppLink());
+
+  useEffect(() => {
+    setWhatsAppLink(getDynamicWhatsAppLink());
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +51,7 @@ export default function Navbar() {
             Location
           </Link>
           <a
-            href={CLINIC_WHATSAPP_LINK}
+            href={whatsAppLink}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center text-green-400 hover:text-green-300 transition-colors"
@@ -107,7 +112,7 @@ export default function Navbar() {
               Location
             </Link>
             <a
-              href={CLINIC_WHATSAPP_LINK}
+              href={whatsAppLink}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center text-green-400 hover:text-green-300 transition-colors py-2"
