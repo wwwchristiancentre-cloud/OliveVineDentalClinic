@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import { CLINIC_PHONE_DISPLAY, CLINIC_WHATSAPP_LINK } from '@/config/constants';
 
 export default function PrivacyPolicy() {
   return (
@@ -76,7 +77,7 @@ export default function PrivacyPolicy() {
               <div className="space-y-3 pt-6 border-t border-gray-100">
                 <h2 className="font-serif text-xl text-olive-dark font-semibold">4. WhatsApp Communication</h2>
                 <p>
-                  Our clinic supports a fast WhatsApp direct line (+234 703 229 9287) to facilitate quick booking and support.
+                  Our clinic supports a fast WhatsApp direct line ({CLINIC_PHONE_DISPLAY}) to facilitate quick booking and support.
                 </p>
                 <p>
                   While convenient, please avoid sharing highly sensitive medical histories or diagnostic records over non-encrypted open chat channels. Our clinical team will coordinate secure in-person evaluations at Suite C108 Garki Mall for all medical assessments.
@@ -89,7 +90,7 @@ export default function PrivacyPolicy() {
                   Under MDCN ethical codes, you maintain full right to access your physical and digital medical files, obtain copy duplicates of your digital radiographs, and request immediate rectification of incorrect personal information.
                 </p>
                 <p>
-                  For any inquiries regarding your privacy rights, please connect directly with our patient care team at Garki Mall, Area 11, Abuja, or call us at <strong>0706 368 7055</strong>.
+                  For any inquiries regarding your privacy rights, please connect directly with our patient care team at Garki Mall, Area 11, Abuja, or call us at <strong>{CLINIC_PHONE_DISPLAY}</strong>.
                 </p>
               </div>
 
@@ -129,7 +130,7 @@ export default function PrivacyPolicy() {
                     Book Appointment
                   </Link>
                   <a
-                    href="https://wa.me/2347032299287"
+                    href={CLINIC_WHATSAPP_LINK}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block w-full bg-transparent border border-olive text-olive hover:bg-olive hover:text-white py-3 rounded-full font-bold transition-all text-xs tracking-wider uppercase active:scale-95"

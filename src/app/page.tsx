@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, CLINIC_WHATSAPP_LINK } from '@/config/constants';
 
 export default function Home() {
   const [introPlayed, setIntroPlayed] = useState(true);
@@ -10,7 +11,7 @@ export default function Home() {
     "Now Welcoming New Patients in Garki",
     "Pristine IPC Safety Standards",
     "Suite C108, Garki Mall, Abuja",
-    "Direct WhatsApp: 0805 335 1465"
+    `Direct WhatsApp: ${CLINIC_PHONE_DISPLAY}`
   ];
   const [activeAnnouncement, setActiveAnnouncement] = useState(0);
 
@@ -93,7 +94,7 @@ export default function Home() {
                   </button>
                 </Link>
                 <a
-                  href="https://wa.me/2347032299287"
+                  href={CLINIC_WHATSAPP_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto inline-flex items-center justify-center bg-white/5 border border-white/15 hover:bg-white/10 text-white px-8 py-4 rounded-full font-bold transition-all text-sm tracking-wider uppercase active:scale-95 cursor-pointer"
@@ -630,7 +631,7 @@ export default function Home() {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div className="space-y-2 p-6 rounded-2xl bg-white border border-gray-100 shadow-md">
                   <span className="text-xs text-gold uppercase tracking-widest font-bold">Contact</span>
-                  <p className="font-serif text-lg text-olive-dark font-semibold">0805 335 1465 / 0706 368 7055</p>
+                  <p className="font-serif text-lg text-olive-dark font-semibold">{CLINIC_PHONE_DISPLAY}</p>
                   <p className="text-xs text-gray-400">Call for immediate support</p>
                 </div>
                 <div className="space-y-2 p-6 rounded-2xl bg-white border border-gray-100 shadow-md">
@@ -642,7 +643,7 @@ export default function Home() {
 
               <div className="flex gap-4">
                 <a
-                  href="https://wa.me/2347032299287"
+                  href={CLINIC_WHATSAPP_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold transition-all inline-flex items-center text-xs tracking-wider uppercase active:scale-95 shadow-md"
@@ -650,7 +651,7 @@ export default function Home() {
                   Message WhatsApp
                 </a>
                 <a
-                  href="tel:+2347032299287"
+                  href={`tel:${CLINIC_PHONE_TEL}`}
                   className="bg-transparent border border-olive text-olive hover:bg-olive hover:text-white px-6 py-3 rounded-full font-semibold transition-all inline-flex items-center text-xs tracking-wider uppercase active:scale-95"
                 >
                   Call Clinic
@@ -704,7 +705,7 @@ export default function Home() {
                 </button>
               </Link>
               <a
-                href="https://wa.me/2347032299287"
+                href={CLINIC_WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto bg-white/5 border border-white/10 hover:bg-white/10 text-white px-10 py-4 rounded-full font-bold transition-all text-sm tracking-wider uppercase active:scale-95 cursor-pointer"
@@ -739,7 +740,7 @@ export default function Home() {
                 <p>Suite C108, Garki Mall</p>
                 <p>Opp. Garki International Market</p>
                 <p>Garki Area 11, Abuja, Nigeria</p>
-                <p className="pt-2">0805 335 1465 or 0706 368 7055</p>
+                <p className="pt-2">{CLINIC_PHONE_DISPLAY}</p>
               </div>
             </div>
             <div className="space-y-4">
@@ -766,7 +767,7 @@ export default function Home() {
 
         {/* Global Floating WhatsApp Badges */}
         <a
-          href="https://wa.me/2347032299287"
+          href={CLINIC_WHATSAPP_LINK}
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-6 right-6 z-40 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl flex items-center justify-center hover:-translate-y-1 active:scale-95 transition-all duration-300 group cursor-pointer"
