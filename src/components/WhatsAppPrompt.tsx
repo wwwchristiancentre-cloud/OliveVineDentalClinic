@@ -23,8 +23,22 @@ export default function WhatsAppPrompt() {
       }
     };
 
+    const handleCustomTrigger = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      const url = customEvent.detail?.url;
+      if (url) {
+        setTargetUrl(url);
+        setTimeLeft(7);
+        setIsOpen(true);
+      }
+    };
+
     window.addEventListener('click', handleGlobalClick);
-    return () => window.removeEventListener('click', handleGlobalClick);
+    window.addEventListener('triggerWhatsAppPrompt', handleCustomTrigger);
+    return () => {
+      window.removeEventListener('click', handleGlobalClick);
+      window.removeEventListener('triggerWhatsAppPrompt', handleCustomTrigger);
+    };
   }, []);
 
   useEffect(() => {

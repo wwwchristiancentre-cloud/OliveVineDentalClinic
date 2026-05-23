@@ -253,8 +253,11 @@ export default function Booking() {
       return;
     }
     
-    // Programmatically open the pre-filled WhatsApp message in a new browser tab
-    window.open(getWhatsAppLink(), '_blank', 'noopener,noreferrer');
+    // Dispatch custom event to trigger the premium global WhatsApp call prompt!
+    const triggerEvent = new CustomEvent('triggerWhatsAppPrompt', {
+      detail: { url: getWhatsAppLink() }
+    });
+    window.dispatchEvent(triggerEvent);
     
     // Transition the active site page state into the Sanctuary Pass voucher success view
     setIsSubmitted(true);

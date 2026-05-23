@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { getDynamicWhatsAppLink } from '@/config/constants';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [whatsAppLink, setWhatsAppLink] = useState(getDynamicWhatsAppLink());
+  const pathname = usePathname();
+  const isHomepage = pathname === '/';
 
   useEffect(() => {
     setWhatsAppLink(getDynamicWhatsAppLink());
@@ -28,7 +31,7 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+        isScrolled || !isHomepage
           ? 'py-4 bg-charcoal/85 backdrop-blur-md border-b border-white/10 shadow-lg'
           : 'py-6 bg-transparent border-b border-transparent'
       }`}
@@ -41,13 +44,13 @@ export default function Navbar() {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center space-x-8 text-xs font-semibold tracking-widest uppercase">
-          <Link href="#story" className="text-gray-300 hover:text-gold transition-colors">
+          <Link href="/#story" className="text-gray-300 hover:text-gold transition-colors">
             Our Story
           </Link>
-          <Link href="#services" className="text-gray-300 hover:text-gold transition-colors">
+          <Link href="/#services" className="text-gray-300 hover:text-gold transition-colors">
             Services
           </Link>
-          <Link href="#location" className="text-gray-300 hover:text-gold transition-colors">
+          <Link href="/#location" className="text-gray-300 hover:text-gold transition-colors">
             Location
           </Link>
           <a
@@ -91,21 +94,21 @@ export default function Navbar() {
         <div className="md:hidden bg-charcoal/95 border-b border-white/10 px-6 py-6 space-y-6 absolute top-full left-0 right-0 shadow-xl transition-all duration-300">
           <div className="flex flex-col space-y-4 text-sm font-semibold tracking-widest uppercase">
             <Link
-              href="#story"
+              href="/#story"
               className="text-gray-300 hover:text-gold transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Our Story
             </Link>
             <Link
-              href="#services"
+              href="/#services"
               className="text-gray-300 hover:text-gold transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Services
             </Link>
             <Link
-              href="#location"
+              href="/#location"
               className="text-gray-300 hover:text-gold transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >

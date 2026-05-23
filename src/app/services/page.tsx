@@ -1,26 +1,70 @@
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import ViewCanvas from '@/features/3d/ViewCanvas';
 import Jaw from '@/features/3d/Jaw';
+import Tooth from '@/features/3d/Tooth';
+import Shield from '@/features/3d/Shield';
 import styles from './page.module.css';
 
 export default function Services() {
+    const [activeSection, setActiveSection] = useState<number>(1);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+
+        const sections = container.querySelectorAll('.service-section');
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const index = parseInt(entry.target.getAttribute('data-section') || '1', 10);
+                        setActiveSection(index);
+                    }
+                });
+            },
+            {
+                root: container,
+                threshold: 0.5, // Trigger when 50% of the section is visible
+            }
+        );
+
+        sections.forEach((sec) => observer.observe(sec));
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <main style={{ height: '100vh', overflow: 'hidden' }}>
+        <main style={{ height: '100vh', overflow: 'hidden' }} className="bg-charcoal text-white">
             <Navbar />
 
             <div className={styles.container}>
                 {/* Fixed 3D Side */}
                 <div className={styles.fixedSide}>
-                    <ViewCanvas className={styles.fixedSide}><Jaw /></ViewCanvas>
+                    <ViewCanvas className={styles.fixedSide}>
+                        {activeSection === 1 && <Tooth />}
+                        {activeSection === 2 && <Shield />}
+                        {activeSection === 3 && <Jaw />}
+                    </ViewCanvas>
                     <div className={styles.floatingLabel}>
-                        ← Viewing: Implants
+                        {activeSection === 1 && "← Viewing: Pristine Molar Crown"}
+                        {activeSection === 2 && "← Viewing: Smile Artistry Shield"}
+                        {activeSection === 3 && "← Viewing: Precision Implant Scaffold"}
                     </div>
                 </div>
 
                 {/* Scrollable Content Side */}
-                <div className={styles.scrollSide}>
+                <div 
+                    ref={scrollContainerRef} 
+                    className={`${styles.scrollSide} scrollSide-container`}
+                >
                     {/* Section 1 */}
-                    <section className={styles.section}>
+                    <section 
+                        className={`${styles.section} service-section`} 
+                        data-section="1"
+                    >
                         <span className={styles.label}>01. Function</span>
                         <h2 className={styles.heading}>General Dentistry</h2>
                         <p className={styles.desc}>
@@ -35,7 +79,10 @@ export default function Services() {
                     </section>
 
                     {/* Section 2 */}
-                    <section className={`${styles.section} ${styles.bgGray}`}>
+                    <section 
+                        className={`${styles.section} ${styles.bgGray} service-section`} 
+                        data-section="2"
+                    >
                         <span className={styles.label}>02. Aesthetics</span>
                         <h2 className={styles.heading}>Cosmetic Design</h2>
                         <p className={styles.desc}>
@@ -49,7 +96,10 @@ export default function Services() {
                     </section>
 
                     {/* Section 3 */}
-                    <section className={`${styles.section} ${styles.bgDark}`}>
+                    <section 
+                        className={`${styles.section} ${styles.bgDark} service-section`} 
+                        data-section="3"
+                    >
                         <span className={styles.label}>03. Reconstruction</span>
                         <h2 className={styles.heading}>Dental Implants</h2>
                         <p className={styles.desc}>
