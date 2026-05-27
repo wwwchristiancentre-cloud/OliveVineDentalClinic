@@ -1,8 +1,8 @@
 'use client';
 
 import { Canvas } from '@react-three/fiber';
-import { Suspense, useState, useEffect } from 'react';
-import { Html, Loader, PerspectiveCamera } from '@react-three/drei';
+import { Suspense, useEffect, useState } from 'react';
+import { Html, PerspectiveCamera } from '@react-three/drei';
 import { gsap } from 'gsap';
 import { IntroParticles } from '@/features/intro/IntroParticles';
 import { IntroShield } from '@/features/intro/IntroShield';
@@ -11,7 +11,6 @@ import styles from './intro.module.css';
 export function IPCShieldIntro({ onComplete }: { onComplete?: () => void }) {
     const [isFading, setIsFading] = useState(false); // Triggers CSS fade out
     const [complete, setComplete] = useState(false); // Removes from DOM
-    const [isStarted, setIsStarted] = useState(false);
 
     // Auto-hide when sequence finishes
     const handleComplete = () => {
@@ -28,7 +27,6 @@ export function IPCShieldIntro({ onComplete }: { onComplete?: () => void }) {
 
     useEffect(() => {
         console.log("IPCShieldIntro mounted");
-        setIsStarted(true);
         // Lock scroll
         document.body.style.overflow = 'hidden';
         return () => {

@@ -1,16 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import { CLINIC_PHONE_DISPLAY, getDynamicWhatsAppLink } from '@/config/constants';
 
 export default function PrivacyPolicy() {
-  const [whatsAppLink, setWhatsAppLink] = useState(getDynamicWhatsAppLink());
-
-  useEffect(() => {
-    setWhatsAppLink(getDynamicWhatsAppLink());
-  }, []);
+  const whatsAppLink = getDynamicWhatsAppLink();
 
   return (
     <>
@@ -47,17 +42,17 @@ export default function PrivacyPolicy() {
               <div className="space-y-3">
                 <h2 className="font-serif text-xl text-olive-dark font-semibold">1. Our Commitment to Your Sanctuary</h2>
                 <p>
-                  At Olive Vine Dental Clinic, patient confidentiality is treated with absolute reverence. As a registered practice regulated by the Medical and Dental Council of Nigeria (MDCN), we are committed to protecting your clinical records, dental histories, and personal data under stringent standards.
+                  At Olive Vine Dental Clinic, patient confidentiality is treated as a core responsibility. Our practice is guided by Medical and Dental Council of Nigeria (MDCN) expectations and recognized healthcare privacy practices as we protect your clinical records, dental histories, and personal data.
                 </p>
                 <p>
-                  We recognize that seeking medical care requires a high degree of trust. Your data is treated as highly confidential and is only accessible by verified, authorized clinical practitioners directly responsible for your diagnosis and therapy.
+                  We recognize that seeking medical care requires a high degree of trust. Your data is handled with care and is only accessible by authorized clinical practitioners directly responsible for your diagnosis and follow-up support.
                 </p>
               </div>
 
               <div className="space-y-3 pt-6 border-t border-gray-100">
                 <h2 className="font-serif text-xl text-olive-dark font-semibold">2. Information We Collect</h2>
                 <p>
-                  To provide exceptional restorative and cosmetic care, we collect and process the following categories of information:
+                  To provide restorative and cosmetic care, we may collect and process the following categories of information:
                 </p>
                 <ul className="list-disc pl-5 space-y-2">
                   <li><strong>Personal Details:</strong> Name, age, phone/WhatsApp contact information, and email address.</li>
@@ -69,25 +64,25 @@ export default function PrivacyPolicy() {
               <div className="space-y-3 pt-6 border-t border-gray-100">
                 <h2 className="font-serif text-xl text-olive-dark font-semibold">3. How We Use and Protect Your Data</h2>
                 <p>
-                  Your information is utilized exclusively for clinical diagnosis, reservation confirmation, and ongoing follow-up care.
+                  Your information is used for clinical diagnosis, booking coordination, and follow-up care.
                 </p>
                 <p>
-                  Our security measures include:
+                  Our security measures may include:
                 </p>
                 <ul className="list-disc pl-5 space-y-2">
-                  <li><strong>Strict Encryption:</strong> All digital radiographs and clinical logs are stored securely on offline/encrypted local storage servers with zero public internet exposure.</li>
-                  <li><strong>No Third-Party Sales:</strong> We will never sell, trade, or share your contact information, medical background, or communication history with insurance brokers, marketers, or other external entities.</li>
-                  <li><strong>Authorized Consent:</strong> We will not share your records with any relative or third party without your explicit, written signature or authorized medical consent.</li>
+                  <li><strong>Access Controls:</strong> Digital records are stored with access restrictions and encryption where appropriate.</li>
+                  <li><strong>No Third-Party Sales:</strong> We do not use your contact information or medical background for third-party marketing.</li>
+                  <li><strong>Authorized Consent:</strong> We do not share your records with relatives or third parties without your consent or a lawful clinical basis.</li>
                 </ul>
               </div>
 
               <div className="space-y-3 pt-6 border-t border-gray-100">
                 <h2 className="font-serif text-xl text-olive-dark font-semibold">4. WhatsApp Communication</h2>
                 <p>
-                  Our clinic supports a fast WhatsApp direct line ({CLINIC_PHONE_DISPLAY}) to facilitate quick booking and support.
+                  Our clinic supports a WhatsApp direct line ({CLINIC_PHONE_DISPLAY}) to help you send booking requests and receive support.
                 </p>
                 <p>
-                  While convenient, please avoid sharing highly sensitive medical histories or diagnostic records over non-encrypted open chat channels. Our clinical team will coordinate secure in-person evaluations at Suite C108 Garki Mall for all medical assessments.
+                  While convenient, please avoid sharing highly sensitive medical histories or diagnostic records over open chat channels. Our clinical team will coordinate secure in-person evaluations at Suite C108 Garki Mall for medical assessments.
                 </p>
               </div>
 
@@ -116,12 +111,12 @@ export default function PrivacyPolicy() {
                   </div>
                   <h3 className="font-serif text-xl text-white">Hippocratic Privacy</h3>
                   <p className="text-gray-300 text-xs leading-relaxed">
-                    Our data security protocols are formulated in compliance with the Medical and Dental Council of Nigeria's Code of Medical Ethics and international healthcare confidentiality standards.
+                    Our data handling practices are designed to align with applicable healthcare confidentiality expectations, including MDCN guidance where relevant.
                   </p>
 
                   <div className="flex items-center space-x-2 pt-2 text-gold">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                    <span className="font-bold uppercase tracking-wider text-[9px]">100% Medical Confidentiality</span>
+                    <span className="font-bold uppercase tracking-wider text-[9px]">Confidentiality-Focused Care</span>
                   </div>
                 </div>
               </div>

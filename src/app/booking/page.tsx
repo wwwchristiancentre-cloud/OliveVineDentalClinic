@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_RAW } from '@/config/constants';
@@ -11,6 +11,20 @@ type Procedure = {
   duration: string;
   price: string;
   description: string;
+};
+
+type ClockDetails = {
+  year: number;
+  month: number;
+  day: number;
+  hour: number;
+  minute: number;
+};
+
+type CalendarDay = {
+  day: number;
+  isCurrentMonth: boolean;
+  isSunday: boolean;
 };
 
 const PROCEDURES: Procedure[] = [
@@ -50,14 +64,15 @@ const AVAILABLE_TIMES = [
   { time: '11:30 AM', status: 'available' },
   { time: '01:00 PM', status: 'available' },
   { time: '02:30 PM', status: 'available' },
-  { time: '04:00 PM', status: 'limited' }, // Wednesday cut-off / general end
+  { time: '04:00 PM', status: 'limited' },
 ];
 
-// Helper to parse time slot e.g. "09:00 AM" into 24-hour style
+const BOOKING_MONTH_LAUNCH = new Date(2026, 4, 1);
+
 const parseTimeSlot = (timeStr: string) => {
   const parts = timeStr.match(/^(\d+):(\d+)\s*(AM|PM)$/i);
   if (!parts) return { hours: 0, minutes: 0 };
-  
+
   let hours = parseInt(parts[1], 10);
   const minutes = parseInt(parts[2], 10);
   const modifier = parts[3].toUpperCase();
@@ -71,67 +86,128 @@ const parseTimeSlot = (timeStr: string) => {
   return { hours, minutes };
 };
 
-// Generate calendar days for May 2026
-// May 1st 2026 is a Friday. Total days: 31
-const calendarDays = [
-  { day: 27, isCurrentMonth: false, isSunday: false },
-  { day: 28, isCurrentMonth: false, isSunday: false },
-  { day: 29, isCurrentMonth: false, isSunday: false },
-  { day: 30, isCurrentMonth: false, isSunday: false },
-  { day: 1, isCurrentMonth: true, isSunday: false },
-  { day: 2, isCurrentMonth: true, isSunday: false },
-  { day: 3, isCurrentMonth: true, isSunday: true }, // Sunday
-  { day: 4, isCurrentMonth: true, isSunday: false },
-  { day: 5, isCurrentMonth: true, isSunday: false },
-  { day: 6, isCurrentMonth: true, isSunday: false },
-  { day: 7, isCurrentMonth: true, isSunday: false },
-  { day: 8, isCurrentMonth: true, isSunday: false },
-  { day: 9, isCurrentMonth: true, isSunday: false },
-  { day: 10, isCurrentMonth: true, isSunday: true }, // Sunday
-  { day: 11, isCurrentMonth: true, isSunday: false },
-  { day: 12, isCurrentMonth: true, isSunday: false },
-  { day: 13, isCurrentMonth: true, isSunday: false },
-  { day: 14, isCurrentMonth: true, isSunday: false },
-  { day: 15, isCurrentMonth: true, isSunday: false },
-  { day: 16, isCurrentMonth: true, isSunday: false },
-  { day: 17, isCurrentMonth: true, isSunday: true }, // Sunday
-  { day: 18, isCurrentMonth: true, isSunday: false },
-  { day: 19, isCurrentMonth: true, isSunday: false },
-  { day: 20, isCurrentMonth: true, isSunday: false },
-  { day: 21, isCurrentMonth: true, isSunday: false },
-  { day: 22, isCurrentMonth: true, isSunday: false },
-  { day: 23, isCurrentMonth: true, isSunday: false },
-  { day: 24, isCurrentMonth: true, isSunday: true }, // Sunday
-  { day: 25, isCurrentMonth: true, isSunday: false },
-  { day: 26, isCurrentMonth: true, isSunday: false },
-  { day: 27, isCurrentMonth: true, isSunday: false },
-  { day: 28, isCurrentMonth: true, isSunday: false },
-  { day: 29, isCurrentMonth: true, isSunday: false },
-  { day: 30, isCurrentMonth: true, isSunday: false },
-  { day: 31, isCurrentMonth: true, isSunday: true }, // Sunday
-];
+const getCurrentClockDetails = (): ClockDetails => {
+  const now = new Date();
+  return {
+    year: now.getFullYear(),
+    month: now.getMonth(),
+    day: now.getDate(),
+    hour: now.getHours(),
+    minute: now.getMinutes(),
+  };
+};
+
+const getBookingMonthDate = (clock: ClockDetails) => {
+  if (clock.year < 2026 || (clock.year === 2026 && clock.month < 4)) {
+    return BOOKING_MONTH_LAUNCH;
+  }
+  return new Date(clock.year, clock.month, 1);
+};
+
+const buildCalendarDays = (monthDate: Date): CalendarDay[] => {
+  const year = monthDate.getFullYear();
+  const month = monthDate.getMonth();
+  const firstDay = new Date(year, month, 1);
+  const startOffset = (firstDay.getDay() + 6) % 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const previousMonthDays = new Date(year, month, 0).getDate();
+  const cells: CalendarDay[] = [];
+
+  for (let offset = startOffset; offset > 0; offset -= 1) {
+    const day = previousMonthDays - offset + 1;
+    const date = new Date(year, month - 1, day);
+    cells.push({ day, isCurrentMonth: false, isSunday: date.getDay() === 0 });
+  }
+
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    const date = new Date(year, month, day);
+    cells.push({ day, isCurrentMonth: true, isSunday: date.getDay() === 0 });
+  }
+
+  const trailingCells = (7 - (cells.length % 7)) % 7;
+  for (let day = 1; day <= trailingCells; day += 1) {
+    const date = new Date(year, month + 1, day);
+    cells.push({ day, isCurrentMonth: false, isSunday: date.getDay() === 0 });
+  }
+
+  return cells;
+};
+
+const isSameBookingDay = (clock: ClockDetails, monthDate: Date, day: number) =>
+  clock.year === monthDate.getFullYear() &&
+  clock.month === monthDate.getMonth() &&
+  clock.day === day;
+
+const isEarlierMonth = (candidate: Date, reference: Date) =>
+  candidate.getFullYear() < reference.getFullYear() ||
+  (candidate.getFullYear() === reference.getFullYear() && candidate.getMonth() < reference.getMonth());
+
+const isDayDisabledForMonth = (day: number, isCurrentMonth: boolean, isSunday: boolean, monthDate: Date, clock: ClockDetails) => {
+  if (!isCurrentMonth || isSunday) return true;
+
+  const selectedDate = new Date(monthDate.getFullYear(), monthDate.getMonth(), day);
+  const today = new Date(clock.year, clock.month, clock.day);
+
+  return selectedDate < today;
+};
+
+const isTimeSlotDisabledForMonth = (timeStr: string, day: number, monthDate: Date, clock: ClockDetails) => {
+  const slotDate = new Date(monthDate.getFullYear(), monthDate.getMonth(), day);
+
+  if (slotDate.getDay() === 0) return true;
+  if (slotDate.getDay() === 3 && timeStr === '04:00 PM') return true;
+
+  if (isSameBookingDay(clock, monthDate, day)) {
+    const slot = parseTimeSlot(timeStr);
+    if (clock.hour > slot.hours || (clock.hour === slot.hours && clock.minute >= slot.minutes)) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+const findInitialSelection = (days: CalendarDay[], monthDate: Date, clock: ClockDetails) => {
+  for (const item of days) {
+    if (isDayDisabledForMonth(item.day, item.isCurrentMonth, item.isSunday, monthDate, clock)) {
+      continue;
+    }
+
+    const firstAvailableTime = AVAILABLE_TIMES.find((slot) => !isTimeSlotDisabledForMonth(slot.time, item.day, monthDate, clock));
+    if (firstAvailableTime) {
+      return { date: item.day, time: firstAvailableTime.time };
+    }
+  }
+
+  const fallbackDay = days.find((item) => item.isCurrentMonth && !item.isSunday);
+  return {
+    date: fallbackDay?.day ?? 1,
+    time: AVAILABLE_TIMES[0].time,
+  };
+};
+
+const formatBookingDate = (monthDate: Date, day: number) => {
+  const monthName = monthDate.toLocaleString('en-US', { month: 'long' });
+  return `${monthName} ${day}, ${monthDate.getFullYear()}`;
+};
 
 export default function Booking() {
+  const [clock] = useState<ClockDetails>(() => getCurrentClockDetails());
+  const initialMonth = useMemo(() => getBookingMonthDate(clock), [clock]);
+  const initialSelection = useMemo(
+    () => findInitialSelection(buildCalendarDays(initialMonth), initialMonth, clock),
+    [clock, initialMonth]
+  );
+
+  const [visibleMonth, setVisibleMonth] = useState<Date>(initialMonth);
   const [selectedProcedure, setSelectedProcedure] = useState<string>('restorative');
-  const [selectedDate, setSelectedDate] = useState<number>(25); // Default to a valid day in May 2026
-  const [selectedTime, setSelectedTime] = useState<string>('10:00 AM');
+  const [selectedDate, setSelectedDate] = useState<number>(initialSelection.date);
+  const [selectedTime, setSelectedTime] = useState<string>(initialSelection.time);
   const [patientName, setPatientName] = useState('');
   const [patientPhone, setPatientPhone] = useState('');
   const [patientEmail, setPatientEmail] = useState('');
   const [patientNotes, setPatientNotes] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [currentMonth, setCurrentMonth] = useState('May 2026');
-
-  // Dynamic state for today's system clock details
-  const [todayDetails, setTodayDetails] = useState<{
-    year: number;
-    month: number;
-    day: number;
-    hour: number;
-    minute: number;
-  } | null>(null);
-
-  // Scroll-tracking state to show reservation summary below Step 1
   const [showStickyCard, setShowStickyCard] = useState(false);
 
   useEffect(() => {
@@ -145,105 +221,24 @@ export default function Booking() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const calendarDays = useMemo(() => buildCalendarDays(visibleMonth), [visibleMonth]);
+  const currentMonth = useMemo(
+    () => visibleMonth.toLocaleString('en-US', { month: 'long', year: 'numeric' }),
+    [visibleMonth]
+  );
+  const canGoToPreviousMonth = !isEarlierMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1), initialMonth);
+
   const selectedProcedureDetails = PROCEDURES.find((p) => p.id === selectedProcedure);
+  const isDayDisabled = (day: number, isCurrentMonth: boolean, isSunday: boolean) =>
+    isDayDisabledForMonth(day, isCurrentMonth, isSunday, visibleMonth, clock);
+  const isTimeSlotDisabled = (timeStr: string, day: number) =>
+    isTimeSlotDisabledForMonth(timeStr, day, visibleMonth, clock);
 
-  // Determine if a specific day is in the past
-  const isDayDisabled = (day: number, isCurrentMonth: boolean, isSunday: boolean) => {
-    if (!isCurrentMonth) return true;
-    if (isSunday) return true;
-    if (!todayDetails) return false;
-
-    const { year, month, day: currentDay } = todayDetails;
-
-    // Check if month is in the past (year > 2026 or (year === 2026 and month > 4))
-    const isPastMonth = year > 2026 || (year === 2026 && month > 4);
-    if (isPastMonth) return true;
-
-    // Check if month is current (May 2026) and day is before today
-    const isCurrentMonthMay = year === 2026 && month === 4;
-    if (isCurrentMonthMay && day < currentDay) return true;
-
-    return false;
-  };
-
-  // Determine if a specific time slot is in the past
-  const isTimeSlotDisabled = (timeStr: string, day: number) => {
-    // 1. Wednesday cut-off rule
-    const isWednesday = [6, 13, 20, 27].includes(day);
-    if (isWednesday && timeStr === '04:00 PM') return true;
-
-    // 2. Past time slot check for today
-    if (!todayDetails) return false;
-    const { year, month, day: currentDay, hour: currentHour, minute: currentMinute } = todayDetails;
-
-    const isCurrentMonthMay = year === 2026 && month === 4;
-    if (isCurrentMonthMay && day === currentDay) {
-      const slot = parseTimeSlot(timeStr);
-      if (currentHour > slot.hours || (currentHour === slot.hours && currentMinute >= slot.minutes)) {
-        return true;
-      }
-    }
-
-    return false;
-  };
-
-  // Mount logic: Get current system clock and adjust initial day/time if they are in the past
-  useEffect(() => {
-    const now = new Date();
-    const details = {
-      year: now.getFullYear(),
-      month: now.getMonth(),
-      day: now.getDate(),
-      hour: now.getHours(),
-      minute: now.getMinutes(),
-    };
-    setTodayDetails(details);
-
-    const isPastMonth = details.year > 2026 || (details.year === 2026 && details.month > 4);
-    const isCurrentMonthMay = details.year === 2026 && details.month === 4;
-
-    let initialDay = 25;
-    if (isPastMonth || (isCurrentMonthMay && initialDay < details.day)) {
-      // Find the first valid future day in May 2026 starting from details.day
-      const firstValidItem = calendarDays.find(item => 
-        item.isCurrentMonth && 
-        !item.isSunday && 
-        (!isCurrentMonthMay || item.day >= details.day)
-      );
-      if (firstValidItem) {
-        initialDay = firstValidItem.day;
-      }
-    }
-    setSelectedDate(initialDay);
-
-    // Also adjust selectedTime if the day is today and selectedTime is in the past
-    if (isCurrentMonthMay && initialDay === details.day) {
-      const firstValidTime = AVAILABLE_TIMES.find(slot => {
-        const parsed = parseTimeSlot(slot.time);
-        return !(details.hour > parsed.hours || (details.hour === parsed.hours && details.minute >= parsed.minutes));
-      });
-      if (firstValidTime) {
-        setSelectedTime(firstValidTime.time);
-      } else {
-        // If no slots left today, pick the next valid day
-        const nextValidItem = calendarDays.find(item => 
-          item.isCurrentMonth && 
-          !item.isSunday && 
-          item.day > details.day
-        );
-        if (nextValidItem) {
-          setSelectedDate(nextValidItem.day);
-          setSelectedTime('10:00 AM');
-        }
-      }
-    }
-  }, []);
-
-  const isFormInvalid = 
-    !patientName.trim() || 
-    !patientPhone.trim() || 
-    !selectedProcedure || 
-    !selectedDate || 
+  const isFormInvalid =
+    !patientName.trim() ||
+    !patientPhone.trim() ||
+    !selectedProcedure ||
+    !selectedDate ||
     !selectedTime ||
     isTimeSlotDisabled(selectedTime, selectedDate);
 
@@ -252,26 +247,67 @@ export default function Booking() {
     if (isFormInvalid) {
       return;
     }
-    
+
     // Dispatch custom event to trigger the premium global WhatsApp call prompt!
     const triggerEvent = new CustomEvent('triggerWhatsAppPrompt', {
       detail: { url: getWhatsAppLink() }
     });
     window.dispatchEvent(triggerEvent);
-    
+
     // Transition the active site page state into the Sanctuary Pass voucher success view
     setIsSubmitted(true);
   };
 
   const getWhatsAppLink = () => {
-    const text = `Hello Olive Vine Dental Clinic,\n\nI would like to confirm my Sanctuary Reservation for a clinical session:\n\n` +
+    const text = `Hello Olive Vine Dental Clinic,\n\nI would like to send a booking request for a clinical visit:\n\n` +
       `- Selected Therapy: ${selectedProcedureDetails?.name}\n` +
-      `- Requested Date: May ${selectedDate}, 2026\n` +
-      `- Reserved Time: ${selectedTime}\n` +
+      `- Requested Date: ${formatBookingDate(visibleMonth, selectedDate)}\n` +
+      `- Selected Time: ${selectedTime}\n` +
       `- Patient Name: ${patientName || '(Pending)'}\n` +
       `- Contact Number: ${patientPhone || '(Pending)'}\n\n` +
-      `Please confirm my reserved slot at Suite C108, Garki Mall, Abuja (opposite Garki International Market). Thank you!`;
+      `Please let me know if this slot is available at Suite C108, Garki Mall, Abuja (opposite Garki International Market). Thank you!`;
     return `https://wa.me/${CLINIC_PHONE_RAW}?text=${encodeURIComponent(text)}`;
+  };
+
+  const handleDateSelect = (day: number) => {
+    setSelectedDate(day);
+
+    if (isTimeSlotDisabled(selectedTime, day)) {
+      const firstAvailableTime = AVAILABLE_TIMES.find((slot) => !isTimeSlotDisabled(slot.time, day));
+      if (firstAvailableTime) {
+        setSelectedTime(firstAvailableTime.time);
+      }
+    }
+  };
+
+  const applyMonthChange = (nextMonth: Date) => {
+    const nextCalendarDays = buildCalendarDays(nextMonth);
+    const selectedDayIsValid = nextCalendarDays.some(
+      (item) =>
+        item.isCurrentMonth &&
+        item.day === selectedDate &&
+        !isDayDisabledForMonth(item.day, item.isCurrentMonth, item.isSunday, nextMonth, clock)
+    );
+
+    const selectedTimeIsValid =
+      selectedDayIsValid && !isTimeSlotDisabledForMonth(selectedTime, selectedDate, nextMonth, clock);
+
+    setVisibleMonth(nextMonth);
+
+    if (!selectedDayIsValid || !selectedTimeIsValid) {
+      const fallbackSelection = findInitialSelection(nextCalendarDays, nextMonth, clock);
+      setSelectedDate(fallbackSelection.date);
+      setSelectedTime(fallbackSelection.time);
+    }
+  };
+
+  const goToPreviousMonth = () => {
+    if (!canGoToPreviousMonth) return;
+    applyMonthChange(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1));
+  };
+
+  const goToNextMonth = () => {
+    applyMonthChange(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1));
   };
 
   return (
@@ -319,37 +355,43 @@ export default function Booking() {
                     <h2 className="font-serif text-lg md:text-xl text-olive-dark font-semibold">Select Curated Procedure</h2>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {PROCEDURES.map((proc) => (
-                      <label
-                        key={proc.id}
-                        onClick={() => setSelectedProcedure(proc.id)}
-                        className={`block p-5 rounded-2xl border transition-all duration-300 cursor-pointer text-left relative overflow-hidden group select-none ${selectedProcedure === proc.id
-                          ? 'border-gold bg-olive/5 shadow-md shadow-gold/5'
-                          : 'border-gray-100 bg-white hover:border-olive/30'
-                          }`}
-                      >
-                        <div className="flex justify-between items-start mb-2">
-                          <h3 className={`font-serif text-sm font-bold transition-colors ${selectedProcedure === proc.id ? 'text-olive' : 'text-gray-800'}`}>
-                            {proc.name}
-                          </h3>
-                          <input
-                            type="radio"
-                            name="procedure"
-                            value={proc.id}
-                            checked={selectedProcedure === proc.id}
-                            onChange={() => { }}
-                            className="text-gold focus:ring-gold border-gray-300 h-4 w-4"
-                          />
-                        </div>
-                        <p className="text-gray-500 text-xs leading-relaxed mb-4">{proc.description}</p>
-                        <div className="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-gray-400">
-                          <span>{proc.duration}</span>
-                          <span className="text-gold">{proc.price}</span>
-                        </div>
-                      </label>
-                    ))}
-                  </div>
+                  <fieldset className="grid sm:grid-cols-2 gap-4">
+                    <legend className="sr-only">Select a procedure</legend>
+                    {PROCEDURES.map((proc) => {
+                      const procedureId = `procedure-${proc.id}`;
+
+                      return (
+                        <label
+                          key={proc.id}
+                          htmlFor={procedureId}
+                          className={`block p-5 rounded-2xl border transition-all duration-300 cursor-pointer text-left relative overflow-hidden group select-none ${selectedProcedure === proc.id
+                            ? 'border-gold bg-olive/5 shadow-md shadow-gold/5'
+                            : 'border-gray-100 bg-white hover:border-olive/30'
+                            }`}
+                        >
+                          <div className="flex justify-between items-start mb-2">
+                            <h3 className={`font-serif text-sm font-bold transition-colors ${selectedProcedure === proc.id ? 'text-olive' : 'text-gray-800'}`}>
+                              {proc.name}
+                            </h3>
+                            <input
+                              id={procedureId}
+                              type="radio"
+                              name="procedure"
+                              value={proc.id}
+                              checked={selectedProcedure === proc.id}
+                              onChange={() => setSelectedProcedure(proc.id)}
+                              className="text-gold focus:ring-gold border-gray-300 h-4 w-4"
+                            />
+                          </div>
+                          <p className="text-gray-500 text-xs leading-relaxed mb-4">{proc.description}</p>
+                          <div className="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-gray-400">
+                            <span>{proc.duration}</span>
+                            <span className="text-gold">{proc.price}</span>
+                          </div>
+                        </label>
+                      );
+                    })}
+                  </fieldset>
                 </div>
 
                 {/* Step 2: Date & Time Picker */}
@@ -365,8 +407,23 @@ export default function Booking() {
                       <div className="flex justify-between items-center mb-4">
                         <h3 className="font-serif text-xs font-bold uppercase tracking-wider text-olive-dark">{currentMonth}</h3>
                         <div className="flex space-x-1">
-                          <button type="button" className="p-1 rounded bg-white border border-gray-200 text-xs text-gray-400 hover:text-olive">←</button>
-                          <button type="button" className="p-1 rounded bg-white border border-gray-200 text-xs text-gray-400 hover:text-olive">→</button>
+                          <button
+                            type="button"
+                            onClick={goToPreviousMonth}
+                            disabled={!canGoToPreviousMonth}
+                            className={`p-1 rounded bg-white border border-gray-200 text-xs transition-colors ${canGoToPreviousMonth ? 'text-gray-400 hover:text-olive' : 'text-gray-200 cursor-not-allowed opacity-50'}`}
+                            aria-label="View previous month"
+                          >
+                            ←
+                          </button>
+                          <button
+                            type="button"
+                            onClick={goToNextMonth}
+                            className="p-1 rounded bg-white border border-gray-200 text-xs text-gray-400 hover:text-olive transition-colors"
+                            aria-label="View next month"
+                          >
+                            →
+                          </button>
                         </div>
                       </div>
 
@@ -390,7 +447,7 @@ export default function Booking() {
                               key={idx}
                               type="button"
                               disabled={isDisabled}
-                              onClick={() => setSelectedDate(item.day)}
+                              onClick={() => handleDateSelect(item.day)}
                               className={`h-9 w-full rounded-xl text-xs font-bold transition-all relative flex items-center justify-center ${isSelected
                                 ? 'bg-gold text-white shadow-md shadow-gold/25'
                                 : isDisabled
@@ -439,7 +496,7 @@ export default function Booking() {
                                 {slot.time}
                                 {isSlotDisabled && (
                                   <span className="block text-[8px] tracking-wide text-red-400 font-bold uppercase">
-                                    {[6, 13, 20, 27].includes(selectedDate) && slot.time === '04:00 PM' ? 'Wed Cut-off' : 'Passed'}
+                                    {new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), selectedDate).getDay() === 3 && slot.time === '04:00 PM' ? 'Wed Cut-off' : 'Passed'}
                                   </span>
                                 )}
                               </button>
@@ -450,7 +507,7 @@ export default function Booking() {
 
                       <div className="mt-6 p-4 rounded-xl bg-gray-50 border border-gray-100 text-xs text-gray-500 leading-relaxed">
                         <p className="font-bold text-olive mb-1">📅 Booking Details:</p>
-                        Selected May {selectedDate}, 2026 at {selectedTime} for {selectedProcedureDetails?.name}.
+                        Selected {formatBookingDate(visibleMonth, selectedDate)} at {selectedTime} for {selectedProcedureDetails?.name}.
                       </div>
                     </div>
                   </div>
@@ -548,7 +605,7 @@ export default function Booking() {
                       <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.588 1.981 14.119.957 11.49.955 6.058.955 1.633 5.328 1.63 10.757c-.001 1.732.463 3.42 1.342 4.927l-.994 3.633 3.73-.974.349.208z" />
                       </svg>
-                      Book Sanctuary Visit via WhatsApp
+                      Send Booking Request via WhatsApp
                     </button>
                   </div>
                 </div>
@@ -585,7 +642,7 @@ export default function Booking() {
                       </div>
 
                       <p className="text-gray-300 text-xs leading-relaxed italic">
-                        "Healing is an act of trust. We commit to validating your safety and ensuring a pristine, completely comfortable sanctuary for your care."
+                        Healing is an act of trust. We strive to support your safety and keep the experience comfortable and refined.
                       </p>
 
                       <div className="flex items-center space-x-3 pt-2">
@@ -593,7 +650,7 @@ export default function Booking() {
                           <span className="font-serif text-gold text-[9px] tracking-wider font-bold">OV</span>
                         </div>
                         <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-                          MDCN Certified Practice
+                          MDCN-Guided Practice
                         </div>
                       </div>
                     </div>
@@ -638,7 +695,7 @@ export default function Booking() {
                     <div className="flex justify-between items-center pb-3 border-b border-gray-150 mb-4">
                       <div className="flex items-center space-x-2">
                         <span className="w-2.5 h-2.5 rounded-full bg-gold animate-pulse"></span>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-olive">Sanctuary Reservation</span>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-olive">Booking Request</span>
                       </div>
                       <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Summary</span>
                     </div>
@@ -647,7 +704,7 @@ export default function Booking() {
                       {/* 1. Selected Procedure Summary Block */}
                       <div className="p-4 rounded-2xl bg-olive/5 border border-olive/10 shadow-sm relative overflow-hidden transition-all duration-300">
                         <div className="flex justify-between items-center mb-1">
-                          <span className="text-[8px] uppercase tracking-wider font-bold text-gold">Sanctuary Therapy</span>
+                          <span className="text-[8px] uppercase tracking-wider font-bold text-gold">Procedure Request</span>
                           <span className="inline-flex items-center bg-gold text-white text-[7px] font-bold uppercase px-2 py-0.5 rounded-full tracking-wider shadow-sm">
                             ✓ Procedure Chosen
                           </span>
@@ -662,9 +719,9 @@ export default function Booking() {
                       {/* 2. Selected Date & Time Summary Block */}
                       <div className="p-4 rounded-2xl bg-olive/5 border border-olive/10 shadow-sm relative overflow-hidden transition-all duration-300">
                         <div className="flex justify-between items-center mb-1.5">
-                          <span className="text-[8px] uppercase tracking-wider font-bold text-gold">Scheduled Slot</span>
+                          <span className="text-[8px] uppercase tracking-wider font-bold text-gold">Requested Time</span>
                           <span className="inline-flex items-center bg-gold text-white text-[7px] font-bold uppercase px-2 py-0.5 rounded-full tracking-wider shadow-sm">
-                            ✓ Time Reserved
+                            ✓ Time Selected
                           </span>
                         </div>
                         <div className="flex items-center space-x-2 text-olive-dark">
@@ -672,7 +729,7 @@ export default function Booking() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                           <span className="text-xs font-bold text-olive-dark">
-                            May {selectedDate}, 2026 at {selectedTime}
+                            {formatBookingDate(visibleMonth, selectedDate)} at {selectedTime}
                           </span>
                         </div>
                       </div>
@@ -688,7 +745,7 @@ export default function Booking() {
                         </span>
                       ) : (
                         <span className="text-green-500 font-bold animate-pulse">
-                          Ready! Book via options below
+                          Ready! Send request below
                         </span>
                       )}
                     </div>
@@ -711,12 +768,12 @@ export default function Booking() {
               </div>
 
               <div className="space-y-2">
-                <span className="text-gold text-xs font-bold uppercase tracking-widest block">Reservation Provisionally Confirmed</span>
-                <h2 className="font-serif text-3xl md:text-4xl text-olive-dark">Your Clinical Sanctuary is Reserved</h2>
+                <span className="text-gold text-xs font-bold uppercase tracking-widest block">Booking Request Ready</span>
+                <h2 className="font-serif text-3xl md:text-4xl text-olive-dark">Your WhatsApp Request Is Prepared</h2>
               </div>
 
               <p className="text-gray-600 text-sm leading-relaxed max-w-md mx-auto">
-                Thank you, <span className="font-bold text-olive-dark">{patientName}</span>. We have provisionally blocked <span className="font-bold text-olive-dark">May {selectedDate}, 2026 at {selectedTime}</span> inside our sterile Abuja treatment suite.
+                Thank you, <span className="font-bold text-olive-dark">{patientName}</span>. We&apos;ve prepared a WhatsApp request for <span className="font-bold text-olive-dark">{formatBookingDate(visibleMonth, selectedDate)} at {selectedTime}</span> so our team can review availability and reply.
               </p>
 
               {/* Gold-Bordered Medical Sanctuary Pass (Voucher Style) */}
@@ -726,13 +783,13 @@ export default function Booking() {
                 <div className="absolute top-1/2 -right-2.5 w-5 h-5 rounded-full bg-cream border-l border-gold/20 -translate-y-1/2 z-10"></div>
                 
                 <div className="border-b border-dashed border-gold/20 pb-3 flex justify-between items-center">
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-olive font-serif">Sanctuary Pass</span>
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-olive font-serif">Request Pass</span>
                   <span className="text-[8px] uppercase font-bold tracking-wider text-gold bg-white/60 px-2.5 py-0.5 rounded-full border border-gold/15">Abuja Branch</span>
                 </div>
                 
                 <div className="space-y-3 text-gray-600 relative z-20">
                   <div className="flex justify-between items-start">
-                    <span className="text-gray-400">📍 Sanctuary Suite</span>
+                    <span className="text-gray-400">📍 Clinic Location</span>
                     <span className="font-bold text-olive-dark text-right max-w-[200px]">Suite C108, Garki Mall, Area 11, Abuja</span>
                   </div>
                   <div className="flex justify-between">
@@ -744,13 +801,13 @@ export default function Booking() {
                     <span className="font-bold text-olive-dark">{patientPhone}</span>
                   </div>
                   <div className="flex justify-between items-start">
-                    <span className="text-gray-400">⚜️ Tailored Therapy</span>
+                    <span className="text-gray-400">⚜️ Requested Therapy</span>
                     <span className="font-bold text-gold text-right max-w-[180px]">{selectedProcedureDetails?.name}</span>
                   </div>
                 </div>
                 
                 <div className="pt-3.5 border-t border-dashed border-gold/20 text-[10px] text-center text-red-500 font-bold uppercase tracking-widest animate-pulse">
-                  ⚠️ Slot requires instant confirmation below
+                  ⚠️ This remains a request until the clinic replies
                 </div>
               </div>
 
@@ -764,7 +821,7 @@ export default function Booking() {
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.588 1.981 14.119.957 11.49.955 6.058.955 1.633 5.328 1.63 10.757c-.001 1.732.463 3.42 1.342 4.927l-.994 3.633 3.73-.974.349.208z" />
                   </svg>
-                  Confirm Fast via WhatsApp
+                  Send Request via WhatsApp
                 </a>
                 <Link href="/" className="w-full sm:w-auto bg-transparent border border-olive text-olive hover:bg-olive hover:text-white px-10 py-4 rounded-full font-bold transition-all text-xs tracking-wider uppercase active:scale-95 inline-flex items-center justify-center hover:-translate-y-0.5">
                   Return to Sanctuary

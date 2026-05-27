@@ -8,13 +8,9 @@ import { getDynamicWhatsAppLink } from '@/config/constants';
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [whatsAppLink, setWhatsAppLink] = useState(getDynamicWhatsAppLink());
   const pathname = usePathname();
   const isHomepage = pathname === '/';
-
-  useEffect(() => {
-    setWhatsAppLink(getDynamicWhatsAppLink());
-  }, []);
+  const whatsAppLink = getDynamicWhatsAppLink();
 
   useEffect(() => {
     const handleScroll = () => {

@@ -7,6 +7,10 @@ export default function WhatsAppPrompt() {
   const [isOpen, setIsOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState(7); // 7-second countdown
 
+  const redirectToWhatsApp = (url: string) => {
+    window.location.assign(url);
+  };
+
   useEffect(() => {
     const handleGlobalClick = (e: MouseEvent) => {
       // Find closest anchor tag clicked
@@ -48,12 +52,11 @@ export default function WhatsAppPrompt() {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          // Redirect to target WhatsApp on expiration
           if (targetUrl) {
-            window.open(targetUrl, '_blank', 'noopener,noreferrer');
+            setIsOpen(false);
+            setTargetUrl(null);
+            redirectToWhatsApp(targetUrl);
           }
-          setIsOpen(false);
-          setTargetUrl(null);
           return 0;
         }
         return prev - 1;
@@ -65,10 +68,10 @@ export default function WhatsAppPrompt() {
 
   const handleContinue = () => {
     if (targetUrl) {
-      window.open(targetUrl, '_blank', 'noopener,noreferrer');
+      setIsOpen(false);
+      setTargetUrl(null);
+      redirectToWhatsApp(targetUrl);
     }
-    setIsOpen(false);
-    setTargetUrl(null);
   };
 
   const handleClose = () => {
@@ -97,7 +100,7 @@ export default function WhatsAppPrompt() {
 
         <div className="p-4 bg-cream/40 border border-olive/5 rounded-2xl">
           <p className="text-olive-dark text-sm leading-relaxed font-serif italic">
-            "Feel free to call even after sending your message."
+            We&apos;ll open WhatsApp shortly. If the message doesn&apos;t go through, feel free to call the clinic.
           </p>
         </div>
 

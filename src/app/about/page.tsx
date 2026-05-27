@@ -20,7 +20,7 @@ export default function About() {
                 </div>
 
                 <div className={styles.textSide}>
-                    <span className={styles.quote}>"To heal is to serve."</span>
+                    <span className={styles.quote}>“To heal is to serve.”</span>
                     <p className={styles.bioText}>
                         Medicine treats the body, but true healing touches the spirit. At Olive Vine, we believe in a holistic
                         approach where clinical excellence is delivered with the compassion of a shepherd.

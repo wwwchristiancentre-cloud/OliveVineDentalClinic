@@ -5,24 +5,20 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, getDynamicWhatsAppLink } from '@/config/constants';
 
-export default function Home() {
-  const [introPlayed, setIntroPlayed] = useState(true);
-  const [whatsAppLink, setWhatsAppLink] = useState(getDynamicWhatsAppLink());
+const ANNOUNCEMENTS = [
+  'Now Welcoming New Patients in Garki',
+  'Careful IPC Practices',
+  'Suite C108, Garki Mall, Abuja',
+  `Direct WhatsApp: ${CLINIC_PHONE_DISPLAY}`,
+];
 
-  useEffect(() => {
-    setWhatsAppLink(getDynamicWhatsAppLink());
-  }, []);
-  const announcements = [
-    "Now Welcoming New Patients in Garki",
-    "Pristine IPC Safety Standards",
-    "Suite C108, Garki Mall, Abuja",
-    `Direct WhatsApp: ${CLINIC_PHONE_DISPLAY}`
-  ];
+export default function Home() {
+  const whatsAppLink = getDynamicWhatsAppLink();
   const [activeAnnouncement, setActiveAnnouncement] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setActiveAnnouncement((prev) => (prev + 1) % announcements.length);
+      setActiveAnnouncement((prev) => (prev + 1) % ANNOUNCEMENTS.length);
     }, 3500);
     return () => clearInterval(timer);
   }, []);
@@ -75,7 +71,7 @@ export default function Home() {
                     className="flex flex-col transition-transform duration-500 ease-in-out"
                     style={{ transform: `translateY(-${activeAnnouncement * 1.25}rem)` }}
                   >
-                    {announcements.map((text, idx) => (
+                    {ANNOUNCEMENTS.map((text, idx) => (
                       <span key={idx} className="h-5 flex items-center shrink-0 truncate text-[10px] sm:text-xs tracking-wider">
                         {text}
                       </span>
@@ -88,7 +84,7 @@ export default function Home() {
                 <span className="text-gold italic font-normal tracking-wide">With a Soul</span>
               </h1>
               <p className="text-gray-300 text-base md:text-lg max-w-xl leading-relaxed">
-                Experience Abuja’s premier dental sanctuary. We combine cutting-edge clinical safety and digital diagnostics with a tranquil, empathetic approach to healing.
+                Experience a calm, design-led dental practice in Abuja. We combine careful clinical workflows and digital diagnostics with a tranquil, empathetic approach to healing.
               </p>
 
               {/* Dual CTAs */}
@@ -115,7 +111,7 @@ export default function Home() {
               <div className="pt-8 border-t border-white/10 flex flex-wrap gap-x-8 gap-y-4 text-xs text-gray-400 font-medium">
                 <div className="flex items-center space-x-2">
                   <svg className="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                  <span>MDCN Certified</span>
+                  <span>MDCN-Guided Care</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <svg className="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
@@ -180,12 +176,12 @@ export default function Home() {
                 <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">Suite C108 Garki Mall</p>
               </div>
               <div className="space-y-1 border-l border-white/10">
-                <p className="text-gold font-serif text-3xl font-semibold">Pristine</p>
-                <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">IPC Safety Standards</p>
+                <p className="text-gold font-serif text-3xl font-semibold">Careful</p>
+                <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">IPC Practices</p>
               </div>
               <div className="space-y-1 border-l border-white/10">
-                <p className="text-gold font-serif text-3xl font-semibold">5-Star</p>
-                <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">Patient Ratings</p>
+                <p className="text-gold font-serif text-3xl font-semibold">Trusted</p>
+                <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">Patient Feedback</p>
               </div>
               <div className="space-y-1 border-l border-white/10">
                 <p className="text-gold font-serif text-3xl font-semibold">Direct</p>
@@ -206,7 +202,7 @@ export default function Home() {
                 <span className="text-gold italic font-normal">Surgical Reverence</span>
               </h2>
               <p className="text-gray-300 leading-relaxed">
-                Our Infection Prevention and Control (IPC) protocols set a new baseline for dental safety in Abuja. We treat every single instrument with rigorous multi-stage sterilisation protocols that meet strict international standards, ensuring a sterile sanctuary for your peace of mind.
+                Our Infection Prevention and Control (IPC) protocols are designed to support a high standard of dental safety in Abuja. We treat every instrument with careful multi-stage sterilisation practices to help maintain a clean, reassuring environment for your care.
               </p>
               <div className="pt-4 flex flex-wrap gap-4">
                 <div className="flex items-center space-x-3 bg-white/5 border border-white/10 rounded-2xl p-4 max-w-xs">
@@ -410,7 +406,7 @@ export default function Home() {
             <div className="relative py-8 px-6 md:px-12 border-y border-gold/20 my-8">
               <span className="absolute top-2 left-6 text-6xl text-gold/20 font-serif">“</span>
               <p className="font-serif italic text-olive-dark text-xl md:text-2xl leading-relaxed text-center max-w-2xl mx-auto">
-                We don't just treat anatomy; we care for the human soul behind the smile.
+                We do not just treat anatomy; we care for the human soul behind the smile.
               </p>
               <p className="text-xs font-bold uppercase tracking-widest text-gold mt-4">— Dr. Emmanuel Oke, Founder & Surgeon</p>
               <span className="absolute bottom-[-10px] right-6 text-6xl text-gold/20 font-serif">”</span>
@@ -454,7 +450,7 @@ export default function Home() {
               <span className="text-gold text-xs font-bold uppercase tracking-widest">The Sanctuary</span>
               <h2 className="font-serif text-4xl md:text-5xl text-white">Why Patients Trust Us</h2>
               <p className="text-gray-300 text-sm">
-                We design every detail of your visit to eliminate clinical anxiety and guarantee safety.
+                We design every detail of your visit to reduce clinical anxiety and support safety.
               </p>
             </div>
 
@@ -514,9 +510,9 @@ export default function Home() {
                     <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                   ))}
                 </div>
-                <h4 className="font-serif text-lg text-olive-dark font-semibold">"Absolutely Painless"</h4>
+                <h4 className="font-serif text-lg text-olive-dark font-semibold">Absolutely Painless</h4>
                 <p className="text-gray-500 text-xs md:text-sm leading-relaxed">
-                  "I was terrified of having an implant done, but Dr. Oke talked me through every single step. The environment at Garki Mall is incredibly serene, and the procedure was completely painless. Exceptional care."
+                  I was terrified of having an implant done, but Dr. Oke talked me through every single step. The environment at Garki Mall is incredibly serene, and the procedure was completely painless. Exceptional care.
                 </p>
                 <div className="pt-4 border-t border-gray-100">
                   <p className="text-xs font-bold text-olive-dark uppercase">Chinedu O.</p>
@@ -531,9 +527,9 @@ export default function Home() {
                     <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                   ))}
                 </div>
-                <h4 className="font-serif text-lg text-olive-dark font-semibold">"A Sanctuary Indeed"</h4>
+                <h4 className="font-serif text-lg text-olive-dark font-semibold">A Sanctuary Indeed</h4>
                 <p className="text-gray-500 text-xs md:text-sm leading-relaxed">
-                  "Most dental clinics feel sterile and scary. Olive Vine feels like a luxury spa. Beautiful music, soft aromas, and extremely kind doctors. My teeth cleaning was the most relaxing experience ever."
+                  Most dental clinics feel sterile and scary. Olive Vine feels like a luxury spa. Beautiful music, soft aromas, and extremely kind doctors. My teeth cleaning was the most relaxing experience ever.
                 </p>
                 <div className="pt-4 border-t border-gray-100">
                   <p className="text-xs font-bold text-olive-dark uppercase">Fatima A.</p>
@@ -548,9 +544,9 @@ export default function Home() {
                     <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                   ))}
                 </div>
-                <h4 className="font-serif text-lg text-olive-dark font-semibold">"Ultimate Precision"</h4>
+                <h4 className="font-serif text-lg text-olive-dark font-semibold">Ultimate Precision</h4>
                 <p className="text-gray-500 text-xs md:text-sm leading-relaxed">
-                  "I had my clear aligners done here and the digital mapping was incredible. I was able to see the full outcome before we even began. The precision is unmatched in Abuja. Strongly recommend!"
+                  I had my clear aligners done here and the digital mapping was incredible. I was able to see the full outcome before we even began. The precision is unmatched in Abuja. Strongly recommend!
                 </p>
                 <div className="pt-4 border-t border-gray-100">
                   <p className="text-xs font-bold text-olive-dark uppercase">Dr. Ibrahim Y.</p>
@@ -583,7 +579,7 @@ export default function Home() {
                 </div>
                 <h3 className="font-serif text-xl text-white font-semibold">Select Procedure</h3>
                 <p className="text-gray-400 text-xs md:text-sm max-w-xs mx-auto">
-                  Pick restorative, cosmetic, or basic checkup care pathways from our secure booking dashboard.
+                  Pick restorative, cosmetic, or checkup care pathways and send your booking request directly to the clinic.
                 </p>
               </div>
 
@@ -603,9 +599,9 @@ export default function Home() {
                 <div className="w-16 h-16 rounded-full bg-charcoal border border-gold/40 flex items-center justify-center font-serif text-xl text-gold mx-auto shadow-xl">
                   03
                 </div>
-                <h3 className="font-serif text-xl text-white font-semibold">Confirm Instantly</h3>
+                <h3 className="font-serif text-xl text-white font-semibold">Request Follow-Up</h3>
                 <p className="text-gray-400 text-xs md:text-sm max-w-xs mx-auto">
-                  Receive secure SMS and WhatsApp confirmation alerts with direct clinic maps and details.
+                  Receive SMS and WhatsApp follow-up alerts with clinic details and next steps.
                 </p>
               </div>
             </div>
@@ -646,12 +642,12 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
                 <a
                   href={whatsAppLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold transition-all inline-flex items-center text-xs tracking-wider uppercase active:scale-95 shadow-md"
+                  className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold transition-all inline-flex items-center text-xs tracking-wider uppercase active:scale-95 shadow-md shadow-green-500/10"
                 >
                   Message WhatsApp
                 </a>
@@ -661,24 +657,32 @@ export default function Home() {
                 >
                   Call Clinic
                 </a>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=The+Olive+Vine+Dental+Clinic+Garki+Mall+Abuja"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-transparent border border-gold text-gold hover:bg-gold hover:text-white px-6 py-3 rounded-full font-semibold transition-all inline-flex items-center text-xs tracking-wider uppercase active:scale-95"
+                >
+                  Open in Maps
+                </a>
               </div>
             </div>
             {/* Right Column: Embedded Google Map */}
             <div className="md:col-span-6 flex justify-center h-96 relative scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-200 transform">
               <div className="w-full h-full rounded-3xl border border-gray-200 shadow-2xl overflow-hidden relative group bg-charcoal">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.3957245952873!2d7.481512411226066!3d9.027623990998906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0bc41d2f78df%3A0xc3ab0be218c50e2!2sGarki%20Mall!5e0!3m2!1sen!2sng!4v1716393222384!5m2!1sen!2sng"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d840.8449029708042!2d7.493349700481015!3d9.028008359739331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0b888dbbacd5%3A0xcfc7aae6497593b3!2sThe%20Olive%20Vine%20Dental%20Clinic!5e1!3m2!1sen!2sng!4v1779618250068!5m2!1sen!2sng"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="w-full h-full filter invert-[0.9] hue-rotate-[180deg] saturate-[0.5] contrast-[1.2] hover:filter-none transition-all duration-700"
+                  className="w-full h-full border-0 transition-all duration-300"
                 ></iframe>
-                {/* Floating badge inside map */}
-                <div className="absolute top-4 left-4 z-10 pointer-events-none">
-                  <span className="text-[10px] font-bold tracking-widest text-gold uppercase bg-charcoal/90 border border-gold/20 px-3 py-1.5 rounded-full shadow-lg">Garki Mall Location</span>
+                {/* Floating badge inside map - Positioned top-right to prevent overlap with standard map controls/info */}
+                <div className="absolute top-4 right-4 z-10 pointer-events-none">
+                  <span className="text-[10px] font-bold tracking-widest text-gold uppercase bg-charcoal/90 border border-gold/20 px-3 py-1.5 rounded-full shadow-lg">Olive Vine Dental Location</span>
                 </div>
               </div>
             </div>
@@ -701,7 +705,7 @@ export default function Home() {
               <span className="text-gold italic font-normal tracking-wide">Elevated</span>
             </h2>
             <p className="text-gray-300 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-              Step out of anxiety and into complete safety. Join Dr. Oke at Abuja’s premier dental sanctuary for healing and aesthetics.
+              Step out of anxiety and into a calm, carefully prepared care environment. Join Dr. Oke in Abuja for restorative, preventive, and aesthetic dental support.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Link href="/booking">
@@ -727,7 +731,7 @@ export default function Home() {
             <div className="space-y-4">
               <p className="font-serif text-white text-lg font-bold tracking-wider">OLIVE VINE</p>
               <p className="text-gray-400 leading-relaxed">
-                Abuja’s premier dental sanctuary combining absolute safety protocols with empathetic, soul-centered healing.
+                A calm Abuja dental practice combining careful safety processes with empathetic, patient-centered care.
               </p>
             </div>
             <div className="space-y-4">
@@ -751,11 +755,11 @@ export default function Home() {
             <div className="space-y-4">
               <p className="text-white font-bold uppercase tracking-wider text-xs">Absolute Safety</p>
               <p className="text-gray-400 leading-relaxed">
-                Our Infection Prevention and Control (IPC) protocols exceed international sterilisation standards.
+                Our Infection Prevention and Control (IPC) protocols are designed to support careful, high-standard sterilisation practices.
               </p>
               <div className="flex items-center space-x-2 text-gold">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                <span className="font-bold uppercase tracking-wider text-[10px]">MDCN Certified Protocol</span>
+                <span className="font-bold uppercase tracking-wider text-[10px]">MDCN-Guided Practice</span>
               </div>
             </div>
           </div>
