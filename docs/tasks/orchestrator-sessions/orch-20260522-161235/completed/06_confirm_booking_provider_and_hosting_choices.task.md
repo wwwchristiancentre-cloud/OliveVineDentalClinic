@@ -37,3 +37,11 @@ The user has not yet confirmed the booking provider or hosting platform. These c
 
 ## Verification
 Choices should make it easier, not harder, to reach a public launch in 1–2 days.
+
+## Completion Decision
+- **Booking mechanism selected:** WhatsApp request flow. The launch site should treat booking as a request handoff, not an instantly confirmed appointment.
+- **Hosting target selected:** Vercel.
+- **Domain / DNS next step:** `https://www.olivevinedental.com` is the configured production site URL. Before public launch, confirm the domain is connected to the Vercel project and DNS is resolving correctly. If DNS is not ready, launch first with the Vercel production or preview URL and connect the custom domain afterward.
+
+## Completion Status
+Completed. These choices keep launch speed as the priority and avoid adding a custom scheduling system before public launch.

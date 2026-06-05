@@ -11,7 +11,7 @@
 - **Known constraints:** tight timeline; user wants strong design quality; site must work, be secure, be hosted, and provide direct access for booking.
 - **Known preferences:** doctor-led hero; hand/shield concept preserved in a supporting role; avoid annoying forced intro replay; use 21st.dev selectively; copy can be finalized later.
 - **Assumptions:** booking will likely rely on a hosted scheduler or simple booking handoff for launch; not all legacy 3D concepts should survive into v1 unchanged.
-- **Risks:** design scope creep; overuse of motion-heavy components; unresolved booking provider or hosting decision; exposed client-side secrets from prior prototype patterns.
+- **Risks:** design scope creep; overuse of motion-heavy components; domain/DNS confirmation before public launch; exposed client-side secrets from prior prototype patterns.
 
 ## Skills Registry
 - **21st-dev-components** — useful for mapping provided links into a fast design system and avoiding unnecessary custom section builds.
@@ -31,7 +31,7 @@
 | 03 | Gemini design handoff packet | design | vibe-design | 21st-dev-components | 02 | pending |
 | 04 | Build landing page, booking path, and privacy page | code | vibe-build | none | 02, 03 | pending |
 | 05 | Security, hosting, and launch readiness | review / code | vibe-build | none | 04 | pending |
-| 06 | Booking provider and hosting decision confirmation | general / user decision | design | none | 01 | blocked |
+| 06 | Booking provider and hosting decision confirmation | general / user decision | design | none | 01 | completed |
 
 ## Progress Checklist
 - [x] Confirm current repo and create working branch

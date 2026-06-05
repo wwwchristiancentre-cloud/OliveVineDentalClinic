@@ -1,9 +1,9 @@
 # Open Questions
 
 ## External Decisions
-1. Which booking provider should be used for launch?
-2. Which hosting target should be used for launch?
-3. Will there be a direct public domain immediately, or a temporary hosted link first?
+1. **Booking mechanism for launch:** Resolved — use the WhatsApp request flow. The site should present this as a request handoff, not an instantly confirmed appointment.
+2. **Hosting target:** Resolved — use Vercel.
+3. **Domain / DNS:** Pending launch-ops confirmation — `https://www.olivevinedental.com` is the configured production URL. Confirm it is connected to the Vercel project and DNS is resolving correctly before public launch. If not ready, launch first with the Vercel production or preview URL.
 
 ## Content / Brand Questions
 4. Which doctor portrait(s) are approved for use?
@@ -21,10 +21,10 @@
 12. Should the hero include any subtle hand/shield visual echo behind the doctor, or keep that concept entirely in section 2?
 
 ## Practical Recommendation
-If speed is the priority, the safest answers are:
-- use a hosted booking provider
-- use a managed host like Vercel or Netlify
-- launch with a temporary hosted link first if needed
+If speed is the priority, the safest path is:
+- use the current WhatsApp request flow for launch
+- host on Vercel
+- launch with a temporary Vercel link first if custom-domain DNS is not ready
 - keep WhatsApp both in the header and as a floating action button
 - defer `/services` as a lightweight future page unless content is already ready
 - let the hand/shield section animate only in-view or once per session, never as a full-screen gate
