@@ -265,7 +265,7 @@ export default function Booking() {
   const getWhatsAppLink = () => {
     const trimmedEmail = patientEmail.trim();
     const trimmedNotes = patientNotes.trim();
-    const text = `Hello Olive Vine Dental Clinic,\n\nI would like to send a booking request for a clinical visit:\n\n` +
+    const text = `Hello The Olive Vine Dental Clinic,\n\nI would like to send a booking request for a clinical visit:\n\n` +
       `- Selected Therapy: ${selectedProcedureDetails?.name}\n` +
       `- Requested Date: ${formatBookingDate(visibleMonth, selectedDate)}\n` +
       `- Selected Time: ${selectedTime}\n` +

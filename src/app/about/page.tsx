@@ -31,7 +31,7 @@ export default function About() {
                 <div className={styles.textSide}>
                     <span className={styles.quote}>“To heal is to serve.”</span>
                     <p className={styles.bioText}>
-                        Medicine treats the body, but true healing touches the spirit. At Olive Vine, we believe in a holistic
+                        Medicine treats the body, but true healing touches the spirit. At The Olive Vine Dental Clinic, we believe in a holistic
                         approach where clinical excellence is delivered with the compassion of a shepherd.
                     </p>
                     <div className={styles.credentials}>
@@ -75,7 +75,7 @@ export default function About() {
                             <div className={styles.innerDot}></div>
                         </div>
                         <span style={{ color: 'var(--gold-DEFAULT)' }} className={styles.timelineLabel}>The Vision</span>
-                        <h3 className={styles.timelineHeading}>Olive Vine Dental</h3>
+                        <h3 className={styles.timelineHeading}>The Olive Vine Dental Clinic</h3>
                         <p style={{ color: 'var(--gray-300)', fontSize: '1.125rem' }} className={styles.timelineDesc}>
                             A sanctuary where cutting-edge dentistry meets the warmth of home.
                         </p>

@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
-import { CLINIC_PHONE_RAW, CLINIC_PHONE_TEL } from '@/config/constants';
+import { CLINIC_BUSINESS_NAME, CLINIC_PHONE_RAW, CLINIC_PHONE_TEL } from '@/config/constants';
 
-export const CLINIC_NAME = 'Olive Vine Dental Clinic';
+export const CLINIC_NAME = CLINIC_BUSINESS_NAME;
 export const CLINIC_TAGLINE = 'Clinical Excellence With Gentle Precision';
 export const CLINIC_DESCRIPTION =
-  'Olive Vine Dental Clinic provides calm, design-led dental care in Garki, Abuja, with restorative, cosmetic, preventive, and WhatsApp-first booking support.';
+  'The Olive Vine Dental Clinic provides calm, design-led dental care in Garki, Abuja, with restorative, cosmetic, preventive, and WhatsApp-first booking support.';
 export const CLINIC_ADDRESS_LINE_1 = 'Suite C108, Garki Mall';
 export const CLINIC_ADDRESS_LINE_2 = 'Opposite Garki International Market';
 export const CLINIC_LOCALITY = 'Garki Area 11';
@@ -13,11 +13,12 @@ export const CLINIC_CITY = 'Abuja';
 export const CLINIC_REGION = 'Federal Capital Territory';
 export const CLINIC_COUNTRY = 'Nigeria';
 export const DEFAULT_OG_IMAGE = '/The Olive Vine1.jpg';
+export const PRODUCTION_SITE_URL = 'https://www.olivevinedental.com';
 export const GOOGLE_MAPS_SEARCH_URL =
   'https://www.google.com/maps/search/?api=1&query=The+Olive+Vine+Dental+Clinic+Garki+Mall+Abuja';
 
 const DEFAULT_KEYWORDS = [
-  'Olive Vine Dental Clinic',
+  'The Olive Vine Dental Clinic',
   'dentist Abuja',
   'dental clinic Garki',
   'dentist Garki Mall',
@@ -32,19 +33,17 @@ const withProtocol = (value: string) =>
   value.startsWith('http://') || value.startsWith('https://') ? value : `https://${value}`;
 
 export const resolveSiteUrl = () => {
-  const candidates = [
-    process.env.NEXT_PUBLIC_SITE_URL,
-    process.env.VERCEL_PROJECT_PRODUCTION_URL,
-    process.env.VERCEL_URL,
-  ];
+  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 
-  const resolved = candidates.find((candidate) => candidate && candidate.trim().length > 0);
-
-  if (!resolved) {
-    return 'http://localhost:3000';
+  if (configuredUrl) {
+    return withProtocol(configuredUrl).replace(/\/$/, '');
   }
 
-  return withProtocol(resolved.trim()).replace(/\/$/, '');
+  if (process.env.NODE_ENV === 'production') {
+    return PRODUCTION_SITE_URL;
+  }
+
+  return 'http://localhost:3000';
 };
 
 const buildAbsoluteUrl = (path: string) => new URL(path, `${resolveSiteUrl()}/`).toString();

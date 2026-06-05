@@ -462,10 +462,10 @@ export default function Home() {
 
             <div className="text-gray-600 space-y-6 leading-relaxed max-w-3xl mx-auto text-sm md:text-base text-center">
               <p>
-                At Olive Vine Dental Clinic, we believe that premium healthcare begins with listening. Every patient has a unique story, every smile a specific anatomy.
+                At The Olive Vine Dental Clinic, we believe that premium healthcare begins with listening. Every patient has a unique story, every smile a specific anatomy.
               </p>
               <p>
-                Dr. Oke founded Olive Vine to challenge the sterile, assembly-line model of traditional dental clinics. Combining state-of-the-art imaging and minimally invasive surgical tools with a comforting, pastoral philosophy of holistic care, we have built a sanctuary for healing in Abuja.
+                Dr. Oke founded The Olive Vine Dental Clinic to challenge the sterile, assembly-line model of traditional dental clinics. Combining state-of-the-art imaging and minimally invasive surgical tools with a comforting, pastoral philosophy of holistic care, we have built a sanctuary for healing in Abuja.
               </p>
             </div>
 
@@ -547,7 +547,7 @@ export default function Home() {
               <span className="text-gold text-xs font-bold uppercase tracking-widest">Patient Voices</span>
               <h2 className="font-serif text-4xl md:text-5xl text-olive-dark">Abuja Smiling Confidently</h2>
               <p className="text-gray-600 text-sm">
-                Stories of painless healing and restored aesthetics from patients who discovered Olive Vine.
+                Stories of painless healing and restored aesthetics from patients who discovered The Olive Vine Dental Clinic.
               </p>
             </div>
 
@@ -578,7 +578,7 @@ export default function Home() {
                 </div>
                 <h4 className="font-serif text-lg text-olive-dark font-semibold">A Sanctuary Indeed</h4>
                 <p className="text-gray-500 text-xs md:text-sm leading-relaxed">
-                  Most dental clinics feel sterile and scary. Olive Vine feels like a luxury spa. Beautiful music, soft aromas, and extremely kind doctors. My teeth cleaning was the most relaxing experience ever.
+                  Most dental clinics feel sterile and scary. The Olive Vine Dental Clinic feels like a luxury spa. Beautiful music, soft aromas, and extremely kind doctors. My teeth cleaning was the most relaxing experience ever.
                 </p>
                 <div className="pt-4 border-t border-gray-100">
                   <p className="text-xs font-bold text-olive-dark uppercase">Fatima A.</p>
@@ -725,7 +725,7 @@ export default function Home() {
               <div className="w-full h-full rounded-3xl border border-gray-200 shadow-2xl overflow-hidden relative group bg-charcoal">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d840.8449029708042!2d7.493349700481015!3d9.028008359739331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0b888dbbacd5%3A0xcfc7aae6497593b3!2sThe%20Olive%20Vine%20Dental%20Clinic!5e1!3m2!1sen!2sng!4v1779618250068!5m2!1sen!2sng"
-                  title="Google Map showing Olive Vine Dental Clinic at Garki Mall, Abuja"
+                  title="Google Map showing The Olive Vine Dental Clinic at Garki Mall, Abuja"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -737,7 +737,7 @@ export default function Home() {
                 ></iframe>
                 {/* Floating badge inside map - Positioned top-right to prevent overlap with standard map controls/info */}
                 <div className="absolute top-4 right-4 z-10 pointer-events-none">
-                  <span className="text-[10px] font-bold tracking-widest text-gold uppercase bg-charcoal/90 border border-gold/20 px-3 py-1.5 rounded-full shadow-lg">Olive Vine Dental Location</span>
+                  <span className="text-[10px] font-bold tracking-widest text-gold uppercase bg-charcoal/90 border border-gold/20 px-3 py-1.5 rounded-full shadow-lg">The Olive Vine Dental Clinic Location</span>
                 </div>
               </div>
             </div>
@@ -785,7 +785,7 @@ export default function Home() {
         <footer className="bg-charcoal border-t border-white/10 py-16 px-6 md:px-8 text-xs text-gray-500 relative z-10">
           <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-12">
             <div className="space-y-4">
-              <p className="font-serif text-white text-lg font-bold tracking-wider">OLIVE VINE</p>
+              <p className="font-serif text-white text-lg font-bold tracking-wider">THE OLIVE VINE DENTAL CLINIC</p>
               <p className="text-gray-400 leading-relaxed">
                 A calm Abuja dental practice combining careful safety processes with empathetic, patient-centered care.
               </p>
@@ -822,7 +822,7 @@ export default function Home() {
           </div>
 
           <div className="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-600 font-bold uppercase tracking-wider">
-            <p>© {new Date().getFullYear()} Olive Vine Dental Clinic. All Rights Reserved.</p>
+            <p>© {new Date().getFullYear()} The Olive Vine Dental Clinic. All Rights Reserved.</p>
             <div className="flex space-x-6">
               <Link href="/privacy" className="hover:text-gold transition-colors">Privacy Policy</Link>
               <span className="text-white/10">|</span>

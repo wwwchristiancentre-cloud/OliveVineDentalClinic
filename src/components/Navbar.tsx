@@ -35,7 +35,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 md:px-8 flex justify-between items-center">
         {/* Brand Logo */}
         <Link href="/" className="font-serif text-xl md:text-2xl font-bold tracking-wider text-white hover:text-gold transition-colors">
-          OLIVE VINE
+          THE OLIVE VINE DENTAL CLINIC
         </Link>
 
         {/* Desktop Navigation Links */}

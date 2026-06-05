@@ -41,7 +41,7 @@ export default function PrivacyPolicy() {
               <div className="space-y-3">
                 <h2 className="font-serif text-xl text-olive-dark font-semibold">1. Our Commitment to Your Sanctuary</h2>
                 <p>
-                  At Olive Vine Dental Clinic, patient confidentiality is treated as a core responsibility. Our practice is guided by Medical and Dental Council of Nigeria (MDCN) expectations and recognized healthcare privacy practices as we protect your clinical records, dental histories, and personal data.
+                  At The Olive Vine Dental Clinic, patient confidentiality is treated as a core responsibility. Our practice is guided by Medical and Dental Council of Nigeria (MDCN) expectations and recognized healthcare privacy practices as we protect your clinical records, dental histories, and personal data.
                 </p>
                 <p>
                   We recognize that seeking medical care requires a high degree of trust. Your data is handled with care and is only accessible by authorized clinical practitioners directly responsible for your diagnosis and follow-up support.
