@@ -8,7 +8,7 @@ const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-serif'
 
 export const metadata: Metadata = {
   title: 'Olive Vine Dental Clinic',
-  description: 'Clinical Excellence With a Soul',
+  description: 'Clinical Excellence With Gentle Precision',
 };
 
 export default function RootLayout({

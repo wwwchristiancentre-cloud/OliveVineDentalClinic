@@ -4,11 +4,14 @@
 Review complete
 
 ## Tasks
-- Reviewed public-launch security and trust risks across homepage, booking, privacy, layout, navbar, constants, and debug routes.
-- Flagged public-facing claims and trust issues that should be downgraded before launch.
+- Verified Vercel launch readiness across homepage, booking, privacy, layout, navbar, constants, and config.
+- Ran production build and lint checks.
+- Noted launch blockers/polish items for handoff.
 
 ## Files Changed
 - progress.md
 
 ## Notes
-- Main risks: exposed debug route, misleading booking confirmation flow, and over-strong privacy/quality claims.
+- Build passes successfully.
+- Lint currently reports 12 `@next/next/no-img-element` warnings.
+- Booking request message omits optional email and notes fields.

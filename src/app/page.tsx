@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, getDynamicWhatsAppLink } from '@/config/constants';
+import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, CLINIC_PHONE_BACKUP_DISPLAY, getDynamicWhatsAppLink } from '@/config/constants';
 
 const ANNOUNCEMENTS = [
   'Now Welcoming New Patients in Garki',
@@ -58,6 +58,15 @@ export default function Home() {
             <div className="absolute top-1/4 -right-20 w-[450px] h-[450px] rounded-full bg-olive-light/10 blur-3xl animate-[pulse_8s_infinite]"></div>
             <div className="absolute -bottom-20 -left-20 w-[500px] h-[500px] rounded-full bg-gold/5 blur-3xl animate-[pulse_12s_infinite_2s]"></div>
             <div className="absolute top-1/2 left-1/3 w-[300px] h-[300px] rounded-full bg-olive-deep/15 blur-3xl animate-pulse"></div>
+
+            {/* Subtle Brand Logo Watermark */}
+            <div className="absolute top-0 md:top-1/2 left-1/2 -translate-x-1/2 -translate-y-0 md:-translate-y-1/2 w-[1000px] h-[1000px] md:w-[1450px] md:h-[1450px] opacity-[0.12] select-none pointer-events-none mix-blend-screen">
+              <img
+                src="/The Olive Vine2.png"
+                alt=""
+                className="w-full h-full object-contain"
+              />
+            </div>
           </div>
 
           <div className="max-w-7xl mx-auto w-full grid md:grid-cols-12 gap-12 items-center relative z-10">
@@ -81,10 +90,10 @@ export default function Home() {
               </div>
               <h1 className="font-serif text-5xl md:text-7xl leading-tight text-white">
                 Clinical Excellence <br />
-                <span className="text-gold italic font-normal tracking-wide">With a Soul</span>
+                <span className="text-gold italic font-normal tracking-wide">With Gentle Precision</span>
               </h1>
               <p className="text-gray-300 text-base md:text-lg max-w-xl leading-relaxed">
-                Experience a calm, design-led dental practice in Abuja. We combine careful clinical workflows and digital diagnostics with a tranquil, empathetic approach to healing.
+                Experience calm, design-led dental care in Abuja, where advanced diagnostics, careful treatment, and a soothing environment make every visit feel clear, comfortable, and reassuring.
               </p>
 
               {/* Dual CTAs */}
@@ -280,7 +289,7 @@ export default function Home() {
 
             <div className="grid md:grid-cols-3 gap-8">
               {/* Card 1: Restorative */}
-              <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:bg-olive hover:text-white transition-all duration-500 cursor-pointer scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out transform flex flex-col justify-between">
+              <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:bg-olive hover:text-white transition-all duration-500 scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out transform flex flex-col justify-between">
                 <div>
                   {/* Mini 3D Pop-out Portal */}
                   <div className="relative w-full h-44 mb-6 flex items-end justify-center overflow-visible">
@@ -311,13 +320,13 @@ export default function Home() {
                     Advanced, biocompatible implants, bridges, and crown architectures engineered to return full clinical function and pristine, natural aesthetics.
                   </p>
                 </div>
-                <Link href="/services" className="inline-flex items-center text-gold text-xs font-bold tracking-widest uppercase hover:underline">
+                <span className="inline-flex items-center text-gold text-xs font-bold tracking-widest uppercase">
                   Explore Therapy <span className="ml-2">→</span>
-                </Link>
+                </span>
               </div>
 
               {/* Card 2: Cosmetic */}
-              <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:bg-olive hover:text-white transition-all duration-500 cursor-pointer scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-150 transform flex flex-col justify-between">
+              <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:bg-olive hover:text-white transition-all duration-500 scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-150 transform flex flex-col justify-between">
                 <div>
                   {/* Mini 3D Pop-out Portal */}
                   <div className="relative w-full h-44 mb-6 flex items-end justify-center overflow-visible">
@@ -348,13 +357,13 @@ export default function Home() {
                     Minimally invasive custom veneers and high-potency professional whitening systems designed to express your natural beauty rather than mask it.
                   </p>
                 </div>
-                <Link href="/services" className="inline-flex items-center text-gold text-xs font-bold tracking-widest uppercase hover:underline">
+                <span className="inline-flex items-center text-gold text-xs font-bold tracking-widest uppercase">
                   Explore Artistry <span className="ml-2">→</span>
-                </Link>
+                </span>
               </div>
 
               {/* Card 3: Orthodontics */}
-              <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:bg-olive hover:text-white transition-all duration-500 cursor-pointer scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-300 transform flex flex-col justify-between">
+              <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:bg-olive hover:text-white transition-all duration-500 scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out delay-300 transform flex flex-col justify-between">
                 <div>
                   {/* Mini 3D Pop-out Portal */}
                   <div className="relative w-full h-44 mb-6 flex items-end justify-center overflow-visible">
@@ -385,9 +394,9 @@ export default function Home() {
                     Discreet alignment systems including invisible medical-grade aligners for quiet, comfortable teeth correction that respects your lifestyle.
                   </p>
                 </div>
-                <Link href="/services" className="inline-flex items-center text-gold text-xs font-bold tracking-widest uppercase hover:underline">
+                <span className="inline-flex items-center text-gold text-xs font-bold tracking-widest uppercase">
                   Explore Alignment <span className="ml-2">→</span>
-                </Link>
+                </span>
               </div>
             </div>
           </div>
@@ -632,7 +641,10 @@ export default function Home() {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div className="space-y-2 p-6 rounded-2xl bg-white border border-gray-100 shadow-md">
                   <span className="text-xs text-gold uppercase tracking-widest font-bold">Contact</span>
-                  <p className="font-serif text-lg text-olive-dark font-semibold">{CLINIC_PHONE_DISPLAY}</p>
+                  <div className="space-y-1">
+                    <p className="font-serif text-lg text-olive-dark font-semibold">{CLINIC_PHONE_DISPLAY}</p>
+                    <p className="font-serif text-lg text-olive-dark font-semibold">{CLINIC_PHONE_BACKUP_DISPLAY}</p>
+                  </div>
                   <p className="text-xs text-gray-400">Call for immediate support</p>
                 </div>
                 <div className="space-y-2 p-6 rounded-2xl bg-white border border-gray-100 shadow-md">
@@ -750,6 +762,7 @@ export default function Home() {
                 <p>Opp. Garki International Market</p>
                 <p>Garki Area 11, Abuja, Nigeria</p>
                 <p className="pt-2">{CLINIC_PHONE_DISPLAY}</p>
+                <p>{CLINIC_PHONE_BACKUP_DISPLAY}</p>
               </div>
             </div>
             <div className="space-y-4">
