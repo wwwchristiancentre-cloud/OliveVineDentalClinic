@@ -1,9 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
 import Navbar from '@/components/Navbar';
-import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, CLINIC_PHONE_BACKUP_DISPLAY, getDynamicWhatsAppLink } from '@/config/constants';
+import { CLINIC_PHONE_BACKUP_DISPLAY, CLINIC_PHONE_DISPLAY, CLINIC_PHONE_TEL, getDynamicWhatsAppLink } from '@/config/constants';
+import { GOOGLE_MAPS_SEARCH_URL } from '@/config/site';
 
 const ANNOUNCEMENTS = [
   'Now Welcoming New Patients in Garki',
@@ -61,10 +64,13 @@ export default function Home() {
 
             {/* Subtle Brand Logo Watermark */}
             <div className="absolute top-0 md:top-1/2 left-1/2 -translate-x-1/2 -translate-y-0 md:-translate-y-1/2 w-[1000px] h-[1000px] md:w-[1450px] md:h-[1450px] opacity-[0.12] select-none pointer-events-none mix-blend-screen">
-              <img
+              <Image
                 src="/The Olive Vine2.png"
                 alt=""
-                className="w-full h-full object-contain"
+                fill
+                priority
+                sizes="(min-width: 768px) 1450px, 1000px"
+                className="object-contain"
               />
             </div>
           </div>
@@ -98,10 +104,11 @@ export default function Home() {
 
               {/* Dual CTAs */}
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Link href="/booking">
-                  <button className="w-full sm:w-auto bg-gold hover:bg-gold-warm text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5 active:scale-95 text-sm tracking-wider uppercase cursor-pointer">
-                    Book Appointment
-                  </button>
+                <Link
+                  href="/booking"
+                  className="w-full sm:w-auto inline-flex justify-center bg-gold hover:bg-gold-warm text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5 active:scale-95 text-sm tracking-wider uppercase cursor-pointer"
+                >
+                  Book Appointment
                 </Link>
                 <a
                   href={whatsAppLink}
@@ -144,9 +151,13 @@ export default function Home() {
 
                   {/* 1.a. BACK IMAGE LAYER: The Clipped Body (inside the overflow-hidden frame) */}
                   {/* Positioned at bottom-[-55px] to ensure the straight bottom edge of the suit never shows, even on hover */}
-                  <img
+                  <Image
                     src="/dr-oke.png"
                     alt="Dr. Emmanuel Oke Portrait - Body"
+                    width={420}
+                    height={560}
+                    priority
+                    sizes="420px"
                     className="absolute bottom-[-55px] left-1/2 -translate-x-1/2 h-[560px] w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.05] group-hover:-translate-y-3 origin-bottom"
                   />
                 </div>
@@ -154,9 +165,13 @@ export default function Home() {
                 {/* 2. FRONT IMAGE LAYER: The Pop-Out Head (outside the frame to overlap the top border) */}
                 {/* We use clip-path to keep ONLY the head and neck (top 38%), so shoulders do not protrude out of the sides! */}
                 {/* Sits at bottom-[-55px] to perfectly align and scale in sync with the back body layer */}
-                <img
+                <Image
                   src="/dr-oke.png"
                   alt="Dr. Emmanuel Oke Portrait - Head Pop-out"
+                  width={420}
+                  height={560}
+                  priority
+                  sizes="420px"
                   style={{ clipPath: 'inset(0 0 62% 0)' }}
                   className="absolute bottom-[-55px] left-1/2 -translate-x-1/2 h-[560px] w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.05] group-hover:-translate-y-3 origin-bottom filter drop-shadow-[0_20px_25px_rgba(0,0,0,0.7)]"
                 />
@@ -247,17 +262,23 @@ export default function Home() {
                   <div className="absolute top-2 left-2 right-2 bottom-0 rounded-t-[150px] rounded-b-none border-t border-x border-b-0 border-gold/10 pointer-events-none z-20"></div>
 
                   {/* 2. BACK IMAGE LAYER: The Clipped Chair Base */}
-                  <img
+                  <Image
                     src="/dental-chair.png"
                     alt="Pristine Sanctuary Dental Chair - Base"
+                    width={410}
+                    height={410}
+                    sizes="410px"
                     className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 h-[410px] w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.05] group-hover:-translate-y-2 origin-bottom"
                   />
                 </div>
 
                 {/* 3. FRONT IMAGE LAYER: The Pop-Out LED Surgical Light / Headrest */}
-                <img
+                <Image
                   src="/dental-chair.png"
                   alt="Pristine Sanctuary Dental Chair - Pop-out LED Light"
+                  width={410}
+                  height={410}
+                  sizes="410px"
                   style={{ clipPath: 'inset(0 0 65% 0)' }}
                   className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 h-[410px] w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.05] group-hover:-translate-y-2 origin-bottom filter drop-shadow-[0_15px_20px_rgba(0,0,0,0.6)]"
                 />
@@ -299,17 +320,23 @@ export default function Home() {
                       <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 group-hover:from-charcoal/60 transition-all duration-500"></div>
 
                       {/* Back Body Layer */}
-                      <img
+                      <Image
                         src="/restorative-care.png"
                         alt="Restorative Care - Base"
+                        width={128}
+                        height={128}
+                        sizes="128px"
                         className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 h-32 w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1.5 origin-bottom"
                       />
                     </div>
 
                     {/* Front Pop-out Layer */}
-                    <img
+                    <Image
                       src="/restorative-care.png"
                       alt="Restorative Care - Pop-out"
+                      width={128}
+                      height={128}
+                      sizes="128px"
                       style={{ clipPath: 'inset(0 0 50% 0)' }}
                       className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 h-32 w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1.5 origin-bottom filter drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_12px_16px_rgba(0,0,0,0.4)]"
                     />
@@ -336,17 +363,23 @@ export default function Home() {
                       <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 group-hover:from-charcoal/60 transition-all duration-500"></div>
 
                       {/* Back Body Layer */}
-                      <img
+                      <Image
                         src="/cosmetic-artistry.png"
                         alt="Cosmetic Artistry - Base"
+                        width={128}
+                        height={128}
+                        sizes="128px"
                         className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 h-32 w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1.5 origin-bottom"
                       />
                     </div>
 
                     {/* Front Pop-out Layer */}
-                    <img
+                    <Image
                       src="/cosmetic-artistry.png"
                       alt="Cosmetic Artistry - Pop-out"
+                      width={128}
+                      height={128}
+                      sizes="128px"
                       style={{ clipPath: 'inset(0 0 50% 0)' }}
                       className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 h-32 w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1.5 origin-bottom filter drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_12px_16px_rgba(0,0,0,0.4)]"
                     />
@@ -373,17 +406,23 @@ export default function Home() {
                       <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 group-hover:from-charcoal/60 transition-all duration-500"></div>
 
                       {/* Back Body Layer */}
-                      <img
+                      <Image
                         src="/clear-orthodontics.png"
                         alt="Clear Orthodontics - Base"
+                        width={128}
+                        height={128}
+                        sizes="128px"
                         className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 h-32 w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1.5 origin-bottom"
                       />
                     </div>
 
                     {/* Front Pop-out Layer */}
-                    <img
+                    <Image
                       src="/clear-orthodontics.png"
                       alt="Clear Orthodontics - Pop-out"
+                      width={128}
+                      height={128}
+                      sizes="128px"
                       style={{ clipPath: 'inset(0 0 50% 0)' }}
                       className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 h-32 w-auto max-w-none object-cover pointer-events-none z-10 transition-all duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1.5 origin-bottom filter drop-shadow-[0_8px_12px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_12px_16px_rgba(0,0,0,0.4)]"
                     />
@@ -443,10 +482,11 @@ export default function Home() {
             </div>
 
             <div className="pt-6">
-              <Link href="/booking">
-                <button className="bg-olive hover:bg-olive-dark text-white px-8 py-3.5 rounded-full font-bold transition-all shadow-md active:scale-95 text-xs tracking-wider uppercase cursor-pointer">
-                  Schedule with Dr. Oke
-                </button>
+              <Link
+                href="/booking"
+                className="inline-flex bg-olive hover:bg-olive-dark text-white px-8 py-3.5 rounded-full font-bold transition-all shadow-md active:scale-95 text-xs tracking-wider uppercase cursor-pointer"
+              >
+                Schedule with Dr. Oke
               </Link>
             </div>
           </div>
@@ -616,10 +656,11 @@ export default function Home() {
             </div>
 
             <div className="text-center pt-8 scroll-animate opacity-0 translate-y-8 transition-all duration-1000 ease-out transform">
-              <Link href="/booking">
-                <button className="bg-gold hover:bg-gold-warm text-white px-10 py-4 rounded-full font-bold transition-all shadow-lg active:scale-95 text-sm tracking-wider uppercase cursor-pointer">
-                  Open Booking Dashboard
-                </button>
+              <Link
+                href="/booking"
+                className="inline-flex bg-gold hover:bg-gold-warm text-white px-10 py-4 rounded-full font-bold transition-all shadow-lg active:scale-95 text-sm tracking-wider uppercase cursor-pointer"
+              >
+                Open Booking Dashboard
               </Link>
             </div>
           </div>
@@ -670,7 +711,7 @@ export default function Home() {
                   Call Clinic
                 </a>
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=The+Olive+Vine+Dental+Clinic+Garki+Mall+Abuja"
+                  href={GOOGLE_MAPS_SEARCH_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-transparent border border-gold text-gold hover:bg-gold hover:text-white px-6 py-3 rounded-full font-semibold transition-all inline-flex items-center text-xs tracking-wider uppercase active:scale-95"
@@ -684,12 +725,14 @@ export default function Home() {
               <div className="w-full h-full rounded-3xl border border-gray-200 shadow-2xl overflow-hidden relative group bg-charcoal">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d840.8449029708042!2d7.493349700481015!3d9.028008359739331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0b888dbbacd5%3A0xcfc7aae6497593b3!2sThe%20Olive%20Vine%20Dental%20Clinic!5e1!3m2!1sen!2sng!4v1779618250068!5m2!1sen!2sng"
+                  title="Google Map showing Olive Vine Dental Clinic at Garki Mall, Abuja"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
                   className="w-full h-full border-0 transition-all duration-300"
                 ></iframe>
                 {/* Floating badge inside map - Positioned top-right to prevent overlap with standard map controls/info */}
@@ -720,10 +763,11 @@ export default function Home() {
               Step out of anxiety and into a calm, carefully prepared care environment. Join Dr. Oke in Abuja for restorative, preventive, and aesthetic dental support.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Link href="/booking">
-                <button className="w-full sm:w-auto bg-gold hover:bg-gold-warm text-white px-10 py-4 rounded-full font-bold transition-all shadow-lg active:scale-95 text-sm tracking-wider uppercase cursor-pointer">
-                  Book Your Sanctuary Visit
-                </button>
+              <Link
+                href="/booking"
+                className="w-full sm:w-auto inline-flex justify-center bg-gold hover:bg-gold-warm text-white px-10 py-4 rounded-full font-bold transition-all shadow-lg active:scale-95 text-sm tracking-wider uppercase cursor-pointer"
+              >
+                Book Your Sanctuary Visit
               </Link>
               <a
                 href={whatsAppLink}

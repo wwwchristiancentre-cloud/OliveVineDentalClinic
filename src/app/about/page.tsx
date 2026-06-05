@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import Navbar from '@/components/Navbar';
 import styles from './page.module.css';
 
@@ -10,7 +12,14 @@ export default function About() {
             <section className={styles.hero}>
                 <div className={styles.imageSide}>
                     <div className={styles.placeholderImage}>
-                        <img src="/dr-oke.png" alt="Dr. Oke" className="w-full h-full object-cover" />
+                        <Image
+                            src="/dr-oke.png"
+                            alt="Dr. Oke"
+                            fill
+                            priority
+                            sizes="(min-width: 768px) 50vw, 100vw"
+                            className="object-cover"
+                        />
                     </div>
                     <div className={styles.overlayText}>
                         <span className={styles.overlayLabel}>Lead Surgeon & Pastor</span>

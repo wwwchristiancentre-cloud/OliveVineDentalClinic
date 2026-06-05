@@ -1,7 +1,9 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useMemo, useState } from 'react';
+
 import Navbar from '@/components/Navbar';
 import { CLINIC_PHONE_DISPLAY, CLINIC_PHONE_RAW } from '@/config/constants';
 
@@ -207,6 +209,7 @@ export default function Booking() {
   const [patientPhone, setPatientPhone] = useState('');
   const [patientEmail, setPatientEmail] = useState('');
   const [patientNotes, setPatientNotes] = useState('');
+  const [hasWhatsAppConsent, setHasWhatsAppConsent] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showStickyCard, setShowStickyCard] = useState(false);
 
@@ -240,6 +243,7 @@ export default function Booking() {
     !selectedProcedure ||
     !selectedDate ||
     !selectedTime ||
+    !hasWhatsAppConsent ||
     isTimeSlotDisabled(selectedTime, selectedDate);
 
   const handleBookingSubmit = (e: React.FormEvent) => {
@@ -259,13 +263,17 @@ export default function Booking() {
   };
 
   const getWhatsAppLink = () => {
+    const trimmedEmail = patientEmail.trim();
+    const trimmedNotes = patientNotes.trim();
     const text = `Hello Olive Vine Dental Clinic,\n\nI would like to send a booking request for a clinical visit:\n\n` +
       `- Selected Therapy: ${selectedProcedureDetails?.name}\n` +
       `- Requested Date: ${formatBookingDate(visibleMonth, selectedDate)}\n` +
       `- Selected Time: ${selectedTime}\n` +
       `- Patient Name: ${patientName || '(Pending)'}\n` +
-      `- Contact Number: ${patientPhone || '(Pending)'}\n\n` +
-      `Please let me know if this slot is available at Suite C108, Garki Mall, Abuja (opposite Garki International Market). Thank you!`;
+      `- Contact Number: ${patientPhone || '(Pending)'}\n` +
+      (trimmedEmail ? `- Email Address: ${trimmedEmail}\n` : '') +
+      (trimmedNotes ? `- Booking Notes (non-sensitive): ${trimmedNotes}\n` : '') +
+      `\nPlease let me know if this slot is available at Suite C108, Garki Mall, Abuja (opposite Garki International Market). Thank you!`;
     return `https://wa.me/${CLINIC_PHONE_RAW}?text=${encodeURIComponent(text)}`;
   };
 
@@ -548,7 +556,7 @@ export default function Booking() {
                     </div>
 
                     <div className="space-y-1.5 sm:col-span-2">
-                      <label className="text-[10px] uppercase font-bold tracking-wider text-gray-400" htmlFor="email">Email Address (Optional)</label>
+                      <label className="text-[10px] uppercase font-bold tracking-wider text-gray-400" htmlFor="email">Email Address (Optional — included in WhatsApp request)</label>
                       <input
                         type="email"
                         id="email"
@@ -560,11 +568,11 @@ export default function Booking() {
                     </div>
 
                     <div className="space-y-1.5 sm:col-span-2">
-                      <label className="text-[10px] uppercase font-bold tracking-wider text-gray-400" htmlFor="notes">Symptoms or Special Requests</label>
+                      <label className="text-[10px] uppercase font-bold tracking-wider text-gray-400" htmlFor="notes">Comfort or Scheduling Notes (Optional — non-sensitive only)</label>
                       <textarea
                         id="notes"
                         rows={3}
-                        placeholder="Please share any clinical details, dental anxieties, or comfort requirements you have..."
+                        placeholder="Share timing, accessibility, or comfort preferences only. Please do not include symptoms, diagnoses, or other sensitive medical details."
                         value={patientNotes}
                         onChange={(e) => setPatientNotes(e.target.value)}
                         className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-gold focus:border-gold transition-all"
@@ -575,6 +583,27 @@ export default function Booking() {
 
                 {/* Submissions buttons */}
                 <div className="flex flex-col gap-4 pt-6 border-t border-gray-100">
+                  <div className="rounded-2xl border border-gold/20 bg-gold/5 p-4 text-xs text-gray-600 space-y-3">
+                    <p className="font-bold uppercase tracking-wider text-olive-dark">WhatsApp booking notice</p>
+                    <p className="leading-relaxed">
+                      Submitting this request opens WhatsApp, a third-party messaging service. Only non-sensitive booking details from this form will be included in your message. For full guidance, review our{' '}
+                      <Link href="/privacy" className="font-semibold text-olive underline underline-offset-2 hover:text-gold">
+                        Privacy Policy
+                      </Link>
+                      .
+                    </p>
+                    <label className="flex items-start gap-3 rounded-xl border border-gray-100 bg-white/80 p-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={hasWhatsAppConsent}
+                        onChange={(e) => setHasWhatsAppConsent(e.target.checked)}
+                        className="mt-0.5 h-4 w-4 rounded border-gray-300 text-gold focus:ring-gold"
+                      />
+                      <span className="leading-relaxed text-gray-600">
+                        I understand this booking request will be sent through WhatsApp and I will only share non-sensitive information.
+                      </span>
+                    </label>
+                  </div>
                   {isFormInvalid && (
                     <div className="p-3.5 bg-red-50/70 border border-red-100 rounded-xl flex items-center space-x-2 text-xs text-red-600 animate-[fadeIn_0.3s_ease-out]">
                       <svg className="w-4 h-4 text-red-500 shrink-0 animate-bounce" fill="currentColor" viewBox="0 0 20 20">
@@ -584,6 +613,8 @@ export default function Booking() {
                         <span className="font-bold">Booking Locked:</span> Please provide your{' '}
                         {(!patientName.trim() || !patientPhone.trim()) ? (
                           <span className="underline font-semibold text-red-700">Name & WhatsApp number</span>
+                        ) : !hasWhatsAppConsent ? (
+                          <span className="underline font-semibold text-red-700">WhatsApp consent acknowledgement</span>
                         ) : (
                           <span className="underline font-semibold text-red-700">a valid future Date & Time slot</span>
                         )}{' '}
@@ -633,10 +664,12 @@ export default function Booking() {
                       {/* Doctor portrait */}
                       <div className="py-4 border-y border-white/10 flex justify-center">
                         <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-gold/40 shadow-inner bg-olive-deep">
-                          <img
+                          <Image
                             src="/dr-oke.png"
                             alt="Dr. Oke Portrait"
-                            className="absolute inset-0 w-full h-full object-cover"
+                            fill
+                            sizes="96px"
+                            className="object-cover"
                           />
                         </div>
                       </div>
@@ -739,9 +772,11 @@ export default function Booking() {
                     <div className="text-center pt-2 text-[9px] text-gray-400 font-bold uppercase tracking-wider">
                       {isFormInvalid ? (
                         <span className="text-red-400 font-bold animate-pulse">
-                          {!patientName.trim() || !patientPhone.trim() 
+                          {!patientName.trim() || !patientPhone.trim()
                             ? 'Enter name & WhatsApp above'
-                            : 'Select a valid future slot above'}
+                            : !hasWhatsAppConsent
+                              ? 'Review WhatsApp notice above'
+                              : 'Select a valid future slot above'}
                         </span>
                       ) : (
                         <span className="text-green-500 font-bold animate-pulse">

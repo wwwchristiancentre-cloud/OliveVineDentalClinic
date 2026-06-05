@@ -1,7 +1,10 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
+
 import Navbar from '@/components/Navbar';
+import { getDynamicWhatsAppLink } from '@/config/constants';
 import ViewCanvas from '@/features/3d/ViewCanvas';
 import Jaw from '@/features/3d/Jaw';
 import Tooth from '@/features/3d/Tooth';
@@ -11,6 +14,7 @@ import styles from './page.module.css';
 export default function Services() {
     const [activeSection, setActiveSection] = useState<number>(1);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const whatsAppLink = getDynamicWhatsAppLink();
 
     useEffect(() => {
         const container = scrollContainerRef.current;
@@ -90,8 +94,15 @@ export default function Services() {
                             veneers and professional whitening systems.
                         </p>
                         <div className={styles.buttons}>
-                            <button className={styles.btnPrimary}>View Gallery</button>
-                            <button className={styles.btnLink}>Pricing</button>
+                            <Link href="/booking" className={styles.btnPrimary}>Book Consultation</Link>
+                            <a
+                                href={whatsAppLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.btnLink}
+                            >
+                                Ask About Pricing
+                            </a>
                         </div>
                     </section>
 

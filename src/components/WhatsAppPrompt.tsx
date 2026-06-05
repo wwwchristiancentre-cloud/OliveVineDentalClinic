@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function WhatsAppPrompt() {
@@ -98,9 +99,12 @@ export default function WhatsAppPrompt() {
           <h3 className="font-serif text-xl text-olive-dark font-semibold">Sanctuary Support Gateway</h3>
         </div>
 
-        <div className="p-4 bg-cream/40 border border-olive/5 rounded-2xl">
+        <div className="p-4 bg-cream/40 border border-olive/5 rounded-2xl space-y-2">
           <p className="text-olive-dark text-sm leading-relaxed font-serif italic">
             We&apos;ll open WhatsApp shortly. If the message doesn&apos;t go through, feel free to call the clinic.
+          </p>
+          <p className="text-[11px] leading-relaxed text-gray-500">
+            WhatsApp is a third-party service. Please avoid sharing medical histories, X-rays, payment details, or other sensitive health information in chat.
           </p>
         </div>
 
@@ -131,6 +135,9 @@ export default function WhatsAppPrompt() {
           >
             Cancel
           </button>
+          <Link href="/privacy" className="inline-flex text-[11px] font-semibold text-olive hover:text-gold transition-colors">
+            Review privacy guidance
+          </Link>
         </div>
 
       </div>

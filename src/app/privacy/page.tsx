@@ -1,6 +1,5 @@
-'use client';
-
 import Link from 'next/link';
+
 import Navbar from '@/components/Navbar';
 import { CLINIC_PHONE_DISPLAY, getDynamicWhatsAppLink } from '@/config/constants';
 
@@ -57,7 +56,7 @@ export default function PrivacyPolicy() {
                 <ul className="list-disc pl-5 space-y-2">
                   <li><strong>Personal Details:</strong> Name, age, phone/WhatsApp contact information, and email address.</li>
                   <li><strong>Clinical Records:</strong> Oral health history, pre-existing systemic conditions, medications, treatment plans, 3D intraoral scans, and digital radiographs.</li>
-                  <li><strong>Booking Specifications:</strong> Date, time, requested procedures, and specific dental comfort preferences.</li>
+                  <li><strong>Booking Specifications:</strong> Date, time, requested procedures, email contact you choose to share, and non-sensitive comfort or scheduling preferences.</li>
                 </ul>
               </div>
 
@@ -82,7 +81,7 @@ export default function PrivacyPolicy() {
                   Our clinic supports a WhatsApp direct line ({CLINIC_PHONE_DISPLAY}) to help you send booking requests and receive support.
                 </p>
                 <p>
-                  While convenient, please avoid sharing highly sensitive medical histories or diagnostic records over open chat channels. Our clinical team will coordinate secure in-person evaluations at Suite C108 Garki Mall for medical assessments.
+                  While convenient, WhatsApp is a third-party messaging platform. Please avoid sharing highly sensitive medical histories, diagnostic records, payment information, or emergency concerns over open chat channels. Our clinical team will coordinate secure in-person evaluations at Suite C108 Garki Mall for medical assessments.
                 </p>
               </div>
 

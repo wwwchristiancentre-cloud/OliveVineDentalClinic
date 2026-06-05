@@ -62,10 +62,11 @@ export default function Navbar() {
 
         {/* CTA Button */}
         <div className="hidden md:block">
-          <Link href="/booking">
-            <button className="relative overflow-hidden bg-white text-olive px-6 py-2.5 rounded-full font-bold hover:bg-gold hover:text-white transition-all text-xs tracking-wider uppercase shadow-md active:scale-95 duration-150 cursor-pointer">
-              Book Now
-            </button>
+          <Link
+            href="/booking"
+            className="relative inline-flex overflow-hidden bg-white text-olive px-6 py-2.5 rounded-full font-bold hover:bg-gold hover:text-white transition-all text-xs tracking-wider uppercase shadow-md active:scale-95 duration-150 cursor-pointer"
+          >
+            Book Now
           </Link>
         </div>
 
@@ -121,10 +122,12 @@ export default function Navbar() {
               WhatsApp Help
             </a>
           </div>
-          <Link href="/booking" onClick={() => setIsMobileMenuOpen(false)}>
-            <button className="w-full bg-gold text-white py-3 rounded-full font-bold hover:bg-gold-warm transition-all text-sm tracking-widest uppercase shadow-lg cursor-pointer">
-              Book Appointment
-            </button>
+          <Link
+            href="/booking"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block w-full bg-gold text-white py-3 rounded-full font-bold hover:bg-gold-warm transition-all text-sm tracking-widest uppercase shadow-lg cursor-pointer text-center"
+          >
+            Book Appointment
           </Link>
         </div>
       )}
